@@ -40,6 +40,10 @@ class ResponsiveAppBar extends Component {
     this.setState({ anchorElUser: null });
   }
 
+  /**
+   * Changes the current page of the app.
+   * @param {string} page the page to switch to.
+   */
   changePage(page) {
     this.props.changePage(page);
     this.handleCloseNavMenu();
