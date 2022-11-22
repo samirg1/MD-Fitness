@@ -13,12 +13,11 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { Component } from "react";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Account", "Logout"];
 
 class ResponsiveAppBar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       anchorElNav: null,
       anchorElUser: null,
@@ -39,6 +38,11 @@ class ResponsiveAppBar extends Component {
 
   handleCloseUserMenu() {
     this.setState({ anchorElUser: null });
+  }
+
+  changePage(page) {
+    this.props.changePage(page);
+    this.handleCloseNavMenu();
   }
 
   render() {
@@ -96,10 +100,10 @@ class ResponsiveAppBar extends Component {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
+                {this.props.pages.map((page) => (
                   <MenuItem
                     key={page}
-                    onClick={() => this.handleCloseNavMenu()}
+                    onClick={() => this.changePage(page)}
                   >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
@@ -125,13 +129,13 @@ class ResponsiveAppBar extends Component {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              MyGym
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+              {this.props.pages.map((page) => (
                 <Button
                   key={page}
-                  onClick={() => this.handleCloseNavMenu()}
+                  onClick={() => this.changePage(page)}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
                   {page}
