@@ -1,4 +1,3 @@
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AppBar from "@mui/material/AppBar";
@@ -113,11 +112,17 @@ const ResponsiveAppBar = (props) => {
                                 <MenuItem
                                     key={page}
                                     onClick={() => changePage(page)}
-                                ></MenuItem>
+                                >
+                                    <Typography textAlign="center">
+                                        {page}
+                                    </Typography>
+                                </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    <FitnessCenterIcon
+                    <Avatar
+                        alt="MDFit"
+                        src={AppIcon}
                         sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
                     />
                     <Typography
@@ -129,9 +134,8 @@ const ResponsiveAppBar = (props) => {
                             mr: 2,
                             display: { xs: "flex", md: "none" },
                             flexGrow: 1,
-                            fontFamily: "monospace",
+                            fontFamily: "arial",
                             fontWeight: 700,
-                            letterSpacing: ".3rem",
                             color: "inherit",
                             textDecoration: "none",
                         }}
