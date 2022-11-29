@@ -1,7 +1,6 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -13,9 +12,10 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AppIcon from ".//img/icon.jpg";
+import AppBarIconText from "./AppBarIconText";
 
 const APP_NAME = "MD FITNESS";
+
 const settings = ["Account", "Logout"];
 
 const ResponsiveAppBar = ({ pages }) => {
@@ -52,28 +52,7 @@ const ResponsiveAppBar = ({ pages }) => {
         <AppBar position="static" color="primary">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Avatar
-                        alt="MDFit"
-                        src={AppIcon}
-                        sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-                    />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: "none", md: "flex" },
-                            fontFamily: "arial",
-                            fontWeight: 700,
-                            color: "inherit",
-                            textDecoration: "none",
-                        }}
-                    >
-                        {APP_NAME}
-                    </Typography>
-
+                    <AppBarIconText large name={APP_NAME} />
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -120,28 +99,7 @@ const ResponsiveAppBar = ({ pages }) => {
                             ))}
                         </Menu>
                     </Box>
-                    <Avatar
-                        alt="MDFit"
-                        src={AppIcon}
-                        sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                    />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: "flex", md: "none" },
-                            flexGrow: 1,
-                            fontFamily: "arial",
-                            fontWeight: 700,
-                            color: "inherit",
-                            textDecoration: "none",
-                        }}
-                    >
-                        {APP_NAME}
-                    </Typography>
+                    <AppBarIconText name={APP_NAME} />
                     <Box
                         sx={{
                             flexGrow: 1,

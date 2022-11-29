@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/system";
 import { Component } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ResponsiveAppBar from "./AppBar";
+import ResponsiveAppBar from "./app-bar/AppBar";
 import Home from "./Home";
 import theme from "./theme";
 
