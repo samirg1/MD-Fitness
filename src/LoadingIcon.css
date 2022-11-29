@@ -7,7 +7,7 @@
     left: 50%;
     translate: -50% -50%;
     border-radius: 50%;
-    animation: resize-container 2s ease-out 0s infinite normal none;
+    animation: resize-container 2s ease-out 0s infinite reverse none;
 }
 
 .animating-letter {
@@ -54,8 +54,6 @@
     50% {
         translate: -90% -50%;
     }
-    100% {
-    }
 }
 
 @keyframes move-d {
@@ -65,18 +63,16 @@
     50% {
         translate: 10% -50%;
     }
-    100% {
-    }
 }
 
 @keyframes resize-container {
     0% {
-        width: 150px; height: 150px;
+        width: 100px; height: 100px;
     }
     50% {
         width: 100px; height: 100px;
     }
     100% {
-
+        width: 150px; height: 150px;
     }
 }
