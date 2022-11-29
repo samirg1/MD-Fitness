@@ -3,7 +3,7 @@ import { ThemeProvider } from "@mui/system";
 import { Component } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ResponsiveAppBar from "./app-bar/AppBar";
-import Home from "./Home";
+import Home from "./homepage/Home";
 import theme from "./theme";
 
 const pages = ["Programs"];
