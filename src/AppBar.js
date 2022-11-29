@@ -18,7 +18,7 @@ import AppIcon from ".//img/icon.jpg";
 const APP_NAME = "MD FITNESS";
 const settings = ["Account", "Logout"];
 
-const ResponsiveAppBar = (props) => {
+const ResponsiveAppBar = ({ pages }) => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const navigate = useNavigate();
@@ -49,7 +49,7 @@ const ResponsiveAppBar = (props) => {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" color="primary">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Avatar
@@ -108,7 +108,7 @@ const ResponsiveAppBar = (props) => {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            {props.pages.map((page) => (
+                            {pages.map((page) => (
                                 <MenuItem
                                     key={page}
                                     onClick={() => changePage(page)}
@@ -148,7 +148,7 @@ const ResponsiveAppBar = (props) => {
                             display: { xs: "none", md: "flex" },
                         }}
                     >
-                        {props.pages.map((page) => (
+                        {pages.map((page) => (
                             <Button
                                 key={page}
                                 onClick={() => changePage(page)}

@@ -1,0 +1,82 @@
+.animation-container {
+    width: 150px;
+    height: 150px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    border-radius: 50%;
+    animation: resize-container 2s ease-out 0s infinite normal none;
+}
+
+.animating-letter {
+    font-weight: bold;
+    font-size: 50px;
+    color: rgb(41, 72, 157) !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    z-index: 0;
+}
+
+.animation-m {
+    translate: -90% -50%;
+    animation-name: move-m;
+}
+
+.animation-d {
+    translate: 10% -50%;
+    animation-name: move-d;
+}
+
+.animation-word {
+    background-color: black;
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 5px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: 10;
+}
+
+@keyframes move-m {
+    0% {
+        translate: -170% -50%;
+    }
+    50% {
+        translate: -90% -50%;
+    }
+    100% {
+    }
+}
+
+@keyframes move-d {
+    0% {
+        translate: 120% -50%;
+    }
+    50% {
+        translate: 10% -50%;
+    }
+    100% {
+    }
+}
+
+@keyframes resize-container {
+    0% {
+        width: 150px; height: 150px;
+    }
+    50% {
+        width: 100px; height: 100px;
+    }
+    100% {
+
+    }
+}
