@@ -27,6 +27,11 @@ const App = () => {
                                     <button
                                         onClick={redirectToCheckout}
                                         disabled={isLoading}
+                                        style={{
+                                            width: "20%",
+                                            height: "20%",
+                                            fontSize: "20px"
+                                        }}
                                     >
                                         {isLoading ? "Loading..." : "Buy"}
                                     </button>
