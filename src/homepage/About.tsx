@@ -1,6 +1,5 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { Component, Fragment } from "react";
 import HomeTitle from "./HomeTitle";
 
 const text = `
@@ -48,15 +47,15 @@ habitasse platea dictumst quisque sagittis purus sit amet
 volutpat.
 `;
 
-export default class About extends Component {
-    render() {
-        return (
-            <Fragment>
-                <HomeTitle title={"ABOUT"} />
-                <Grid item xs={6}>
-                    <Typography>{text}</Typography>
-                </Grid>
-            </Fragment>
-        );
-    }
-}
+const About = () => {
+    return (
+        <>
+            <HomeTitle title={"ABOUT"} />
+            <Grid item xs={6}>
+                <Typography>{text}</Typography>
+            </Grid>
+        </>
+    );
+};
+
+export default About;

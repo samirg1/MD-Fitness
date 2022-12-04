@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeTitle from "./HomeTitle";
 
@@ -15,7 +14,7 @@ const ProgramsSummary = () => {
     const navigate = useNavigate();
 
     return (
-        <Fragment>
+        <>
             <HomeTitle title={"PROGRAMS"} />
             <Card variant="outlined">
                 <CardContent>
@@ -34,7 +33,7 @@ const ProgramsSummary = () => {
                     </Button>
                 </CardActions>
             </Card>
-        </Fragment>
+        </>
     );
 };
 

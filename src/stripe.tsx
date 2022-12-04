@@ -10,7 +10,7 @@ const getStripe = () => {
     return stripePromise;
 };
 
-export const StripeComponent = () => {
+const StripeComponent = () => {
     const [error, setError] = useState<string | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -48,3 +48,5 @@ export const StripeComponent = () => {
         </div>
     );
 };
+
+export default StripeComponent;
