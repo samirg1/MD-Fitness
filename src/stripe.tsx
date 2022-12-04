@@ -1,16 +1,17 @@
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { useState } from "react";
 
-let stripePromise;
+let stripePromise: Promise<Stripe | null> | undefined;
 
 const getStripe = () => {
-    if (!stripePromise)
-        stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+    if (stripePromise === undefined) {
+        stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY as string);
+    }
     return stripePromise;
 };
 
 export const StripeComponent = () => {
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(false);
 
     const checkoutOptions = {
@@ -20,7 +21,7 @@ export const StripeComponent = () => {
                 quantity: 1,
             },
         ],
-        mode: "payment",
+        mode: "payment" as "payment" | "subscription" | undefined,
         successUrl: `${window.location.origin}`, // TODO when payment is successful
         cancelUrl: `${window.location.origin}`, // TODO when payment is cancelled
     };
@@ -29,17 +30,21 @@ export const StripeComponent = () => {
         setIsLoading(true);
 
         const stripe = await getStripe();
+        if (stripe === null) {
+            alert("Cannot connect to stripe");
+            return setIsLoading(false);
+        }
         const { error } = await stripe.redirectToCheckout(checkoutOptions);
         if (error) setError(error.message);
-
-        setIsLoading(false);
     };
 
     if (error) alert(error);
 
     return (
         <div>
-            <button onClick={redirectToCheckout} disabled={isLoading}>{ isLoading ? "Loading..." : "Buy"}</button>
+            <button onClick={redirectToCheckout} disabled={isLoading}>
+                {isLoading ? "Loading..." : "Buy"}
+            </button>
         </div>
     );
 };

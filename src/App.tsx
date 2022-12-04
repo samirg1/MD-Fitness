@@ -16,7 +16,7 @@ class App extends Component {
                 <Router>
                     <ResponsiveAppBar pages={pages} />
                     <Routes>
-                        <Route exact path="/" element={<Home />}></Route>
+                        <Route path="/" element={<Home />}></Route>
                         <Route
                             path="/programs"
                             element={<StripeComponent />}

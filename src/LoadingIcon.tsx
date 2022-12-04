@@ -1,5 +1,5 @@
 import { Component } from "react";
-import './LoadingIcon.css';
+import "./LoadingIcon.css";
 
 export default class LoadingIcon extends Component {
     render() {
