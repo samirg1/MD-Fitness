@@ -18,7 +18,7 @@ const APP_NAME = "MD FITNESS";
 
 const settings = ["Account", "Logout"];
 
-const ResponsiveAppBar = ({ pages }: { pages: string[]}) => {
+const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const navigate = useNavigate();
@@ -27,7 +27,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[]}) => {
      * Opens the navigation menu
      * @param event The event that caused this function
      */
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
 
@@ -35,7 +35,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[]}) => {
      * Opens the user menu
      * @param event The event that caused this function
      */
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
@@ -158,12 +158,12 @@ const ResponsiveAppBar = ({ pages }: { pages: string[]}) => {
                                 horizontal: "right",
                             }}
                             open={Boolean(anchorElUser)}
-                            onClose={() => handleCloseUserMenu()}
+                            onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
                                 <MenuItem
                                     key={setting}
-                                    onClick={() => handleCloseUserMenu()}
+                                    onClick={handleCloseUserMenu}
                                 >
                                     <Typography textAlign="center">
                                         {setting}

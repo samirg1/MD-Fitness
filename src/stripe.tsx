@@ -7,7 +7,7 @@ let stripePromise: Promise<Stripe | null> | undefined;
  * Singleton method to get an instance of Stripe.
  * @returns The stripe promise to get an instance of Stripe.
  */
-const getStripe = () => {
+const getStripe = (): Promise<Stripe | null> => {
     if (stripePromise === undefined) {
         stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY as string);
     }
@@ -33,7 +33,7 @@ const StripeHook = () => {
     /**
      * Redirect the current page to the Stripe checkout endpoint.
      */
-    const redirectToCheckout = async () => {
+    const redirectToCheckout = async (): Promise<void> => {
         setIsLoading(true);
 
         const stripe = await getStripe();

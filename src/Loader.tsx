@@ -7,9 +7,7 @@ const Loader = ({ isLoading }: { isLoading: boolean }) => {
             <span className="animating-letter animation-d">D</span>
             <div className="animation-word">FITNESS</div>
         </div>
-    ) : (
-        null
-    );
+    ) : null;
 };
 
 export default Loader;

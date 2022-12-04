@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@mui/system";
 import "@stripe/stripe-js";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ResponsiveAppBar from "./app-bar/AppBar";
 import Home from "./homepage/Home";
 import LoadingIcon from "./Loader";
@@ -14,7 +14,7 @@ const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Router>
+            <BrowserRouter>
                 <ResponsiveAppBar pages={pages} />
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
@@ -30,7 +30,7 @@ const App = () => {
                                         style={{
                                             width: "20%",
                                             height: "20%",
-                                            fontSize: "20px"
+                                            fontSize: "20px",
                                         }}
                                     >
                                         {isLoading ? "Loading..." : "Buy"}
@@ -40,7 +40,7 @@ const App = () => {
                         }
                     ></Route>
                 </Routes>
-            </Router>
+            </BrowserRouter>
         </ThemeProvider>
     );
 };

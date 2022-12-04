@@ -68,12 +68,15 @@
 
 @keyframes resize-container {
     0% {
-        width: 100px; height: 100px;
+        width: 100px;
+        height: 100px;
     }
     50% {
-        width: 100px; height: 100px;
+        width: 100px;
+        height: 100px;
     }
     100% {
-        width: 150px; height: 150px;
+        width: 150px;
+        height: 150px;
     }
 }
