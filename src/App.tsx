@@ -3,12 +3,15 @@ import "@stripe/stripe-js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ResponsiveAppBar from "./app-bar/AppBar";
 import Home from "./homepage/Home";
-import StripeComponent from "./stripe";
+import LoadingIcon from "./Loader";
+import StripeHook from "./stripe";
 import theme from "./theme";
 
 const pages = ["Programs"];
 
 const App = () => {
+    const { isLoading, redirectToCheckout } = StripeHook();
+
     return (
         <ThemeProvider theme={theme}>
             <Router>
@@ -17,7 +20,19 @@ const App = () => {
                     <Route path="/" element={<Home />}></Route>
                     <Route
                         path="/programs"
-                        element={<StripeComponent />}
+                        element={
+                            <>
+                                <LoadingIcon isLoading={isLoading} />
+                                <div>
+                                    <button
+                                        onClick={redirectToCheckout}
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? "Loading..." : "Buy"}
+                                    </button>
+                                </div>
+                            </>
+                        }
                     ></Route>
                 </Routes>
             </Router>

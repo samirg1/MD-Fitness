@@ -3,6 +3,10 @@ import { useState } from "react";
 
 let stripePromise: Promise<Stripe | null> | undefined;
 
+/**
+ * Singleton method to get an instance of Stripe.
+ * @returns The stripe promise to get an instance of Stripe.
+ */
 const getStripe = () => {
     if (stripePromise === undefined) {
         stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY as string);
@@ -10,7 +14,7 @@ const getStripe = () => {
     return stripePromise;
 };
 
-const StripeComponent = () => {
+const StripeHook = () => {
     const [error, setError] = useState<string | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -22,10 +26,13 @@ const StripeComponent = () => {
             },
         ],
         mode: "payment" as "payment" | "subscription" | undefined,
-        successUrl: `${window.location.origin}`, // TODO when payment is successful
-        cancelUrl: `${window.location.origin}`, // TODO when payment is cancelled
+        successUrl: `${window.location.origin}`,
+        cancelUrl: `${window.location.origin}`,
     };
 
+    /**
+     * Redirect the current page to the Stripe checkout endpoint.
+     */
     const redirectToCheckout = async () => {
         setIsLoading(true);
 
@@ -40,13 +47,7 @@ const StripeComponent = () => {
 
     if (error) alert(error);
 
-    return (
-        <div>
-            <button onClick={redirectToCheckout} disabled={isLoading}>
-                {isLoading ? "Loading..." : "Buy"}
-            </button>
-        </div>
-    );
+    return { isLoading, redirectToCheckout };
 };
 
-export default StripeComponent;
+export default StripeHook;

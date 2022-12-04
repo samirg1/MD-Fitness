@@ -23,25 +23,39 @@ const ResponsiveAppBar = ({ pages }: { pages: string[]}) => {
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const navigate = useNavigate();
 
+    /**
+     * Opens the navigation menu
+     * @param event The event that caused this function
+     */
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setAnchorElNav(event.currentTarget);
     };
 
+    /**
+     * Opens the user menu
+     * @param event The event that caused this function
+     */
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setAnchorElUser(event.currentTarget);
     };
 
+    /**
+     * Closes the navigation menu
+     */
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
+    /**
+     * Closes the user menu
+     */
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
 
     /**
      * Changes the current page of the app.
-     * @param {string} page the page to switch to.
+     * @param page the page to switch to.
      */
     const changePage = (page: string) => {
         navigate(`/${page.toLowerCase()}`);
