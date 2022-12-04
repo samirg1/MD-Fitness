@@ -18,16 +18,16 @@ const APP_NAME = "MD FITNESS";
 
 const settings = ["Account", "Logout"];
 
-const ResponsiveAppBar = ({ pages }) => {
-    const [anchorElNav, setAnchorElNav] = useState(null);
-    const [anchorElUser, setAnchorElUser] = useState(null);
+const ResponsiveAppBar = ({ pages }: { pages: string[]}) => {
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const navigate = useNavigate();
 
-    const handleOpenNavMenu = (event) => {
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setAnchorElNav(event.currentTarget);
     };
 
-    const handleOpenUserMenu = (event) => {
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setAnchorElUser(event.currentTarget);
     };
 
@@ -43,7 +43,7 @@ const ResponsiveAppBar = ({ pages }) => {
      * Changes the current page of the app.
      * @param {string} page the page to switch to.
      */
-    const changePage = (page) => {
+    const changePage = (page: string) => {
         navigate(`/${page.toLowerCase()}`);
         handleCloseNavMenu();
     };
@@ -64,7 +64,7 @@ const ResponsiveAppBar = ({ pages }) => {
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
-                            onClick={(e) => handleOpenNavMenu(e)}
+                            onClick={handleOpenNavMenu}
                             color="inherit"
                         >
                             <MenuIcon />
@@ -82,7 +82,7 @@ const ResponsiveAppBar = ({ pages }) => {
                                 horizontal: "left",
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={() => handleCloseNavMenu()}
+                            onClose={handleCloseNavMenu}
                             sx={{
                                 display: { xs: "block", md: "none" },
                             }}
@@ -99,7 +99,7 @@ const ResponsiveAppBar = ({ pages }) => {
                             ))}
                         </Menu>
                     </Box>
-                    <AppBarIconText name={APP_NAME} />
+                    <AppBarIconText large={false} name={APP_NAME} />
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -124,7 +124,7 @@ const ResponsiveAppBar = ({ pages }) => {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton
-                                onClick={(e) => handleOpenUserMenu(e)}
+                                onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
                                 <SettingsIcon sx={{ color: "white" }} />
