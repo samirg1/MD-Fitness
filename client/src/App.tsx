@@ -5,6 +5,7 @@ import ResponsiveAppBar from "./app-bar/AppBar";
 import Home from "./homepage/Home";
 import LoadingIcon from "./Loader";
 import StripeHook from "./stripe";
+import TestComp from "./testComponent";
 import theme from "./theme";
 
 const pages = ["Programs"];
@@ -36,6 +37,7 @@ const App = () => {
                                         {isLoading ? "Loading..." : "Buy"}
                                     </button>
                                 </div>
+                                <TestComp/>
                             </>
                         }
                     ></Route>
