@@ -1,4 +1,4 @@
-const Joi = require('@hapi/joi');
+const Joi = require("@hapi/joi");
 
 const validate = (data, validatingObject) => {
     const schema = Joi.object(data);

@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { mongoConnect } = require("./api/mongoose");
+const { mongoConnect } = require("./mongoose");
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }

@@ -6,6 +6,6 @@ const mongoConnect = (callback) => {
 
 const createModel = (name, schemaObject) => {
     return mongoose.model(name, mongoose.Schema(schemaObject));
-}
+};
 
 module.exports = { mongoConnect, createModel };
