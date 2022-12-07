@@ -136,6 +136,12 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
+                        <Button
+                            sx={{ color: "white" }}
+                            onClick={() => changePage("login-signup")}
+                        >
+                            Login / Signup
+                        </Button>
                         <Tooltip title="Open settings">
                             <IconButton
                                 onClick={handleOpenUserMenu}

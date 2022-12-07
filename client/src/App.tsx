@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ResponsiveAppBar from "./app-bar/AppBar";
 import Home from "./homepage/Home";
 import LoadingIcon from "./Loader";
+import LoginSignup from "./login-signup/LoginSignup";
 import StripeHook from "./stripe";
-import TestComp from "./testComponent";
 import theme from "./theme";
 
 const pages = ["Programs"];
@@ -37,10 +37,10 @@ const App = () => {
                                         {isLoading ? "Loading..." : "Buy"}
                                     </button>
                                 </div>
-                                <TestComp/>
                             </>
                         }
-                    ></Route>
+                    />
+                    <Route path="/login-signup" element={<LoginSignup />} />
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
