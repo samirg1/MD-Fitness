@@ -7,7 +7,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import accountHooks from "../../hooks/accountHooks";
+import useAccount from "../../hooks/useAccount";
 import Loader from "../Loader";
 import Field, { FieldType } from "./Field";
 
@@ -27,7 +27,7 @@ const LoginSignup = ({ setSnackbarMessage }: TLoginSignupProps) => {
     const [loading, setLoading] = useState(false);
     const [loginSignupError, setLoginSignupError] = useState("");
 
-    const { signup, login } = accountHooks();
+    const { signup, login } = useAccount();
 
     useEffect(() => setLoginSignupError(""), [name, email, password]);
 

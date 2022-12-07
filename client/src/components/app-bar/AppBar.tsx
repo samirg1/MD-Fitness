@@ -1,5 +1,6 @@
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import SettingsIcon from "@mui/icons-material/Settings";
+import { Avatar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -10,18 +11,33 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthProvider";
 import AppBarIconText from "./AppBarIconText";
+import permissions from "../../config/permissions_list";
 
 const APP_NAME = "MD FITNESS";
 
-const settings = ["Account", "Logout"];
+enum AccountAction {
+    accountPage = "Account",
+    logout = "Logout",
+    loginSignup = "Login / Signup",
+    admin = "Admin"
+}
 
 const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const navigate = useNavigate();
+    const { authentication } = useContext(AuthContext);
+
+    const settings: string[] = [];
+    if (authentication) {
+        settings.push(AccountAction.accountPage, AccountAction.logout);
+        authentication.permissions.includes(permissions.admin) && settings.push(AccountAction.admin);
+    }
+    else settings.push(AccountAction.loginSignup);
 
     /**
      * Opens the navigation menu
@@ -60,6 +76,13 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const changePage = (page: string) => {
         navigate(`/${page.toLowerCase()}`);
         handleCloseNavMenu();
+    };
+
+    const handleSettingClicked = (setting: string) => {
+        switch (setting) {
+            case AccountAction.loginSignup:
+                changePage("login-signup");
+        }
         handleCloseUserMenu();
     };
 
@@ -137,12 +160,18 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title="Open account settings">
                             <IconButton
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
-                                <SettingsIcon sx={{ color: "white" }} />
+                                {authentication ? (
+                                    <Avatar>{authentication.name[0]}</Avatar>
+                                ) : (
+                                    <AccountCircleIcon
+                                        sx={{ color: "white" }}
+                                    />
+                                )}
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -164,21 +193,15 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                             {settings.map((setting) => (
                                 <MenuItem
                                     key={setting}
-                                    onClick={handleCloseUserMenu}
+                                    onClick={() =>
+                                        handleSettingClicked(setting)
+                                    }
                                 >
                                     <Typography textAlign="center">
                                         {setting}
                                     </Typography>
                                 </MenuItem>
                             ))}
-                            <MenuItem
-                                key="login-signup"
-                                onClick={() => changePage("login-signup")}
-                            >
-                                <Typography textAlign="center">
-                                    Login / Sign Up
-                                </Typography>
-                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>

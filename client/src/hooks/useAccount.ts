@@ -1,5 +1,6 @@
+import { useContext } from "react";
 import axios from "../api/axios";
-
+import AuthContext from "../context/AuthProvider";
 
 const SIGNUP_URL = "/user/register";
 const LOGIN_URL = "user/login";
@@ -15,7 +16,9 @@ type TSignup = {
     password: string;
 }
 
-const accountHooks = () => {
+const useAccount = () => {
+    const { setAuthentication } = useContext(AuthContext);
+
     const signup = async (payload: TSignup) => {
         try {
             const response = await axios.post(
@@ -44,7 +47,8 @@ const accountHooks = () => {
                     withCredentials: true,
                 }
             );
-            console.log(JSON.stringify(response.data));
+            const { name, email, accessToken, permissions } = response?.data;
+            setAuthentication({ name, email, permissions, accessToken });
         } catch (error: any) {
             if (!error?.message) return "server response lost";
             return error.response.data;
@@ -55,4 +59,4 @@ const accountHooks = () => {
     return { signup, login };
 };
 
-export default accountHooks;
+export default useAccount;

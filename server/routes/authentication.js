@@ -41,7 +41,12 @@ router.post("/login", async (req, res) => {
     const token = jsonwebtoken.sign({ name: user.name, email: user.email }, process.env.TOKEN_SECRET);
     res.header('authentication-token', token);
 
-    res.send("Logged in as " + user.name);
+    res.send({
+        name: user.name,
+        email: user.email,
+        accessToken: token,
+        permissions: user.permissions
+    });
 });
 
 module.exports = router;
