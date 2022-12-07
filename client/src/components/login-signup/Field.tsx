@@ -37,7 +37,11 @@ const Field = ({ name, value, setValue, disabled, type }: TField) => {
         <>
             <Typography>{name}</Typography>
             <FormControl variant="outlined">
-                <Tooltip title={fieldTooltips[type]} enterTouchDelay={0} leaveTouchDelay={5000}>
+                <Tooltip
+                    title={fieldTooltips[type]}
+                    enterTouchDelay={0}
+                    leaveTouchDelay={5000}
+                >
                     <OutlinedInput
                         disabled={disabled}
                         type={

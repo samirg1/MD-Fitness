@@ -6,10 +6,18 @@ import IconButton from "@mui/material/IconButton";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import accountHooks from "../../hooks/accountHooks";
 import Loader from "../Loader";
 import Field, { FieldType } from "./Field";
 
-const LoginSignup = () => {
+type TLoginSignupProps = {
+    setSnackbarMessage: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const LoginSignup = ({ setSnackbarMessage }: TLoginSignupProps) => {
+    const navigate = useNavigate();
+
     const [loggingIn, setLoggingIn] = useState(true);
 
     const [name, setName] = useState("");
@@ -19,17 +27,45 @@ const LoginSignup = () => {
     const [loading, setLoading] = useState(false);
     const [loginSignupError, setLoginSignupError] = useState("");
 
+    const { signup } = accountHooks();
+
     useEffect(() => setLoginSignupError(""), [name, email, password]);
 
-    const toggleLoggingIn = () => {
-        setLoggingIn((previous) => !previous);
+    const resetFields = () => {
         setName("");
         setEmail("");
         setPassword("");
     };
 
+    const toggleLoggingIn = () => {
+        setLoggingIn((previous) => !previous);
+        resetFields();
+    };
+
     const submit = async () => {
         setLoading(true);
+        let responseError = "";
+
+        if (loggingIn) {
+        } else {
+            responseError = await signup({
+                name: name,
+                email: email,
+                password: password,
+            });
+            if (responseError.startsWith('"password" with value'))
+                setLoginSignupError("invalid password");
+            else setLoginSignupError(responseError);
+        }
+
+        setLoading(false);
+        if (!responseError) {
+            resetFields();
+            navigate(-1);
+            setSnackbarMessage(
+                "Successfully " + (loggingIn ? "logged in" : "signed up")
+            );
+        }
     };
 
     return (
