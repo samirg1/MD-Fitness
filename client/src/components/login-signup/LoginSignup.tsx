@@ -17,12 +17,12 @@ const LoginSignup = () => {
     const [fieldsDisabled, setFieldsDisabled] = useState(false);
 
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("invalid password");
+    const [loginSignupError, setLoginSignupError] = useState("");
 
-    useEffect(() => setError(""), [name, email, password]);
+    useEffect(() => setLoginSignupError(""), [name, email, password]);
 
     const toggleLoggingIn = () => {
-        setLoggingIn((prev) => !prev);
+        setLoggingIn((previous) => !previous);
         setName("");
         setEmail("");
         setPassword("");
@@ -89,9 +89,9 @@ const LoginSignup = () => {
                             <ArrowCircleRightIcon />
                         </IconButton>
                     </Grid>
-                    {error ? (
+                    {loginSignupError ? (
                         <Grid item xs={12}>
-                            <Alert severity="error">{error}</Alert>
+                            <Alert severity="error">{loginSignupError}</Alert>
                         </Grid>
                     ) : null}
                 </Grid>

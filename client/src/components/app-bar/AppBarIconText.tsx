@@ -1,7 +1,7 @@
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-const AppIcon = require("../img/icon.jpg");
+const AppIcon = require("../../img/icon.jpg");
 
 const AppBarIconText = ({ large, name }: { large: boolean; name: string }) => {
     return (

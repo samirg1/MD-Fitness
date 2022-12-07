@@ -1,11 +1,11 @@
 import { ThemeProvider } from "@mui/system";
 import "@stripe/stripe-js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ResponsiveAppBar from "./app-bar/AppBar";
-import Home from "./homepage/Home";
-import LoadingIcon from "./Loader";
-import LoginSignup from "./login-signup/LoginSignup";
-import StripeHook from "./stripe";
+import StripeHook from "./api/stripe";
+import ResponsiveAppBar from "./components/app-bar/AppBar";
+import Home from "./components/homepage/Home";
+import LoadingIcon from "./components/Loader";
+import LoginSignup from "./components/login-signup/LoginSignup";
 import theme from "./theme";
 
 const pages = ["Programs"];
