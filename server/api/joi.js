@@ -18,12 +18,12 @@ const password = Joi.string()
     );
 
 // validating functions
-const registerValidate = (registerObject) => {
+const validateRegister = (registerObject) => {
     return validate({ name, email, password }, registerObject);
 };
 
-const loginValidate = (loginObject) => {
+const validateLogin = (loginObject) => {
     return validate({ email, password }, loginObject);
 };
 
-module.exports = { registerValidate, loginValidate };
+module.exports = { validateRegister, validateLogin };

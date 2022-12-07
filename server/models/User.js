@@ -1,5 +1,5 @@
 const { createModel } = require("../api/mongoose");
-const { registerValidate, loginValidate } = require("../api/joi");
+const { validateRegister, validateLogin } = require("../api/joi");
 
 const Model = createModel(
     "User",
@@ -32,6 +32,6 @@ const Model = createModel(
     }
 );
 
-Object.assign(Model, { registerValidate, loginValidate });
+Object.assign(Model, { validateRegister, validateLogin });
 
 module.exports = Model;
