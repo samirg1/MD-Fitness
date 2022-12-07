@@ -1,1 +1,0 @@
-# MD-Fitness Web Application
