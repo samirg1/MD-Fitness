@@ -17,7 +17,6 @@ type TSignup = {
 
 const accountHooks = () => {
     const signup = async (payload: TSignup) => {
-        let signupError = '';
         try {
             const response = await axios.post(
                 SIGNUP_URL,
@@ -29,13 +28,31 @@ const accountHooks = () => {
             );
             console.log(JSON.stringify(response));
         } catch (error: any) {
-            if (!error?.message) signupError = "server response lost";
-            else signupError = error.response.data;
+            if (!error?.message) return "server response lost";
+            return error.response.data;
         }
-        return signupError;
+        return '';
     }
 
-    return { signup };
+    const login = async (payload: TLogin) => {
+        try {
+            const response = await axios.post(
+                LOGIN_URL,
+                JSON.stringify(payload),
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
+            );
+            console.log(JSON.stringify(response.data));
+        } catch (error: any) {
+            if (!error?.message) return "server response lost";
+            return error.response.data;
+        }
+        return '';
+    };
+
+    return { signup, login };
 };
 
 export default accountHooks;

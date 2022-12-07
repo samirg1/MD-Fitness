@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    const errorMessage = "invalid email and/or password"
+    const errorMessage = "invalid email and/or password";
 
     if (User.validateLogin(req.body)) return res.status(400).send(errorMessage);
 
@@ -39,7 +39,7 @@ router.post("/login", async (req, res) => {
     if (!validPassword) return res.status(400).send(errorMessage);
 
     const token = jsonwebtoken.sign({ name: user.name, email: user.email }, process.env.TOKEN_SECRET);
-    res.header('authentication-token', token).send(token);
+    res.header('authentication-token', token);
 
     res.send("Logged in as " + user.name);
 });

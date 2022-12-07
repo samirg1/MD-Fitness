@@ -27,7 +27,7 @@ const LoginSignup = ({ setSnackbarMessage }: TLoginSignupProps) => {
     const [loading, setLoading] = useState(false);
     const [loginSignupError, setLoginSignupError] = useState("");
 
-    const { signup } = accountHooks();
+    const { signup, login } = accountHooks();
 
     useEffect(() => setLoginSignupError(""), [name, email, password]);
 
@@ -47,16 +47,21 @@ const LoginSignup = ({ setSnackbarMessage }: TLoginSignupProps) => {
         let responseError = "";
 
         if (loggingIn) {
+            responseError = await login({
+                email: email,
+                password: password,
+            });
         } else {
             responseError = await signup({
                 name: name,
                 email: email,
                 password: password,
             });
-            if (responseError.startsWith('"password" with value'))
-                setLoginSignupError("invalid password");
-            else setLoginSignupError(responseError);
         }
+
+        if (responseError.startsWith('"password" with value'))
+            setLoginSignupError("invalid password");
+        else setLoginSignupError(responseError);
 
         setLoading(false);
         if (!responseError) {
