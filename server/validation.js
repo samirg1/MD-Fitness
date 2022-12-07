@@ -7,7 +7,7 @@ const validate = (data, validatingObject) => {
 };
 
 // the validating fields
-const name = Joi.string().required().max(255);
+const name = Joi.string().required().max(50);
 const email = Joi.string().required().email();
 const password = Joi.string()
     .required()

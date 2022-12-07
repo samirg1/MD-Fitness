@@ -5,7 +5,7 @@ const Model = createModel("User", {
     name: {
         type: String,
         required: true,
-        max: 255,
+        max: 50,
     },
     email: {
         type: String,
@@ -17,7 +17,7 @@ const Model = createModel("User", {
         type: String,
         required: true,
         max: 1024,
-        min: 6,
+        min: 8,
     },
     dateCreated: {
         type: Date,

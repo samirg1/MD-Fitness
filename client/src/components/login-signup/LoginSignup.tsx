@@ -3,10 +3,11 @@ import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
 import Loader from "../Loader";
 import Field, { FieldType } from "./Field";
-import LoginSignupButton from "./LoginSignupButton";
 
 const LoginSignup = () => {
     const [loggingIn, setLoggingIn] = useState(true);
@@ -14,7 +15,6 @@ const LoginSignup = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [fieldsDisabled, setFieldsDisabled] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [loginSignupError, setLoginSignupError] = useState("");
@@ -28,8 +28,7 @@ const LoginSignup = () => {
         setPassword("");
     };
 
-    const submit = () => {
-        setFieldsDisabled(true);
+    const submit = async () => {
         setLoading(true);
     };
 
@@ -46,16 +45,20 @@ const LoginSignup = () => {
             >
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <LoginSignupButton
-                            text="Login"
-                            disabled={loggingIn}
-                            onClick={toggleLoggingIn}
-                        />
-                        <LoginSignupButton
-                            text="Signup"
-                            disabled={!loggingIn}
-                            onClick={toggleLoggingIn}
-                        />
+                        <ToggleButtonGroup
+                            color="primary"
+                            value={loggingIn ? "login" : "signup"}
+                            exclusive
+                            onChange={toggleLoggingIn}
+                            disabled={loading}
+                        >
+                            <ToggleButton value="login" disabled={loggingIn}>
+                                Login
+                            </ToggleButton>
+                            <ToggleButton value="signup" disabled={!loggingIn}>
+                                Sign Up
+                            </ToggleButton>
+                        </ToggleButtonGroup>
                     </Grid>
                     {!loggingIn ? (
                         <Grid item xs={12}>
@@ -63,7 +66,7 @@ const LoginSignup = () => {
                                 name="Enter name:"
                                 value={name}
                                 setValue={setName}
-                                disabled={fieldsDisabled}
+                                disabled={loading}
                                 type={FieldType.text}
                             />
                         </Grid>
@@ -73,7 +76,7 @@ const LoginSignup = () => {
                             name="Enter email:"
                             value={email}
                             setValue={setEmail}
-                            disabled={fieldsDisabled}
+                            disabled={loading}
                             type={FieldType.email}
                         />
                     </Grid>
@@ -82,7 +85,7 @@ const LoginSignup = () => {
                             name="Enter password:"
                             value={password}
                             setValue={setPassword}
-                            disabled={fieldsDisabled}
+                            disabled={loading}
                             type={FieldType.password}
                         />
                         <IconButton onClick={submit} disabled={loading}>

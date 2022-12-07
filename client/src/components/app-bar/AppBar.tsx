@@ -60,6 +60,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const changePage = (page: string) => {
         navigate(`/${page.toLowerCase()}`);
         handleCloseNavMenu();
+        handleCloseUserMenu();
     };
 
     return (
@@ -136,12 +137,6 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Button
-                            sx={{ color: "white" }}
-                            onClick={() => changePage("login-signup")}
-                        >
-                            Login / Signup
-                        </Button>
                         <Tooltip title="Open settings">
                             <IconButton
                                 onClick={handleOpenUserMenu}
@@ -176,6 +171,14 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                                     </Typography>
                                 </MenuItem>
                             ))}
+                            <MenuItem
+                                key="login-signup"
+                                onClick={() => changePage("login-signup")}
+                            >
+                                <Typography textAlign="center">
+                                    Login / Sign Up
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>
