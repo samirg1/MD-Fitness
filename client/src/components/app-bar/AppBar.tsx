@@ -1,6 +1,7 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import InstagramIcon from "@mui/icons-material/Instagram";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Avatar } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -19,6 +20,10 @@ import AppBarIconText from "./AppBarIconText";
 import LogoutPopup from "./LogoutPopup";
 
 const APP_NAME = "MD FITNESS";
+
+const LINKS = {
+    'Instagram': "https://instagram.com/mdonaldfit/",
+}
 
 enum AccountAction {
     accountPage = "Account",
@@ -91,6 +96,10 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
         handleCloseUserMenu();
     };
 
+    const openLink = (link: string) => {
+        window.open(link, "_blank");
+    };
+
     return (
         <AppBar position="static" color="primary">
             <LogoutPopup
@@ -108,7 +117,6 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                     >
                         <IconButton
                             size="large"
-                            aria-label="account of current user"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
@@ -169,6 +177,11 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Open Instagram account">
+                            <IconButton onClick={() => openLink(LINKS.Instagram)}>
+                                <InstagramIcon sx={{ color: "white" }} />
+                            </IconButton>
+                        </Tooltip>
                         <Tooltip title="Open account settings">
                             <IconButton
                                 onClick={handleOpenUserMenu}
