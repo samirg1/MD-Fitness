@@ -1,15 +1,15 @@
-import axios from "../api/axios";
+import { postRequest } from "../api/server";
 import useAuthentication from "./useAuthentication";
 
 const SIGNUP_URL = "/user/register";
 const LOGIN_URL = "user/login";
 
-type TLogin = {
+export type TLogin = {
     email: string;
     password: string;
 }
 
-type TSignup = {
+export type TSignup = {
     name: string;
     email: string;
     password: string;
@@ -19,40 +19,15 @@ const useAccount = () => {
     const { setAuthentication } = useAuthentication();
 
     const signup = async (payload: TSignup) => {
-        try {
-            const response = await axios.post(
-                SIGNUP_URL,
-                JSON.stringify(payload),
-                {
-                    headers: { "Content-Type": "application/json" },
-                    withCredentials: true,
-                }
-            );
+        return await postRequest(SIGNUP_URL, payload, (response) => {
             console.log(JSON.stringify(response));
-        } catch (error: any) {
-            if (!error?.message) return "server response lost";
-            return error.response.data;
-        }
-        return '';
+        });
     }
 
     const login = async (payload: TLogin) => {
-        try {
-            const response = await axios.post(
-                LOGIN_URL,
-                JSON.stringify(payload),
-                {
-                    headers: { "Content-Type": "application/json" },
-                    withCredentials: true,
-                }
-            );
-            const { name, email, accessToken, permissions } = response?.data;
-            setAuthentication({ name, email, permissions, accessToken });
-        } catch (error: any) {
-            if (!error?.message) return "server response lost";
-            return error.response.data;
-        }
-        return '';
+        return await postRequest(LOGIN_URL, payload, (response) => {
+            setAuthentication(response.data);
+        });
     };
 
     const logout = () => setAuthentication(null);

@@ -1,13 +1,18 @@
 import { createContext, useState } from "react";
 
+type TSnackBarOptions = {
+    message: string;
+    type: "error" | "warning" | "info" | "success";
+};
+
 interface TSnackBarContext {
-    message: string | null;
-    setMessage: React.Dispatch<React.SetStateAction<string | null>>;
+    options: TSnackBarOptions | null;
+    setOptions: React.Dispatch<React.SetStateAction<TSnackBarOptions | null>>;
 }
 
 const SnackBarContext = createContext<TSnackBarContext>({
-    message: null,
-    setMessage: () => {},
+    options: null,
+    setOptions: () => {},
 });
 
 type TChildren = {
@@ -15,10 +20,10 @@ type TChildren = {
 };
 
 export const SnackBarProvider = ({ children }: TChildren) => {
-    const [message, setMessage] = useState<string | null>(null);
+    const [options, setOptions] = useState<TSnackBarOptions | null>(null);
 
     return (
-        <SnackBarContext.Provider value={{ message, setMessage }}>
+        <SnackBarContext.Provider value={{ options, setOptions }}>
             {children}
         </SnackBarContext.Provider>
     );

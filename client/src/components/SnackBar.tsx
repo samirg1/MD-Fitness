@@ -1,24 +1,24 @@
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-import { useContext } from "react";
-import SnackBarContext from "../context/SnackBarProvider";
+import useSnackBar from "../hooks/useSnackBar";
 
 const SnackBar = () => {
-    const { message, setMessage } = useContext(SnackBarContext);
+    const { options, setOptions } = useSnackBar();
 
     return (
         <>
             <Snackbar
-                open={message !== null}
+                open={options !== null}
                 autoHideDuration={3000}
-                onClose={() => setMessage(null)}
+                onClose={() => setOptions(null)}
                 anchorOrigin={{
                     vertical: "top",
                     horizontal: "center",
                 }}
             >
-                <Alert severity="success" sx={{ width: "100%" }}>
-                    {message}
+
+                <Alert severity={options?.type} sx={{ width: "100%" }}>
+                    {options?.message}
                 </Alert>
             </Snackbar>
         </>

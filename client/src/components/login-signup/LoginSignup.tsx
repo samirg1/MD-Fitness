@@ -5,16 +5,19 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import SnackBarContext from "../../context/SnackBarProvider";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation  } from "react-router-dom";
 import useAccount from "../../hooks/useAccount";
+import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
 import Field, { FieldType } from "./Field";
 
 const LoginSignup = () => {
     const navigate = useNavigate();
-    const { setMessage: setSnackBarMessage } = useContext(SnackBarContext);
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+    const { setOptions: setSnackBarOptions } = useSnackBar();
 
     const [loggingIn, setLoggingIn] = useState(true);
 
@@ -64,10 +67,11 @@ const LoginSignup = () => {
         setLoading(false);
         if (!responseError) {
             resetFields();
-            navigate(-1);
-            setSnackBarMessage(
-                "Successfully " + (loggingIn ? "logged in" : "signed up")
-            );
+            navigate(from, { replace: true });
+            setSnackBarOptions({
+                message: "Successfully " + (loggingIn ? "logged in" : "signed up"),
+                type: "success"
+            });
         }
     };
 

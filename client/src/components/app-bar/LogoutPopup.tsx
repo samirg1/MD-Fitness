@@ -3,9 +3,8 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-import { useContext } from "react";
-import SnackBarContext from "../../context/SnackBarProvider";
 import useAccount from "../../hooks/useAccount";
+import useSnackBar from "../../hooks/useSnackBar";
 
 const popupStyle = {
     position: "absolute" as "absolute",
@@ -26,11 +25,14 @@ type TLogoutPopupProps = {
 
 const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
     const { logout } = useAccount();
-    const { setMessage: setSnackBarMessage } = useContext(SnackBarContext);
+    const { setOptions: setSnackBarMessage } = useSnackBar();
 
     const handleLogout = () => {
         logout();
-        setSnackBarMessage("Logout successful");
+        setSnackBarMessage({
+            message: "Logout successful",
+            type: "success"
+        });
         handleClose();
     };
 
