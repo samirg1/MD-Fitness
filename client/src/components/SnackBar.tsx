@@ -1,18 +1,17 @@
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import { useContext } from "react";
+import SnackBarContext from "../context/SnackBarProvider";
 
-type TSnackBar = {
-    message: string;
-    setMessage: React.Dispatch<React.SetStateAction<string>>;
-};
+const SnackBar = () => {
+    const { message, setMessage } = useContext(SnackBarContext);
 
-const SnackBar = ({ message, setMessage }: TSnackBar) => {
     return (
         <>
             <Snackbar
                 open={Boolean(message)}
                 autoHideDuration={3000}
-                onClose={() => setMessage("")}
+                onClose={() => setMessage(null)}
                 anchorOrigin={{
                     vertical: "top",
                     horizontal: "center",

@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
 import AppBarIconText from "./AppBarIconText";
 import permissions from "../../config/permissions_list";
+import LogoutPopup from "./LogoutPopup";
 
 const APP_NAME = "MD FITNESS";
 
@@ -29,6 +30,7 @@ enum AccountAction {
 const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const [logoutPopupOpen, setLogoutPopupOpen] = useState(false);
     const navigate = useNavigate();
     const { authentication } = useContext(AuthContext);
 
@@ -82,12 +84,16 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
         switch (setting) {
             case AccountAction.loginSignup:
                 changePage("login-signup");
+                break;
+            case AccountAction.logout:
+                setLogoutPopupOpen(true);
         }
         handleCloseUserMenu();
     };
 
     return (
         <AppBar position="static" color="primary">
+            <LogoutPopup open={logoutPopupOpen} handleClose={() => setLogoutPopupOpen(false)} />
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AppBarIconText large name={APP_NAME} />

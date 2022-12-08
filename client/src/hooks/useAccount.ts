@@ -56,7 +56,11 @@ const useAccount = () => {
         return '';
     };
 
-    return { signup, login };
+    const logout = () => {
+        setAuthentication(null);
+    };  
+
+    return { signup, login, logout };
 };
 
 export default useAccount;
