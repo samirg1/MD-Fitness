@@ -9,7 +9,7 @@ const SnackBar = () => {
     return (
         <>
             <Snackbar
-                open={Boolean(message)}
+                open={message !== null}
                 autoHideDuration={3000}
                 onClose={() => setMessage(null)}
                 anchorOrigin={{

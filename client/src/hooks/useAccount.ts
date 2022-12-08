@@ -56,10 +56,8 @@ const useAccount = () => {
         return '';
     };
 
-    const logout = () => {
-        setAuthentication(null);
-    };  
-
+    const logout = () => setAuthentication(null);
+     
     return { signup, login, logout };
 };
 

@@ -13,9 +13,9 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import permissions from "../../config/permissions_list";
 import AuthContext from "../../context/AuthProvider";
 import AppBarIconText from "./AppBarIconText";
-import permissions from "../../config/permissions_list";
 import LogoutPopup from "./LogoutPopup";
 
 const APP_NAME = "MD FITNESS";
@@ -24,7 +24,7 @@ enum AccountAction {
     accountPage = "Account",
     logout = "Logout",
     loginSignup = "Login / Signup",
-    admin = "Admin"
+    admin = "Admin",
 }
 
 const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
@@ -37,9 +37,9 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const settings: string[] = [];
     if (authentication) {
         settings.push(AccountAction.accountPage, AccountAction.logout);
-        authentication.permissions.includes(permissions.admin) && settings.push(AccountAction.admin);
-    }
-    else settings.push(AccountAction.loginSignup);
+        authentication.permissions.includes(permissions.admin) &&
+            settings.push(AccountAction.admin);
+    } else settings.push(AccountAction.loginSignup);
 
     /**
      * Opens the navigation menu
@@ -93,7 +93,10 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
 
     return (
         <AppBar position="static" color="primary">
-            <LogoutPopup open={logoutPopupOpen} handleClose={() => setLogoutPopupOpen(false)} />
+            <LogoutPopup
+                open={logoutPopupOpen}
+                handleClose={() => setLogoutPopupOpen(false)}
+            />
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AppBarIconText large name={APP_NAME} />

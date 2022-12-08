@@ -14,7 +14,7 @@ const getStripe = (): Promise<Stripe | null> => {
     return stripePromise;
 };
 
-const StripeHook = () => {
+const useStripe = () => {
     const [error, setError] = useState<string | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -50,4 +50,4 @@ const StripeHook = () => {
     return { isLoading, redirectToCheckout };
 };
 
-export default StripeHook;
+export default useStripe;
