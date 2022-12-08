@@ -1,6 +1,5 @@
-import { useContext } from "react";
 import axios from "../api/axios";
-import AuthContext from "../context/AuthProvider";
+import useAuthentication from "./useAuthentication";
 
 const SIGNUP_URL = "/user/register";
 const LOGIN_URL = "user/login";
@@ -17,7 +16,7 @@ type TSignup = {
 }
 
 const useAccount = () => {
-    const { setAuthentication } = useContext(AuthContext);
+    const { setAuthentication } = useAuthentication();
 
     const signup = async (payload: TSignup) => {
         try {

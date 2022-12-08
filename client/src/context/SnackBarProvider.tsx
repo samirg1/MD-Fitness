@@ -10,11 +10,11 @@ const SnackBarContext = createContext<TSnackBarContext>({
     setMessage: () => {},
 });
 
-export const SnackBarProvider = ({
-    children,
-}: {
+type TChildren = {
     children: JSX.Element[] | JSX.Element;
-}) => {
+};
+
+export const SnackBarProvider = ({ children }: TChildren) => {
     const [message, setMessage] = useState<string | null>(null);
 
     return (

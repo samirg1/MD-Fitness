@@ -19,11 +19,11 @@ const AuthContext = createContext<TAuthenticationContext>({
     setAuthentication: () => {},
 });
 
-export const AuthProvider = ({
-    children,
-}: {
+type TChildren = {
     children: JSX.Element[] | JSX.Element;
-}) => {
+};
+
+export const AuthProvider = ({ children }: TChildren) => {
     const [authentication, setAuthentication] =
         useState<TAuthentication | null>(null);
 

@@ -1,8 +1,8 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MenuIcon from "@mui/icons-material/Menu";
-import Avatar from "@mui/material/Avatar";
 import AppBar from "@mui/material/AppBar";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -12,18 +12,18 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import permissions from "../../config/permissions_list";
-import AuthContext from "../../context/AuthProvider";
+import useAuthentication from "../../hooks/useAuthentication";
 import AppBarIconText from "./AppBarIconText";
 import LogoutPopup from "./LogoutPopup";
 
 const APP_NAME = "MD FITNESS";
 
 const LINKS = {
-    'Instagram': "https://instagram.com/mdonaldfit/",
-}
+    Instagram: "https://instagram.com/mdonaldfit/",
+};
 
 enum AccountAction {
     accountPage = "Account",
@@ -37,7 +37,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const [logoutPopupOpen, setLogoutPopupOpen] = useState(false);
     const navigate = useNavigate();
-    const { authentication } = useContext(AuthContext);
+    const { authentication } = useAuthentication();
 
     const settings: string[] = [];
     if (authentication) {
@@ -92,6 +92,15 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                 break;
             case AccountAction.logout:
                 setLogoutPopupOpen(true);
+                break;
+            case AccountAction.admin:
+                changePage("admin");
+                break;
+            case AccountAction.accountPage:
+                changePage("account");
+                break;
+            default:
+                changePage("not-a-real-page"); // will send to page not found
         }
         handleCloseUserMenu();
     };
@@ -178,7 +187,9 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open Instagram account">
-                            <IconButton onClick={() => openLink(LINKS.Instagram)}>
+                            <IconButton
+                                onClick={() => openLink(LINKS.Instagram)}
+                            >
                                 <InstagramIcon sx={{ color: "white" }} />
                             </IconButton>
                         </Tooltip>
