@@ -2,11 +2,6 @@ import { AxiosResponse } from "axios";
 import { TLogin, TSignup } from "../hooks/useAccount";
 import axios from "./axios";
 
-export enum RequestTypes {
-    POST = 'POST',
-    GET = 'GET',
-}
-
 export const postRequest = async (url: string, payload: TLogin | TSignup, callback: (response: AxiosResponse) => void): Promise<string> => {
     try {
         const response = await axios.post(
@@ -17,6 +12,21 @@ export const postRequest = async (url: string, payload: TLogin | TSignup, callba
                 withCredentials: true,
             }
         );
+        callback(response);
+    } catch (error: any) {
+        if (!error?.message) return "server response lost";
+        if (!error.response) return "no server response";
+        return error.response.data;
+    }
+    return '';
+}
+
+export const getRequest = async (url: string, signal: AbortSignal, callback: (response: AxiosResponse) => void): Promise<string> => {
+    try {
+        const response = await axios.get(
+            url,
+            { signal: signal, withCredentials: true },
+        )
         callback(response);
     } catch (error: any) {
         if (!error?.message) return "server response lost";

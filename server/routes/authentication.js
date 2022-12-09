@@ -35,17 +35,36 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).send(errorMessage);
 
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    const validPassword = await bcrypt.compare(
+        req.body.password,
+        user.password
+    );
     if (!validPassword) return res.status(400).send(errorMessage);
 
-    const token = jsonwebtoken.sign({ name: user.name, email: user.email }, process.env.TOKEN_SECRET);
-    res.header('authentication-token', token);
+    const accessToken = jsonwebtoken.sign(
+        { email: user.email, permissions: user.permissions },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "10s" }
+    );
+    const refreshToken = jsonwebtoken.sign(
+        { email: user.email, permissions: user.permissions },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: "30s" }
+    );
+
+    res.cookie("jwt", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 24 * 60 * 60 * 1000,
+    });
+    res.header("authentication-token", accessToken);
 
     res.send({
         name: user.name,
         email: user.email,
-        accessToken: token,
-        permissions: user.permissions
+        accessToken: accessToken,
+        permissions: user.permissions,
     });
 });
 

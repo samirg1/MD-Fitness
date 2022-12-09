@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-type TAuthentication = {
+export type TAuthentication = {
     name: string;
     email: string;
     permissions: number[];
