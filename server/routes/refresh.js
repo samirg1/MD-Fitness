@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
                 process.env.TOKEN_SECRET,
                 { expiresIn: "10s" }
             );
-            res.json({ permissions, accessToken });
+            res.json({ permissions, accessToken, name: foundUser.name });
         }
     );
 });

@@ -12,7 +12,12 @@ const useRefreshToken = () => {
         const accessToken = response.data.accessToken;
         setAuthentication((prev) => {
             console.log("access token refreshed");
-            return { ...prev, accessToken: accessToken } as TAuthentication;
+            return {
+                ...prev,
+                name: response.data.name,
+                permissions: response.data.permissions,
+                accessToken: accessToken
+            } as TAuthentication;
         });
         return accessToken;
     }
