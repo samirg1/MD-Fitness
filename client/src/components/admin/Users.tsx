@@ -7,6 +7,9 @@ import useSnackBar from "../../hooks/useSnackBar";
 
 const USERS_URL = "/users";
 
+/**
+ * Type of user that is returned from database.
+ */
 type TUsers = {
     _id: string;
     name: string;
@@ -15,14 +18,19 @@ type TUsers = {
     permissions: number[];
 };
 
+/**
+ * Users component for displaying the current users of the application in the database.
+ */
 const Users = () => {
     const [users, setUsers] = useState<TUsers[]>([]);
+
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
     const { setAuthentication } = useAuthentication();
     const { setOptions: setSnackBarOptions } = useSnackBar();
 
+    // get users with a private request
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();

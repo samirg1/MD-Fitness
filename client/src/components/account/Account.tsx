@@ -1,5 +1,8 @@
 import useAuthentication from "../../hooks/useAuthentication";
 
+/**
+ * Main page for the user's account and profile.
+ */
 const Account = () => {
     const { authentication } = useAuthentication();
 

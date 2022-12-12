@@ -1,6 +1,8 @@
 import Users from "./Users";
 
-
+/**
+ * Main page for the admin interface.
+ */
 const Admin = () => {
     return (
         <div>
