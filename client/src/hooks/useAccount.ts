@@ -24,8 +24,12 @@ const useAccount = () => {
     const navigate = useNavigate();
 
     const signup = async (payload: TSignup) => {
-        return await postRequest(SIGNUP_URL, payload, (response) => {
-            console.log(JSON.stringify(response));
+        const signupResponse = await postRequest(SIGNUP_URL, payload, () => {});
+        
+        if (signupResponse) return signupResponse;
+        return await login({
+            email: payload.email,
+            password: payload.password
         });
     }
 

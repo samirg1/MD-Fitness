@@ -11,7 +11,6 @@ const useRefreshToken = () => {
         });
         const accessToken = response.data.accessToken;
         setAuthentication((prev) => {
-            console.log("access token refreshed");
             return {
                 ...prev,
                 name: response.data.name,
