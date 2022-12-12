@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const corsOptions = require('./config/corsOptions');
 const { mongoConnect } = require("./mongoose");
+const { sendConfirmationEmail } = require("./mailer");
 const credentials = require('./middles/credentials');
 const cookieParser = require('cookie-parser');
 if (process.env.NODE_ENV !== "production") {

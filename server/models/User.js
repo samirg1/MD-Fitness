@@ -27,6 +27,10 @@ const Model = createModel("User", {
         type: Array,
         default: [1],
     },
+    activated: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 Object.assign(Model, { validateRegister, validateLogin });

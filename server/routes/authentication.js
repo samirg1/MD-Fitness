@@ -34,6 +34,7 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).send(errorMessage);
+    if (!user.activated) return res.status(400).send("Account has not been activated, please check your email");
 
     const validPassword = await bcrypt.compare(
         req.body.password,
@@ -71,8 +72,24 @@ router.post("/login", async (req, res) => {
 router.post("/logout", async (req, res) => {
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(204);
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
     res.sendStatus(204);
 });
+
+router.post("/confirmEmail/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await User.findOne({ _id: id });
+        if (!user) return res.status(400).send("Specified user not found");
+        user.activated = true;
+        await user.save();
+    } catch (error) {
+        return res.status(400).send("Specified user not found");
+    }
+
+    res.sendStatus(204);
+});
+
+router.use('/confirmation', require('./confirmationEmail'));
 
 module.exports = router;

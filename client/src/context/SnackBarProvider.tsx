@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 type TSnackBarOptions = {
     message: string;
     type: "error" | "warning" | "info" | "success";
+    duration?: number;
 };
 
 interface TSnackBarContext {

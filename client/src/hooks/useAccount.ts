@@ -6,6 +6,7 @@ import useSnackBar from "./useSnackBar";
 const SIGNUP_URL = "/user/register";
 const LOGIN_URL = "/user/login";
 const LOGOUT_URL = "/user/logout";
+const CONFIRMATION_URL = "/user/confirmation";
 
 export type TLogin = {
     email: string;
@@ -24,14 +25,10 @@ const useAccount = () => {
     const navigate = useNavigate();
 
     const signup = async (payload: TSignup) => {
-        const signupResponse = await postRequest(SIGNUP_URL, payload, () => {});
-        
-        if (signupResponse) return signupResponse;
-        return await login({
-            email: payload.email,
-            password: payload.password
+        return await postRequest(SIGNUP_URL, payload, (response) => {
+            confirmEmail(response.data._id);
         });
-    }
+    };
 
     const login = async (payload: TLogin) => {
         return await postRequest(LOGIN_URL, payload, (response) => {
@@ -48,6 +45,10 @@ const useAccount = () => {
             });
             navigate("/");
         });
+    };
+
+    const confirmEmail = async (id: string) => {
+        return await postRequest(CONFIRMATION_URL, { id }, () => { });
     };
      
     return { signup, login, logout };

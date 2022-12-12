@@ -9,7 +9,7 @@ const SnackBar = () => {
         <>
             <Snackbar
                 open={options !== null}
-                autoHideDuration={3000}
+                autoHideDuration={options?.duration || 3000}
                 onClose={() => setOptions(null)}
                 anchorOrigin={{
                     vertical: "top",

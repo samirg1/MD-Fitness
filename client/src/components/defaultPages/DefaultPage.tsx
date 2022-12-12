@@ -2,7 +2,12 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 
-const DefaultPage = ({ displayText }: { displayText: string }) => {
+type TDefaultPageProps = {
+    displayText: string;
+    displayBack?: boolean;
+};
+
+const DefaultPage = ({ displayText, displayBack }: TDefaultPageProps) => {
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
 
@@ -29,15 +34,17 @@ const DefaultPage = ({ displayText }: { displayText: string }) => {
                 <Grid item xs={12}>
                     <span>{displayText}</span>
                 </Grid>
-                <Grid item xs={12}>
-                    <Button
-                        variant="contained"
-                        onClick={goBack}
-                        color="secondary"
-                    >
-                        Back
-                    </Button>
-                </Grid>
+                {displayBack ? (
+                    <Grid item xs={12}>
+                        <Button
+                            variant="contained"
+                            onClick={goBack}
+                            color="secondary"
+                        >
+                            Back
+                        </Button>
+                    </Grid>
+                ) : null}
             </Grid>
         </div>
     );

@@ -70,8 +70,9 @@ const LoginSignup = () => {
             navigate(from, { replace: true });
             setSnackBarOptions({
                 message:
-                    "Successfully " + (loggingIn ? "logged in" : "signed up"),
+                    "Successfully " + (loggingIn ? "logged in" : "signed up - please check email for account activation"),
                 type: "success",
+                duration: loggingIn ? undefined : 10000
             });
         }
     };

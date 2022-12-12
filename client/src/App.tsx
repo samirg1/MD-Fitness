@@ -2,6 +2,7 @@ import "@stripe/stripe-js";
 import { Route, Routes } from "react-router-dom";
 import Account from "./components/account/Account";
 import Admin from "./components/admin/Admin";
+import ConfirmEmail from "./components/defaultPages/ConfirmEmail";
 import Missing from "./components/defaultPages/Missing";
 import Unauthorised from "./components/defaultPages/Unauthorised";
 import Home from "./components/homepage/Home";
@@ -41,6 +42,10 @@ const App = () => {
                         <Route path="admin" element={<Admin />} />
                     </Route>
 
+                    <Route
+                        path="confirm-email/:userID"
+                        element={<ConfirmEmail />}
+                    />
                     <Route path="unauthorised" element={<Unauthorised />} />
                     <Route path="*" element={<Missing />} />
                 </Route>
