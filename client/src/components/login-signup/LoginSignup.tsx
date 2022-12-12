@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation  } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAccount from "../../hooks/useAccount";
 import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
@@ -69,8 +69,9 @@ const LoginSignup = () => {
             resetFields();
             navigate(from, { replace: true });
             setSnackBarOptions({
-                message: "Successfully " + (loggingIn ? "logged in" : "signed up"),
-                type: "success"
+                message:
+                    "Successfully " + (loggingIn ? "logged in" : "signed up"),
+                type: "success",
             });
         }
     };

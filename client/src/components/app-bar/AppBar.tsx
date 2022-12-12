@@ -14,7 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import permissions from "../../config/permissions_list";
+import permissions from "../../config/permissionsList";
 import useAuthentication from "../../hooks/useAuthentication";
 import AppBarIconText from "./AppBarIconText";
 import LogoutPopup from "./LogoutPopup";

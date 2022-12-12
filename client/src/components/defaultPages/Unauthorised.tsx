@@ -2,7 +2,7 @@ import DefaultPage from "./DefaultPage";
 
 const Unauthorised = () => {
     return (
-        <DefaultPage displayText="You are not authorised to access this page"/>
+        <DefaultPage displayText="You are not authorised to access this page" />
     );
 };
 

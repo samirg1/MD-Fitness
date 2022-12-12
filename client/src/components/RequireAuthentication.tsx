@@ -3,11 +3,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import useAuthentication from "../hooks/useAuthentication";
 import useSnackBar from "../hooks/useSnackBar";
 
-const RequireAuthentication = ({
-    allowedPermissions,
-}: {
-    allowedPermissions: number[];
-}) => {
+const RequireAuthentication = ({ permissions }: { permissions: number[] }) => {
     const { authentication } = useAuthentication();
     const location = useLocation();
     const { setOptions: setSnackBarOptions } = useSnackBar();
@@ -16,7 +12,7 @@ const RequireAuthentication = ({
         if (!authentication) return false;
         return Boolean(
             authentication.permissions.find((permission) =>
-                allowedPermissions.includes(permission)
+                permissions.includes(permission)
             )
         );
     };

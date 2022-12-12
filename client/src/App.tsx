@@ -10,7 +10,7 @@ import PersistentLogin from "./components/PersistentLogin";
 import Programs from "./components/programs/Programs";
 import RequireAuthentication from "./components/RequireAuthentication";
 import Layout from "./config/Layout";
-import PERMISSIONS from "./config/permissions_list";
+import PERMISSIONS from "./config/permissionsList";
 
 const App = () => {
     return (
@@ -24,7 +24,7 @@ const App = () => {
                     <Route
                         element={
                             <RequireAuthentication
-                                allowedPermissions={[PERMISSIONS.user]}
+                                permissions={[PERMISSIONS.user]}
                             />
                         }
                     >
@@ -34,7 +34,7 @@ const App = () => {
                     <Route
                         element={
                             <RequireAuthentication
-                                allowedPermissions={[PERMISSIONS.admin]}
+                                permissions={[PERMISSIONS.admin]}
                             />
                         }
                     >

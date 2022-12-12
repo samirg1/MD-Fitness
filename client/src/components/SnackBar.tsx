@@ -16,7 +16,6 @@ const SnackBar = () => {
                     horizontal: "center",
                 }}
             >
-
                 <Alert severity={options?.type} sx={{ width: "100%" }}>
                     {options?.message}
                 </Alert>
