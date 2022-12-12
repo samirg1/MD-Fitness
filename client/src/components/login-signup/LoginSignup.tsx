@@ -8,6 +8,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAccount from "../../hooks/useAccount";
+import useKeyDownHandler from "../../hooks/useKeyDownHandler";
 import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
 import Field, { FieldType } from "./Field";
@@ -29,6 +30,7 @@ const LoginSignup = () => {
     const [loginSignupError, setLoginSignupError] = useState("");
 
     const { signup, login } = useAccount();
+    const keyDownHandler = useKeyDownHandler();
 
     useEffect(() => setLoginSignupError(""), [name, email, password]);
 
@@ -70,12 +72,17 @@ const LoginSignup = () => {
             navigate(from, { replace: true });
             setSnackBarOptions({
                 message:
-                    "Successfully " + (loggingIn ? "logged in" : "signed up - please check email for account activation"),
+                    "Successfully " +
+                    (loggingIn
+                        ? "logged in"
+                        : "signed up - please check email for account activation"),
                 type: "success",
-                duration: loggingIn ? undefined : 10000
+                duration: loggingIn ? undefined : 10000,
             });
         }
     };
+
+    useEffect(() => keyDownHandler("Enter", submit));
 
     return (
         <>
@@ -91,6 +98,7 @@ const LoginSignup = () => {
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <ToggleButtonGroup
+                            onKeyDown={(e) => {}}
                             color="primary"
                             value={loggingIn ? "login" : "signup"}
                             exclusive

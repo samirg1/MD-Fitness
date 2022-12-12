@@ -3,8 +3,9 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAccount from "../../hooks/useAccount";
+import useKeyDownHandler from "../../hooks/useKeyDownHandler";
 import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
 
@@ -28,6 +29,7 @@ type TLogoutPopupProps = {
 const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
     const { logout } = useAccount();
     const { setOptions: setSnackBarMessage } = useSnackBar();
+    const keyDownHandler = useKeyDownHandler();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     const handleLogout = async () => {
@@ -42,6 +44,8 @@ const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
         }
         handleClose();
     };
+
+    useEffect(() => keyDownHandler("Enter", handleLogout));
 
     return (
         <>
