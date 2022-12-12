@@ -27,12 +27,12 @@ const LoginSignup = () => {
     const [password, setPassword] = useState("");
 
     const [loading, setLoading] = useState(false);
-    const [loginSignupError, setLoginSignupError] = useState("");
+    const [loginSignupError, setLoginSignupError] = useState<string | null>(null);
 
     const { signup, login } = useAccount();
     const keyDownHandler = useKeyDownHandler();
 
-    useEffect(() => setLoginSignupError(""), [name, email, password]);
+    useEffect(() => setLoginSignupError(null), [name, email, password]);
 
     const resetFields = () => {
         setName("");
@@ -47,7 +47,7 @@ const LoginSignup = () => {
 
     const submit = async () => {
         setLoading(true);
-        let responseError = "";
+        let responseError: string | null = "";
 
         if (loggingIn) {
             responseError = await login({
@@ -62,7 +62,7 @@ const LoginSignup = () => {
             });
         }
 
-        if (responseError.startsWith('"password" with value'))
+        if (responseError?.startsWith('"password" with value'))
             setLoginSignupError("invalid password");
         else setLoginSignupError(responseError);
 

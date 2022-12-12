@@ -111,10 +111,12 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
 
     return (
         <AppBar position="static" color="primary">
-            <LogoutPopup
-                open={logoutPopupOpen}
-                handleClose={() => setLogoutPopupOpen(false)}
-            />
+            {logoutPopupOpen ? (
+                <LogoutPopup
+                    open={logoutPopupOpen}
+                    handleClose={() => setLogoutPopupOpen(false)}
+                />
+            ) : null}
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AppBarIconText large name={APP_NAME} />

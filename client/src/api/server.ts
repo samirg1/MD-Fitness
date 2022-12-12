@@ -1,8 +1,15 @@
 import { AxiosResponse } from "axios";
 import { TLogin, TSignup } from "../hooks/useAccount";
-import axios from "./axios";
+import axios, { axiosPrivate } from "./axios";
 
-export const postRequest = async (url: string, payload: TLogin | TSignup | {}, callback: (response: AxiosResponse) => void): Promise<string> => {
+/**
+ * Post a request to server using axios.
+ * @param url The url to post to.
+ * @param payload The payload to send to the url.
+ * @param callback The callback function to be called when the post is successful.
+ * @returns String detailing the error (if any).
+ */
+export const postRequest = async (url: string, payload: TLogin | TSignup | {}, callback: (response: AxiosResponse) => void): Promise<string | null> => {
     try {
         const response = await axios.post(
             url,
@@ -18,20 +25,25 @@ export const postRequest = async (url: string, payload: TLogin | TSignup | {}, c
         if (!error.response) return "no server response";
         return error.response.data;
     }
-    return '';
+    return null;
 }
 
-export const getRequest = async (url: string, signal: AbortSignal, callback: (response: AxiosResponse) => void): Promise<string> => {
+/**
+ * Get data from server using axios.
+ * @param url The url to retrieve data from.
+ * @param signal The signal to abort the get if necessary.
+ * @param onSuccess The callback function to be called when the get is successful.
+ * @param onFailure The callback function to be called when the get is unsuccessful.
+ * @returns String detailing the error (if any).
+ */
+export const getPrivateRequest = async (url: string, signal: AbortSignal, onSuccess: (response: AxiosResponse) => void, onFailure: () => void): Promise<void> => {
     try {
-        const response = await axios.get(
+        const response = await axiosPrivate.get(
             url,
-            { signal: signal, withCredentials: true },
-        )
-        callback(response);
+            { signal: signal },
+        );
+        onSuccess(response);
     } catch (error: any) {
-        if (!error?.message) return "server response lost";
-        if (!error.response) return "no server response";
-        return error.response.data;
+        if (error.code !== "ERR_CANCELED") onFailure(); // don't fail if get is cancelled
     }
-    return '';
 }

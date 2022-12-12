@@ -1,19 +1,10 @@
-import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { useState } from "react";
-
-let stripePromise: Promise<Stripe | null> | undefined;
+import { getStripe } from "../api/stripe";
 
 /**
- * Singleton method to get an instance of Stripe.
- * @returns The stripe promise to get an instance of Stripe.
+ * Stripe hook.
+ * @returns Function to redirect users to checkout and boolean whether this is loading or not.
  */
-const getStripe = (): Promise<Stripe | null> => {
-    if (stripePromise === undefined) {
-        stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY as string);
-    }
-    return stripePromise;
-};
-
 const useStripe = () => {
     const [error, setError] = useState<string | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(false);

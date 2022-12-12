@@ -1,4 +1,4 @@
-import useStripe from "../../api/stripe";
+import useStripe from "../../hooks/useStripe";
 import Loader from "../Loader";
 
 const Programs = () => {
