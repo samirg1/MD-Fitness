@@ -26,12 +26,21 @@ type TLogoutPopupProps = {
     handleClose: () => void;
 };
 
+/**
+ * Component for the popup dialog that displays when the user wants to logout.
+ * @param open Whether or not this popup is open.
+ * @param handleClose Function that handles the closure of the popup.
+ */
 const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+    
     const { logout } = useAccount();
     const { setOptions: setSnackBarMessage } = useSnackBar();
     const keyDownHandler = useKeyDownHandler();
-    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
+    /**
+     * Handle the logout of the user when selected.
+     */
     const handleLogout = async () => {
         setIsLoggingOut(true);
         const response = await logout();
@@ -45,6 +54,7 @@ const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
         handleClose();
     };
 
+    // Keyboard shortcut for logging out.
     useEffect(() => keyDownHandler("Enter", handleLogout));
 
     return (

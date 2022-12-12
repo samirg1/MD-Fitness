@@ -1,14 +1,19 @@
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-const AppIcon = require("../../img/icon.jpg");
+const APP_NAME = "MD FITNESS";
+const APP_ICON: string = require("../../img/icon.jpg");
 
-const AppBarIconText = ({ large, name }: { large: boolean; name: string }) => {
+/**
+ * The app bar icon and title component.
+ * @param large Whether the icon and app name are displayed in large mode (width wise) or not.
+ */
+const AppBarIconText = ({ large }: { large: boolean }) => {
     return (
         <>
             <Avatar
                 alt="MDFit"
-                src={AppIcon}
+                src={APP_ICON}
                 sx={{
                     display: {
                         xs: large ? "none" : "flex",
@@ -35,7 +40,7 @@ const AppBarIconText = ({ large, name }: { large: boolean; name: string }) => {
                     flexGrow: Number(!large),
                 }}
             >
-                {name}
+                {APP_NAME}
             </Typography>
         </>
     );

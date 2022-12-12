@@ -19,12 +19,13 @@ import useAuthentication from "../../hooks/useAuthentication";
 import AppBarIconText from "./AppBarIconText";
 import LogoutPopup from "./LogoutPopup";
 
-const APP_NAME = "MD FITNESS";
-
 const LINKS = {
     Instagram: "https://instagram.com/mdonaldfit/",
 };
 
+/**
+ * The currently available options in the settings menu.
+ */
 enum AccountAction {
     accountPage = "Account",
     logout = "Logout",
@@ -32,45 +33,54 @@ enum AccountAction {
     admin = "Admin",
 }
 
+/**
+ * Responsive app bar component that changes depending on screen width.
+ * @param pages The list of pages to display in app bar.
+ */
 const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const [logoutPopupOpen, setLogoutPopupOpen] = useState(false);
+
     const navigate = useNavigate();
     const { authentication } = useAuthentication();
 
     const settings: string[] = [];
     if (authentication) {
-        settings.push(AccountAction.accountPage, AccountAction.logout);
-        authentication.permissions.includes(permissions.admin) &&
+        settings.push(AccountAction.accountPage);
+        if (authentication.permissions.includes(permissions.admin)) {
             settings.push(AccountAction.admin);
-    } else settings.push(AccountAction.loginSignup);
+        }
+        settings.push(AccountAction.logout);
+    } else {
+        settings.push(AccountAction.loginSignup);
+    }
 
     /**
-     * Opens the navigation menu
-     * @param event The event that caused this function
+     * Opens the navigation menu.
+     * @param event The event that caused this function.
      */
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
 
     /**
-     * Opens the user menu
-     * @param event The event that caused this function
+     * Opens the user menu.
+     * @param event The event that caused this function.
      */
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
     /**
-     * Closes the navigation menu
+     * Closes the navigation menu.
      */
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
     /**
-     * Closes the user menu
+     * Closes the user menu.
      */
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -85,6 +95,10 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
         handleCloseNavMenu();
     };
 
+    /**
+     * Handle the selection of a setting.
+     * @param setting The setting that was selected.
+     */
     const handleSettingClicked = (setting: string) => {
         switch (setting) {
             case AccountAction.loginSignup:
@@ -105,6 +119,10 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
         handleCloseUserMenu();
     };
 
+    /**
+     * Open a link in a new tab.
+     * @param link The link to open.
+     */
     const openLink = (link: string) => {
         window.open(link, "_blank");
     };
@@ -119,7 +137,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
             ) : null}
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AppBarIconText large name={APP_NAME} />
+                    <AppBarIconText large />
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -135,6 +153,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                         >
                             <MenuIcon />
                         </IconButton>
+                        {/* Menu and menu item for each page if width is too small */}
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -165,7 +184,8 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                             ))}
                         </Menu>
                     </Box>
-                    <AppBarIconText large={false} name={APP_NAME} />
+                    <AppBarIconText large={false} />
+                    {/* Buttons for each page if width pertains */}
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -188,6 +208,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
+                        {/* Instagram link */}
                         <Tooltip title="Open Instagram account">
                             <IconButton
                                 onClick={() => openLink(LINKS.Instagram)}
@@ -209,6 +230,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                                 )}
                             </IconButton>
                         </Tooltip>
+                        {/* Menu and menu item for each settings page */}
                         <Menu
                             sx={{ mt: "45px" }}
                             id="menu-appbar"
