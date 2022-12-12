@@ -3,9 +3,10 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import useAccount from "../../hooks/useAccount";
 import useSnackBar from "../../hooks/useSnackBar";
+import Loader from "../Loader";
 
 const popupStyle = {
     position: "absolute" as "absolute",
@@ -27,58 +28,64 @@ type TLogoutPopupProps = {
 const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
     const { logout } = useAccount();
     const { setOptions: setSnackBarMessage } = useSnackBar();
-    const navigate = useNavigate();
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-    const handleLogout = () => {
-        logout();
-        setSnackBarMessage({
-            message: "Logout successful",
-            type: "success"
-        });
-        navigate("/");
+    const handleLogout = async () => {
+        setIsLoggingOut(true);
+        const response = await logout();
+        setIsLoggingOut(false);
+        if (response) {
+            setSnackBarMessage({
+                message: response,
+                type: "error",
+            });
+        }
         handleClose();
     };
 
     return (
-        <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={popupStyle}>
-                <Grid container spacing={1}>
-                    <Grid item xs={12} style={{ textAlign: "center" }}>
-                        <Typography
-                            id="modal-modal-title"
-                            variant="h6"
-                            component="h2"
-                        >
-                            Logout?
-                        </Typography>
+        <>
+            <Loader isLoading={isLoggingOut} />
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={popupStyle}>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} style={{ textAlign: "center" }}>
+                            <Typography
+                                id="modal-modal-title"
+                                variant="h6"
+                                component="h2"
+                            >
+                                Logout?
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={6} style={{ textAlign: "center" }}>
+                            <Button
+                                variant="contained"
+                                sx={{ mt: 2 }}
+                                onClick={handleClose}
+                            >
+                                Cancel
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6} style={{ textAlign: "center" }}>
+                            <Button
+                                variant="contained"
+                                sx={{ mt: 2 }}
+                                color="error"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={6} style={{ textAlign: "center" }}>
-                        <Button
-                            variant="contained"
-                            sx={{ mt: 2 }}
-                            onClick={handleClose}
-                        >
-                            Cancel
-                        </Button>
-                    </Grid>
-                    <Grid item xs={6} style={{ textAlign: "center" }}>
-                        <Button
-                            variant="contained"
-                            sx={{ mt: 2 }}
-                            color="error"
-                            onClick={handleLogout}
-                        >
-                            Logout
-                        </Button>
-                    </Grid>
-                </Grid>
-            </Box>
-        </Modal>
+                </Box>
+            </Modal>
+        </>
     );
 };
 

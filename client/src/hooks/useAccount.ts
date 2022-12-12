@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { postRequest } from "../api/server";
 import useAuthentication from "./useAuthentication";
+import useSnackBar from "./useSnackBar";
 
 const SIGNUP_URL = "/user/register";
-const LOGIN_URL = "user/login";
+const LOGIN_URL = "/user/login";
+const LOGOUT_URL = "/user/logout";
 
 export type TLogin = {
     email: string;
@@ -17,6 +20,8 @@ export type TSignup = {
 
 const useAccount = () => {
     const { setAuthentication } = useAuthentication();
+    const { setOptions: setSnackBarMessage } = useSnackBar();
+    const navigate = useNavigate();
 
     const signup = async (payload: TSignup) => {
         return await postRequest(SIGNUP_URL, payload, (response) => {
@@ -30,7 +35,16 @@ const useAccount = () => {
         });
     };
 
-    const logout = () => setAuthentication(null);
+    const logout = async () => {
+        return await postRequest(LOGOUT_URL, {}, () => {
+            setAuthentication(null);
+            setSnackBarMessage({
+                message: "Logout successful",
+                type: "success"
+            });
+            navigate("/");
+        });
+    };
      
     return { signup, login, logout };
 };

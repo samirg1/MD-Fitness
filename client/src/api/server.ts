@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { TLogin, TSignup } from "../hooks/useAccount";
 import axios from "./axios";
 
-export const postRequest = async (url: string, payload: TLogin | TSignup, callback: (response: AxiosResponse) => void): Promise<string> => {
+export const postRequest = async (url: string, payload: TLogin | TSignup | {}, callback: (response: AxiosResponse) => void): Promise<string> => {
     try {
         const response = await axios.post(
             url,
