@@ -29,6 +29,19 @@ const fieldTooltips = {
     text: "Maximum 50 characters",
 };
 
+const fieldRegex = {
+    password: new RegExp(
+        "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+    ),
+    email: new RegExp( 
+        "^[A-z0-9._%+-]+@[A-z0-9.-]{2,}\\.[A-z]{2,}$"
+    ),
+    text: new RegExp(
+        "^.{1,50}$"
+    )
+}
+
+
 const Field = ({ name, value, setValue, disabled, type }: TField) => {
     const [showPassword, setShowPassword] = useState(false);
     const toggleShowPassword = () => setShowPassword((previous) => !previous);
@@ -43,6 +56,7 @@ const Field = ({ name, value, setValue, disabled, type }: TField) => {
                     leaveTouchDelay={5000}
                 >
                     <OutlinedInput
+                        error={!value.match(fieldRegex[type])}
                         disabled={disabled}
                         type={
                             showPassword && type === FieldType.password
