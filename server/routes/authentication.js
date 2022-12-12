@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
     const refreshToken = jsonwebtoken.sign(
         { email: user.email, permissions: user.permissions },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: "30s" }
+        { expiresIn: "1d" }
     );
 
     res.cookie("jwt", refreshToken, {

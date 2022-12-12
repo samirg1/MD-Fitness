@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 import useAccount from "../../hooks/useAccount";
 import useSnackBar from "../../hooks/useSnackBar";
 
@@ -26,6 +27,7 @@ type TLogoutPopupProps = {
 const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
     const { logout } = useAccount();
     const { setOptions: setSnackBarMessage } = useSnackBar();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();
@@ -33,6 +35,7 @@ const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
             message: "Logout successful",
             type: "success"
         });
+        navigate("/");
         handleClose();
     };
 

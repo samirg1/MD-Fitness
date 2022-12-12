@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import useAuthentication from "../hooks/useAuthentication";
 import useSnackBar from "../hooks/useSnackBar";
@@ -11,30 +12,33 @@ const RequireAuthentication = ({
     const location = useLocation();
     const { setOptions: setSnackBarOptions } = useSnackBar();
 
-    const provideUserMessage = () => {
-        setSnackBarOptions({
-            message: "You must be logged in to view this page.",
-            type: "info",
-        });
-    };
-
-    if (authentication) {
-        if (
+    const checkPermissions = (): boolean => {
+        if (!authentication) return false;
+        return Boolean(
             authentication.permissions.find((permission) =>
                 allowedPermissions.includes(permission)
             )
-        ) {
-            return <Outlet />;
+        );
+    };
+
+    useEffect(() => {
+        if (!authentication) {
+            setSnackBarOptions({
+                message: "You must be logged in to view this page.",
+                type: "info",
+            });
         }
-        return (
+    }, [authentication, setSnackBarOptions]);
+
+    return authentication ? (
+        checkPermissions() ? (
+            <Outlet />
+        ) : (
             <Navigate to="/unauthorised" state={{ from: location }} replace />
-        );
-    } else {
-        provideUserMessage();
-        return (
-            <Navigate to="/login-signup" state={{ from: location }} replace />
-        );
-    }
+        )
+    ) : (
+        <Navigate to="/login-signup" state={{ from: location }} replace />
+    );
 };
 
 export default RequireAuthentication;

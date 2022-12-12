@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         async (err, decoded) => {
+            if (!decoded) return res.status(403).send("Invalid credentials");
             const foundUser = await User.findOne({ email: decoded.email });
             if (err) return res.status(403).send("Forbidden error");
             if (!foundUser) return res.status(403).send("Forbidden user");

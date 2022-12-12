@@ -1,15 +1,26 @@
 import { useEffect, useState } from "react";
-import { TAuthentication } from "../../context/AuthProvider";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuthentication from "../../hooks/useAuthentication";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useNavigate, useLocation } from "react-router-dom";
+import useSnackBar from "../../hooks/useSnackBar";
 
 const USERS_URL = "/users";
 
+type TUsers = {
+    _id: string;
+    name: string;
+    email: string;
+    dateCreated: Date;
+    permissions: number[];
+}
+
 const Users = () => {
-    const [users, setUsers] = useState<TAuthentication[]>([]);
+    const [users, setUsers] = useState<TUsers[]>([]);
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
+    const { setAuthentication } = useAuthentication();
+    const { setOptions: setSnackBarOptions } = useSnackBar();
 
     useEffect(() => {
         let isMounted = true;
@@ -20,11 +31,20 @@ const Users = () => {
                 const response = await axiosPrivate.get(USERS_URL, {
                     signal: controller.signal,
                 });
-                console.log(response.data);
+                // console.log(response.data);
                 isMounted && setUsers(response.data);
-            } catch (error) {
-                console.error(error);
-                //navigate('/login-signup', { state: { from: location }, replace: true });
+            } catch (error: any) {
+                if (error.code !== "ERR_CANCELED") {
+                    setAuthentication(null);
+                    setSnackBarOptions({
+                        message: "Please log in again",
+                        type: "info",
+                    });
+                    navigate("/login-signup", {
+                        state: { from: location },
+                        replace: true,
+                    });
+                }
             }
         };
 
@@ -34,7 +54,7 @@ const Users = () => {
             isMounted = false;
             controller.abort();
         };
-    }, [axiosPrivate, location, navigate]);
+    }, [axiosPrivate, location, navigate, setAuthentication, setSnackBarOptions]);
 
     return (
         <article>
@@ -42,7 +62,7 @@ const Users = () => {
             {users.length ? (
                 <ul>
                     {users.map((user) => (
-                        <li key={user.name}>{user.name}</li>
+                        <li key={user._id}>{`${user.name} - ${user.email} - ${user.dateCreated} - ${user.permissions}`}</li>
                     ))}
                 </ul>
             ) : (
