@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "../../api/axios";
+import { postRequest } from "../../api/server";
 import Loader from "../Loader";
 import DefaultPage from "./DefaultPage";
 
+/**
+ * Page that is shown when user is confirming an email.
+ */
 const ConfirmEmail = () => {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
     const { userID } = useParams();
     const CONFIRM_URL = `/user/confirmEmail/${userID}`;
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
 
     useEffect(() => {
+        /**
+         * Confirm an email of the user.
+         */
         const confirm = async () => {
-            try {
-                await axios.post(CONFIRM_URL, {
-                    withCredentials: true,
-                    headers: { 'Content-Type': 'application/json'}
-                });
-            } catch (error: any) {
-                setError(error.response.data);
-            }
+            const response = await postRequest(CONFIRM_URL, {}, () => {});
+            setError(response);
             setLoading(false);
         };
 
@@ -29,7 +30,11 @@ const ConfirmEmail = () => {
     return (
         <>
             <Loader isLoading={loading} />
-            <DefaultPage displayText={error || "Email confirmed! You can close this tab."} />
+            <DefaultPage
+                displayText={
+                    error || "Email confirmed! You can close this tab."
+                }
+            />
         </>
     );
 };

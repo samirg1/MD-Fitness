@@ -4,12 +4,23 @@ import { useNavigate } from "react-router-dom";
 
 type TDefaultPageProps = {
     displayText: string;
-    displayBack?: boolean;
+    back?: boolean;
 };
 
-const DefaultPage = ({ displayText, displayBack }: TDefaultPageProps) => {
+/**
+ * Default page for miscellaneous pages.
+ * @param displayText The text to display on this page.
+ * @param back Whether to have the back button on the page.
+ */
+const DefaultPage = ({ displayText, back }: TDefaultPageProps) => {
     const navigate = useNavigate();
-    const goBack = () => navigate(-1);
+
+    /**
+     * Go back to the previous page.
+     */
+    const goBack = () => {
+        navigate(-1);
+    };
 
     return (
         <div
@@ -34,7 +45,7 @@ const DefaultPage = ({ displayText, displayBack }: TDefaultPageProps) => {
                 <Grid item xs={12}>
                     <span>{displayText}</span>
                 </Grid>
-                {displayBack ? (
+                {back ? (
                     <Grid item xs={12}>
                         <Button
                             variant="contained"
