@@ -1,7 +1,8 @@
 const router = require("express").Router();
 
 const { hashPassword, comparePassword } = require("../api/bcrypt");
-const { signToken } = require("../api/jsonwebtoken");
+const { signToken, verifyToken } = require("../api/jsonwebtoken");
+const confirmationRoute = require("./confirmationEmail");
 const User = require("../models/User");
 
 /**
@@ -101,8 +102,17 @@ router.post("/logout", async (req, res) => {
 /**
  * Confirm and activate a user's account.
  */
-router.post("/confirmEmail/:id", async (req, res) => {
-    const { id } = req.params; // get id param
+router.post("/confirmEmail/:token", async (req, res) => {
+    const { token } = req.params; // get token param
+
+    // verify token to get id
+    let id;
+    verifyToken(token, process.env.CONFIRMATION_TOKEN_SECRET, (error, decoded) => {
+        if (error) return res.status(400).send("Link is not valid");
+        if (!decoded) return res.status(400).send("Link is not valid");
+        id = decoded.id;
+    });
+
     try {
         const user = await User.findOne({ _id: id }); // find the user
         if (!user) return res.status(400).send("Specified user not found");
@@ -114,6 +124,6 @@ router.post("/confirmEmail/:id", async (req, res) => {
     res.sendStatus(204);
 });
 
-router.use("/confirmation", require("./confirmationEmail")); // for sending confirmation email
+router.use("/confirmation", confirmationRoute); // for sending confirmation email
 
 module.exports = router;
