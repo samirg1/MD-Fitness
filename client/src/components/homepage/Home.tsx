@@ -3,6 +3,9 @@ import Grid from "@mui/material/Grid";
 import About from "./About";
 import ProgramsSummary from "./ProgramsSummary";
 
+/**
+ * The main interface for the Home page.
+ */
 const Home = () => {
     return (
         <Box

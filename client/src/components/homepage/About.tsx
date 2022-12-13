@@ -47,6 +47,9 @@ habitasse platea dictumst quisque sagittis purus sit amet
 volutpat.
 `;
 
+/**
+ * The about component of the home page.
+ */
 const About = () => {
     return (
         <>
