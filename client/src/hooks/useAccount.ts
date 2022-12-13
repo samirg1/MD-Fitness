@@ -80,7 +80,7 @@ const useAccount = () => {
         return await postRequest(CONFIRMATION_URL, { id }, () => {});
     };
 
-    return { signup, login, logout };
+    return { signup, login, logout, confirmEmail };
 };
 
 export default useAccount;

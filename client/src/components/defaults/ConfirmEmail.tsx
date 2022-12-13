@@ -11,15 +11,16 @@ const ConfirmEmail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const { userID } = useParams();
-    const CONFIRM_URL = `/user/confirmEmail/${userID}`;
+    const { token } = useParams();
+    const CONFIRM_URL = `/user/confirmEmail/${token}`;
 
     useEffect(() => {
         /**
          * Confirm an email of the user.
          */
         const confirm = async () => {
-            const response = await postRequest(CONFIRM_URL, {}, () => {});
+            const response = await postRequest(CONFIRM_URL, {}, () => { });
+            if (!response) localStorage.setItem('verification', JSON.stringify(false));
             setError(response);
             setLoading(false);
         };

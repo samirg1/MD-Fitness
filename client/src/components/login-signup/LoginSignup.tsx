@@ -11,6 +11,7 @@ import useAccount from "../../hooks/useAccount";
 import useKeyDownHandler from "../../hooks/useKeyDownHandler";
 import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
+import AccountVerification from "./AccountVerification";
 import Field, { FieldType } from "./Field";
 
 /**
@@ -22,6 +23,7 @@ const LoginSignup = () => {
     const [password, setPassword] = useState("");
     const [loggingIn, setLoggingIn] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [verifying, setVerifying] = useState(false);
     const [loginSignupError, setLoginSignupError] = useState<string | null>(
         null
     );
@@ -58,22 +60,20 @@ const LoginSignup = () => {
      */
     const submit = async () => {
         setLoading(true);
-        let responseError: string | null = null;
 
         // call auth functions
-        if (loggingIn) {
-            responseError = await login({
-                email: email,
-                password: password,
-            });
-        } else {
-            responseError = await signup({
-                name: name,
-                email: email,
-                password: password,
-            });
-        }
+        if (loggingIn) await performLogin();
+        else await performSignup();
+    };
 
+    /**
+     * Perform the login.
+     */
+    const performLogin = async () => {
+        const responseError = await login({
+            email: email,
+            password: password,
+        });
         // override default password error message
         if (responseError?.startsWith('"password" with value'))
             setLoginSignupError("invalid password");
@@ -81,23 +81,71 @@ const LoginSignup = () => {
 
         setLoading(false);
         if (!responseError) {
-            // if no error show successful state
             resetFields();
             navigate(from, { replace: true }); // go back to where user was (if applicable)
             setSnackBarOptions({
-                message:
-                    "Successfully " +
-                    (loggingIn
-                        ? "logged in"
-                        : "signed up - please check email for account activation"),
+                message: "Successfully logged in",
                 type: "success",
-                duration: loggingIn ? undefined : 10000,
             });
+        }
+    };
+
+    const performSignup = async () => {
+        const responseError = await signup({
+            name: name,
+            email: email,
+            password: password,
+        });
+        // override default password error message
+        if (responseError?.startsWith('"password" with value'))
+            setLoginSignupError("invalid password");
+        else setLoginSignupError(responseError);
+
+        setLoading(false);
+        if (!responseError) {
+            localStorage.setItem("verification", JSON.stringify(true));
+            setVerifying(true);
+            setSnackBarOptions({
+                message:
+                    "Successfully signed up - please check email for account activation",
+                type: "success",
+                duration: 10000,
+            });
+        }
+    };
+
+    /**
+     * Toggle the verification state of the page.
+     * @param newValue The new verifying value.
+     */
+    const toggleVerifying = (newValue: boolean) => {
+        setVerifying(newValue);
+        if (!newValue) {
+            setLoggingIn(true);
+            performLogin();
+        }
+    };
+
+    /**
+     * Toggles the verification status of the page with a local storage change event.
+     * @param event Local storage change event.
+     */
+    const onStorageUpdate = (event: any) => {
+        const { key, newValue } = event;
+        if (key === "verification") {
+            toggleVerifying(JSON.parse(newValue));
         }
     };
 
     // when user presses enter the form submits
     useEffect(() => keyDownHandler("Enter", submit));
+
+    useEffect(() => {
+        window.addEventListener("storage", onStorageUpdate);
+        return () => {
+            window.removeEventListener("storage", onStorageUpdate);
+        };
+    });
 
     return (
         <>
@@ -111,6 +159,11 @@ const LoginSignup = () => {
                 }}
             >
                 <Grid container spacing={3}>
+                    {verifying ? (
+                        <Grid item xs={12} sx={{ textAlign: "center" }}>
+                            <AccountVerification email={email} />
+                        </Grid>
+                    ) : null}
                     <Grid item xs={12}>
                         <ToggleButtonGroup
                             onKeyDown={(e) => {}}
@@ -118,7 +171,7 @@ const LoginSignup = () => {
                             value={loggingIn ? "login" : "signup"}
                             exclusive
                             onChange={toggleLoggingIn}
-                            disabled={loading}
+                            disabled={loading || verifying}
                         >
                             <ToggleButton value="login" disabled={loggingIn}>
                                 Login
@@ -134,7 +187,7 @@ const LoginSignup = () => {
                                 name="Enter name:"
                                 value={name}
                                 setValue={setName}
-                                disabled={loading}
+                                disabled={loading || verifying}
                                 type={FieldType.text}
                             />
                         </Grid>
@@ -144,7 +197,7 @@ const LoginSignup = () => {
                             name="Enter email:"
                             value={email}
                             setValue={setEmail}
-                            disabled={loading}
+                            disabled={loading || verifying}
                             type={FieldType.email}
                         />
                     </Grid>
@@ -153,10 +206,13 @@ const LoginSignup = () => {
                             name="Enter password:"
                             value={password}
                             setValue={setPassword}
-                            disabled={loading}
+                            disabled={loading || verifying}
                             type={FieldType.password}
                         />
-                        <IconButton onClick={submit} disabled={loading}>
+                        <IconButton
+                            onClick={submit}
+                            disabled={loading || verifying}
+                        >
                             <ArrowCircleRightIcon />
                         </IconButton>
                     </Grid>

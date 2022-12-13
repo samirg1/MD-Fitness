@@ -48,7 +48,7 @@ const App = () => {
 
                     {/* Default routes */}
                     <Route
-                        path="confirm-email/:userID"
+                        path="confirm-email/:token"
                         element={<ConfirmEmail />}
                     />
                     <Route path="unauthorised" element={<Unauthorised />} />
