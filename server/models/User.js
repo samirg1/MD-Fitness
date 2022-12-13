@@ -1,6 +1,9 @@
-const { createModel } = require("../mongoose");
-const { validateRegister, validateLogin } = require("../validation");
+const { createModel } = require("../api/mongoose");
+const { validateRegister, validateLogin } = require("../api/validation");
 
+/**
+ * User model for the database.
+ */
 const Model = createModel("User", {
     name: {
         type: String,
@@ -30,7 +33,7 @@ const Model = createModel("User", {
     activated: {
         type: Boolean,
         default: false,
-    }
+    },
 });
 
 Object.assign(Model, { validateRegister, validateLogin });

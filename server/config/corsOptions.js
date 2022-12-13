@@ -1,5 +1,8 @@
-const allowedOrigins = require('./allowedOrigins');
+const allowedOrigins = require("./allowedOrigins");
 
+/**
+ * The cors options for the server requests.
+ */
 const corsOptions = {
     origin: allowedOrigins,
     credentials: true,
