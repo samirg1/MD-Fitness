@@ -9,17 +9,17 @@ const useKeyDownHandler = () => {
      * @param callback The function to call when the shortcut is triggered.
      * @returns Cleanup function that can be used by useEffect.
      */
-     const keyboardShortcut = (key: string, callback: () => void) => {
+    const keyboardShortcut = (key: string, callback: () => void) => {
         const keyDownHandler = (event: any) => {
             if (event.key === key) {
                 event.preventDefault();
                 callback();
             }
-        }
+        };
         document.addEventListener("keydown", keyDownHandler);
         return () => document.removeEventListener("keydown", keyDownHandler);
-     };
-    
+    };
+
     return keyboardShortcut;
 };
 

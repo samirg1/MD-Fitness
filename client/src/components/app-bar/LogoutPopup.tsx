@@ -33,7 +33,7 @@ type TLogoutPopupProps = {
  */
 const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
     const [isLoggingOut, setIsLoggingOut] = useState(false);
-    
+
     const { logout } = useAccount();
     const { setOptions: setSnackBarMessage } = useSnackBar();
     const keyDownHandler = useKeyDownHandler();

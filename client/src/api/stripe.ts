@@ -8,7 +8,9 @@ let stripePromise: Stripe | null;
  */
 export const getStripe = async (): Promise<Stripe | null> => {
     if (stripePromise === undefined) {
-        stripePromise = await loadStripe(process.env.REACT_APP_STRIPE_KEY as string);
+        stripePromise = await loadStripe(
+            process.env.REACT_APP_STRIPE_KEY as string
+        );
     }
     return stripePromise;
 };

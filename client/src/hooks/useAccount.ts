@@ -15,7 +15,7 @@ const CONFIRMATION_URL = "/user/confirmation";
 export type TLogin = {
     email: string;
     password: string;
-}
+};
 
 /**
  * Signup object type.
@@ -24,7 +24,7 @@ export type TSignup = {
     name: string;
     email: string;
     password: string;
-}
+};
 
 /**
  * Hook to use account functionality.
@@ -66,7 +66,7 @@ const useAccount = () => {
             setAuthentication(null);
             setSnackBarMessage({
                 message: "Logout successful",
-                type: "success"
+                type: "success",
             });
             navigate("/");
         });
@@ -77,9 +77,9 @@ const useAccount = () => {
      * @returns The error if any occured.
      */
     const confirmEmail = async (id: string): Promise<string | null> => {
-        return await postRequest(CONFIRMATION_URL, { id }, () => { });
+        return await postRequest(CONFIRMATION_URL, { id }, () => {});
     };
-     
+
     return { signup, login, logout };
 };
 

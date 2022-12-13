@@ -1,13 +1,16 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
+/**
+ * Colour theme for the application.
+ */
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#26499d',
+            main: "#26499d",
         },
         secondary: {
-            main: '#ffffff',
-        }
+            main: "#ffffff",
+        },
     },
 });
 

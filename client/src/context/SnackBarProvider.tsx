@@ -29,7 +29,7 @@ type TChildren = {
 
 /**
  * Wrapper to provide snackbar functionality and context to child components.
- * @param children The child components of this context. 
+ * @param children The child components of this context.
  */
 export const SnackBarProvider = ({ children }: TChildren) => {
     const [options, setOptions] = useState<TSnackBarOptions | null>(null);

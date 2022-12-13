@@ -6,7 +6,7 @@ import SnackBarContext from "../context/SnackBarProvider";
  * @returns The snackbar context.
  */
 const useSnackBar = () => {
-    return useContext(SnackBarContext)
-}
+    return useContext(SnackBarContext);
+};
 
 export default useSnackBar;

@@ -49,7 +49,7 @@ const useStripe = () => {
                 type: "error",
             });
             navigate("/");
-        };
+        }
     };
 
     return { isLoading, redirectToCheckout };

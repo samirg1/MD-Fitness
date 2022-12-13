@@ -13,15 +13,20 @@ import RequireAuthentication from "./components/RequireAuthentication";
 import Layout from "./config/Layout";
 import PERMISSIONS from "./config/permissionsList";
 
+/**
+ * Master component for the application.
+ */
 const App = () => {
     return (
         <Routes>
             <Route element={<PersistentLogin />}>
                 <Route path="/" element={<Layout />}>
+                    {/* Public routes */}
                     <Route path="/" element={<Home />} />
                     <Route path="programs" element={<Programs />} />
                     <Route path="login-signup" element={<LoginSignup />} />
 
+                    {/* Protected routes */}
                     <Route
                         element={
                             <RequireAuthentication
@@ -31,7 +36,6 @@ const App = () => {
                     >
                         <Route path="account" element={<Account />} />
                     </Route>
-
                     <Route
                         element={
                             <RequireAuthentication
@@ -42,6 +46,7 @@ const App = () => {
                         <Route path="admin" element={<Admin />} />
                     </Route>
 
+                    {/* Default routes */}
                     <Route
                         path="confirm-email/:userID"
                         element={<ConfirmEmail />}

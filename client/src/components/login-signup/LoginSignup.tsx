@@ -80,7 +80,8 @@ const LoginSignup = () => {
         else setLoginSignupError(responseError);
 
         setLoading(false);
-        if (!responseError) { // if no error show successful state
+        if (!responseError) {
+            // if no error show successful state
             resetFields();
             navigate(from, { replace: true }); // go back to where user was (if applicable)
             setSnackBarOptions({

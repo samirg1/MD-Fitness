@@ -16,23 +16,26 @@ const useRefreshToken = () => {
      * @returns New access token.
      */
     const refresh = async (): Promise<string | void> => {
-        let accessToken: string = '';
+        let accessToken: string = "";
 
-        await getRequest(REFRESH_URL, (response) => {
-            accessToken = response.data.accessToken;
-            setAuthentication((prev) => {
-                return {
-                    ...prev,
-                    name: response.data.name,
-                    permissions: response.data.permissions,
-                    accessToken: accessToken
-                } as TAuthentication;
-            });
-            
-        }, () => { });
-        
+        await getRequest(
+            REFRESH_URL,
+            (response) => {
+                accessToken = response.data.accessToken;
+                setAuthentication((prev) => {
+                    return {
+                        ...prev,
+                        name: response.data.name,
+                        permissions: response.data.permissions,
+                        accessToken: accessToken,
+                    } as TAuthentication;
+                });
+            },
+            () => {}
+        );
+
         return accessToken;
-    }
+    };
     return refresh;
 };
 
