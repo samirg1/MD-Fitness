@@ -3,40 +3,65 @@ import { postRequest } from "../api/server";
 import useAuthentication from "./useAuthentication";
 import useSnackBar from "./useSnackBar";
 
+// server urls
 const SIGNUP_URL = "/user/register";
 const LOGIN_URL = "/user/login";
 const LOGOUT_URL = "/user/logout";
 const CONFIRMATION_URL = "/user/confirmation";
 
+/**
+ * Login object type.
+ */
 export type TLogin = {
     email: string;
     password: string;
 }
 
+/**
+ * Signup object type.
+ */
 export type TSignup = {
     name: string;
     email: string;
     password: string;
 }
 
+/**
+ * Hook to use account functionality.
+ * @returns Functions for logging in, signing up and logging out.
+ */
 const useAccount = () => {
     const { setAuthentication } = useAuthentication();
     const { setOptions: setSnackBarMessage } = useSnackBar();
     const navigate = useNavigate();
 
-    const signup = async (payload: TSignup) => {
+    /**
+     * Sign a user up.
+     * @param payload The signup details.
+     * @returns The error if any occured.
+     */
+    const signup = async (payload: TSignup): Promise<string | null> => {
         return await postRequest(SIGNUP_URL, payload, (response) => {
             confirmEmail(response.data._id);
         });
     };
 
-    const login = async (payload: TLogin) => {
+    /**
+     * Log a user in.
+     * @param payload The login details.
+     * @returns The error if any occured.
+     */
+    const login = async (payload: TLogin): Promise<string | null> => {
         return await postRequest(LOGIN_URL, payload, (response) => {
             setAuthentication(response.data);
         });
     };
 
-    const logout = async () => {
+    /**
+     * Log a user out.
+     * @returns The error if any occured.
+     */
+    const logout = async (): Promise<string | null> => {
         return await postRequest(LOGOUT_URL, {}, () => {
             setAuthentication(null);
             setSnackBarMessage({
@@ -47,7 +72,11 @@ const useAccount = () => {
         });
     };
 
-    const confirmEmail = async (id: string) => {
+    /**
+     * Confirm the email of a user.
+     * @returns The error if any occured.
+     */
+    const confirmEmail = async (id: string): Promise<string | null> => {
         return await postRequest(CONFIRMATION_URL, { id }, () => { });
     };
      

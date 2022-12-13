@@ -3,11 +3,16 @@ import { axiosPrivate } from "../api/axios";
 import useAuthentication from './useAuthentication';
 import useRefreshToken from './useRefreshToken';
 
+/**
+ * Hook to get an axios private instance with interceptors for private requests.
+ * @returns Axios private instance with interceptors.
+ */
 const useAxiosPrivate = () => {
     const refresh = useRefreshToken();
     const { authentication } = useAuthentication();
 
     useEffect(() => {
+        // add request interceptor
         const requestInterceptor = axiosPrivate.interceptors.request.use(
             (config) => {
                 if (config.headers && !config.headers['authorisation']) {
@@ -17,6 +22,7 @@ const useAxiosPrivate = () => {
             }, (error) => Promise.reject(error)
         );
 
+        // add a response interceptor
         const responseInterceptor = axiosPrivate.interceptors.response.use(
             response => response,
             async (error) => {
@@ -31,7 +37,7 @@ const useAxiosPrivate = () => {
             }
         );
 
-        return () => {
+        return () => { // remove both interceptors during cleanup
             axiosPrivate.interceptors.response.eject(responseInterceptor);
             axiosPrivate.interceptors.request.eject(requestInterceptor);
         }
