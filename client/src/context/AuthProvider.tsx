@@ -1,5 +1,8 @@
 import { createContext, useState } from "react";
 
+/**
+ * Type of object that is stored as authentication state.
+ */
 export type TAuthentication = {
     name: string;
     email: string;
@@ -7,6 +10,9 @@ export type TAuthentication = {
     accessToken: string;
 };
 
+/**
+ * Interface for context
+ */
 interface TAuthenticationContext {
     authentication: TAuthentication | null;
     setAuthentication: React.Dispatch<
@@ -14,6 +20,7 @@ interface TAuthenticationContext {
     >;
 }
 
+// creating the context
 const AuthContext = createContext<TAuthenticationContext>({
     authentication: null,
     setAuthentication: () => {},
@@ -23,6 +30,10 @@ type TChildren = {
     children: JSX.Element[] | JSX.Element;
 };
 
+/**
+ * Wrapper to provide authentication context to children components.
+ * @param children Child components of the context.
+ */
 export const AuthProvider = ({ children }: TChildren) => {
     const [authentication, setAuthentication] =
         useState<TAuthentication | null>(null);
