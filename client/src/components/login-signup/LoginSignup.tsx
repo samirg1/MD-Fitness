@@ -13,42 +13,54 @@ import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
 import Field, { FieldType } from "./Field";
 
+/**
+ * Login and signup page.
+ */
 const LoginSignup = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
-
-    const { setOptions: setSnackBarOptions } = useSnackBar();
-
-    const [loggingIn, setLoggingIn] = useState(true);
-
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const [loggingIn, setLoggingIn] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [loginSignupError, setLoginSignupError] = useState<string | null>(null);
+    const [loginSignupError, setLoginSignupError] = useState<string | null>(
+        null
+    );
 
+    const navigate = useNavigate();
+    const location = useLocation();
     const { signup, login } = useAccount();
     const keyDownHandler = useKeyDownHandler();
+    const { setOptions: setSnackBarOptions } = useSnackBar();
+    const from = location.state?.from?.pathname || "/"; // get from location if there is one
 
+    // clear error when fields change
     useEffect(() => setLoginSignupError(null), [name, email, password]);
 
+    /**
+     * Reset the values of the fields.
+     */
     const resetFields = () => {
         setName("");
         setEmail("");
         setPassword("");
     };
 
+    /**
+     * Toggle between logging in and signing up.
+     */
     const toggleLoggingIn = () => {
         setLoggingIn((previous) => !previous);
         resetFields();
     };
 
+    /**
+     * Submit the login / signup.
+     */
     const submit = async () => {
         setLoading(true);
-        let responseError: string | null = "";
+        let responseError: string | null = null;
 
+        // call auth functions
         if (loggingIn) {
             responseError = await login({
                 email: email,
@@ -62,14 +74,15 @@ const LoginSignup = () => {
             });
         }
 
+        // override default password error message
         if (responseError?.startsWith('"password" with value'))
             setLoginSignupError("invalid password");
         else setLoginSignupError(responseError);
 
         setLoading(false);
-        if (!responseError) {
+        if (!responseError) { // if no error show successful state
             resetFields();
-            navigate(from, { replace: true });
+            navigate(from, { replace: true }); // go back to where user was (if applicable)
             setSnackBarOptions({
                 message:
                     "Successfully " +
@@ -82,6 +95,7 @@ const LoginSignup = () => {
         }
     };
 
+    // when user presses enter the form submits
     useEffect(() => keyDownHandler("Enter", submit));
 
     return (
