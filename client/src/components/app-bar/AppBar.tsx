@@ -14,7 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import permissions from "../../config/permissionsList";
+import PERMISSIONS from "../../config/permissionsList";
 import useAuthentication from "../../hooks/useAuthentication";
 import AppBarIconText from "./AppBarIconText";
 import LogoutPopup from "./LogoutPopup";
@@ -48,7 +48,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const settings: string[] = [];
     if (authentication) {
         settings.push(AccountAction.accountPage);
-        if (authentication.permissions.includes(permissions.admin)) {
+        if (authentication.permissions.includes(PERMISSIONS.admin)) {
             settings.push(AccountAction.admin);
         }
         settings.push(AccountAction.logout);
