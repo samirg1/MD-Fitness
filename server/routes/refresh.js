@@ -1,6 +1,7 @@
 const router = require("express").Router();
+
 const User = require("../models/User");
-const jsonwebtoken = require("jsonwebtoken");
+const { verifyToken } = require("../api/jsonwebtoken");
 
 /**
  * Refresh the user's access token.
@@ -11,7 +12,7 @@ router.get("/", async (req, res) => {
     const refreshToken = cookies.jwt; // get the refresh token
 
     // evaluate jwt
-    jsonwebtoken.verify(
+    verifyToken(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         async (err, decoded) => {

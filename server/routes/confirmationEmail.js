@@ -1,5 +1,6 @@
-const { sendConfirmationEmail } = require("../api/mailer");
 const router = require("express").Router();
+
+const { sendConfirmationEmail } = require("../api/mailer");
 
 /**
  * Send confirmation email.

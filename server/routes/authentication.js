@@ -1,6 +1,7 @@
 const router = require("express").Router();
-const jsonwebtoken = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+
+const { hashPassword, comparePassword } = require("../api/bcrypt");
+const { signToken } = require("../api/jsonwebtoken");
 const User = require("../models/User");
 
 /**
@@ -13,15 +14,11 @@ router.post("/register", async (req, res) => {
     const emailExists = await User.findOne({ email: req.body.email }); // check if the email exists
     if (emailExists) return res.status(400).send("email already exists");
 
-    // hash and salt password
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
     // create new user
     const user = new User({
         name: req.body.name,
         email: req.body.email,
-        password: hashedPassword,
+        password: await hashPassword(req.body.password),
     });
 
     // save user
@@ -53,21 +50,21 @@ router.post("/login", async (req, res) => {
             );
 
     // check password
-    const validPassword = await bcrypt.compare(
+    const validPassword = await comparePassword(
         req.body.password,
         user.password
     );
     if (!validPassword) return res.status(400).send(errorMessage);
 
     // get an access token
-    const accessToken = jsonwebtoken.sign(
+    const accessToken = signToken(
         { email: user.email, permissions: user.permissions },
         process.env.TOKEN_SECRET,
         { expiresIn: "10s" }
     );
 
     // get a refresh token
-    const refreshToken = jsonwebtoken.sign(
+    const refreshToken = signToken(
         { email: user.email, permissions: user.permissions },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: "1d" }

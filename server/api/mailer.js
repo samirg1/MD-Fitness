@@ -1,5 +1,9 @@
 const nodemailer = require("nodemailer");
 
+/**
+ * Send a confirmation email to a user to activate their account.
+ * @param {string} id The id of the user to send the email to.
+ */
 const sendConfirmationEmail = async (id) => {
     const testAccount = await nodemailer.createTestAccount();
     const transporter = nodemailer.createTransport({
@@ -13,7 +17,7 @@ const sendConfirmationEmail = async (id) => {
     });
 
     // send mail with defined transport object
-    await transporter.sendMail(
+    transporter.sendMail(
         {
             from: '"MD-Fitness" <srgupta@bigpond.com>', // sender address
             to: "srgupta@bigpond.com", // list of receivers

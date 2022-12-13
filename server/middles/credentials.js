@@ -1,5 +1,6 @@
-const allowedOrigins = require("../config/allowedOrigins");
 const { Request, Response, NextFunction } = require("express");
+
+const allowedOrigins = require("../config/allowedOrigins");
 
 /**
  * Validate credentials for a request.

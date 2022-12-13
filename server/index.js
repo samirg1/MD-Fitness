@@ -1,13 +1,19 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const corsOptions = require("./config/corsOptions");
-const { mongoConnect } = require("./api/mongoose");
-const credentials = require("./middles/credentials");
-
-const app = express();
 require("dotenv").config();
 
+const corsOptions = require("./config/corsOptions");
+const { mongoConnect } = require("./api/mongoose");
+
+const credentials = require("./middles/credentials");
+const verifyTokenMiddleware = require("./middles/verifyAccessToken");
+
+const authenticationRoute = require("./routes/authentication");
+const refreshRoute = require("./routes/refresh");
+const usersRoute = require("./routes/users");
+
+const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(credentials);
@@ -15,13 +21,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/user", require("./routes/authentication"));
-app.use("/api/refresh", require("./routes/refresh"));
+app.use("/api/user", authenticationRoute);
+app.use("/api/refresh", refreshRoute);
 
-app.use(require("./middles/verifyJWT"));
-app.use("/api/users", require("./routes/users"));
+app.use(verifyTokenMiddleware);
+app.use("/api/users", usersRoute);
 
-// connect to db
+// connect to database
 mongoConnect(() => console.log("Connected to database"));
 
 app.listen(PORT, () => {

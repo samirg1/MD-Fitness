@@ -1,5 +1,5 @@
 const { createModel } = require("../api/mongoose");
-const { validateRegister, validateLogin } = require("../api/validation");
+const { validateRegister, validateLogin } = require("../api/joi");
 
 /**
  * User model for the database.
