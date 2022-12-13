@@ -4,12 +4,17 @@ import useAuthentication from "../hooks/useAuthentication";
 import useRefreshToken from "../hooks/useRefreshToken";
 import Loader from "./Loader";
 
+/**
+ * Peristent login wrapper for the application.
+ */
 const PersistentLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
+
     const refresh = useRefreshToken();
     const { authentication } = useAuthentication();
 
     useEffect(() => {
+        // get access token on reload if refresh token is still available
         const verifyRefreshToken = async () => {
             try {
                 await refresh();

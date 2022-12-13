@@ -2,6 +2,9 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import useSnackBar from "../hooks/useSnackBar";
 
+/**
+ * SnackBar component to display a message to the user. 
+ */
 const SnackBar = () => {
     const { options, setOptions } = useSnackBar();
 

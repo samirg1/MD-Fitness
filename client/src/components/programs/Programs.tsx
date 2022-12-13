@@ -1,6 +1,9 @@
 import useStripe from "../../hooks/useStripe";
 import Loader from "../Loader";
 
+/**
+ * Main component for the programs page.
+ */
 const Programs = () => {
     const { isLoading, redirectToCheckout } = useStripe();
 

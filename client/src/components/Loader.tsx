@@ -1,5 +1,9 @@
 import "./Loader.css";
 
+/**
+ * Loader animation to display on all screens during a loading event.
+ * @param isLoading Whether or not this component will display. 
+ */
 const Loader = ({ isLoading }: { isLoading: boolean }) => {
     return isLoading ? (
         <div className="animation-container">
