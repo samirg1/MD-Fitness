@@ -1,10 +1,13 @@
 const nodemailer = require("nodemailer");
 
+const User = require('../models/User');
+const { signToken } = require('./jsonwebtoken');
+
 /**
  * Send a confirmation email to a user to activate their account.
- * @param {string} token The id of the user to send the email to.
+ * @param {string} id The id of the user to send the email to.
  */
-const sendConfirmationEmail = async (token) => {
+const sendConfirmationEmail = async (id) => {
     const testAccount = await nodemailer.createTestAccount();
     const transporter = nodemailer.createTransport({
         host: "smtp.ethereal.email",
@@ -16,15 +19,22 @@ const sendConfirmationEmail = async (token) => {
         },
     });
 
+    const user = await User.findOne({ _id: id });
+    // create token
+    const confirmationToken = signToken(
+        { id: id },
+        process.env.CONFIRMATION_TOKEN_SECRET,
+        { expiresIn: "1h" }
+    );
+
     // send mail with defined transport object
     transporter.sendMail(
         {
             from: '"MD-Fitness" <srgupta@bigpond.com>', // sender address
-            to: "srgupta@bigpond.com", // list of receivers
+            to: `${user.email}`, // list of receivers
             subject: "Confirmation email", // Subject line
-            text: "Hello world?", // plain text body
-            html: `<b>Hello world?</b>
-            <p>Link here : <a target="_" href="${process.env.DOMAIN}/confirm-email/${token}">Link</a></p>
+            html: `<b>Hello ${user.name}</b>
+            <p>Link here : <a target="_" href="${process.env.DOMAIN}/confirm-email/${confirmationToken}">Link</a></p>
             `, // html body
         },
         (error, info) => {
