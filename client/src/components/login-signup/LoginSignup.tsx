@@ -90,6 +90,9 @@ const LoginSignup = () => {
         }
     };
 
+    /**
+     * Perform a user signup.
+     */
     const performSignup = async () => {
         const responseError = await signup({
             name: name,
@@ -140,11 +143,10 @@ const LoginSignup = () => {
     // when user presses enter the form submits
     useEffect(() => keyDownHandler("Enter", submit));
 
+    // listen for local storage changes
     useEffect(() => {
         window.addEventListener("storage", onStorageUpdate);
-        return () => {
-            window.removeEventListener("storage", onStorageUpdate);
-        };
+        return () => window.removeEventListener("storage", onStorageUpdate);
     });
 
     return (

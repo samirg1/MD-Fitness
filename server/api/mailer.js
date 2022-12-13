@@ -5,9 +5,9 @@ const { signToken } = require('./jsonwebtoken');
 
 /**
  * Send a confirmation email to a user to activate their account.
- * @param {string} id The id of the user to send the email to.
+ * @param {string} email The id of the user to send the email to.
  */
-const sendConfirmationEmail = async (id) => {
+const sendConfirmationEmail = async (email) => {
     const testAccount = await nodemailer.createTestAccount();
     const transporter = nodemailer.createTransport({
         host: "smtp.ethereal.email",
@@ -19,10 +19,11 @@ const sendConfirmationEmail = async (id) => {
         },
     });
 
-    const user = await User.findOne({ _id: id });
+    const user = await User.findOne({ email: email }); // get user from email
+    
     // create token
     const confirmationToken = signToken(
-        { id: id },
+        { id: user._id },
         process.env.CONFIRMATION_TOKEN_SECRET,
         { expiresIn: "1h" }
     );

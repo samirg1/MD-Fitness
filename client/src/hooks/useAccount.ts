@@ -42,7 +42,7 @@ const useAccount = () => {
      */
     const signup = async (payload: TSignup): Promise<string | null> => {
         return await postRequest(SIGNUP_URL, payload, (response) => {
-            confirmEmail(response.data._id);
+            confirmEmail(response.data.email);
         });
     };
 
@@ -76,8 +76,8 @@ const useAccount = () => {
      * Confirm the email of a user.
      * @returns The error if any occured.
      */
-    const confirmEmail = async (id: string): Promise<string | null> => {
-        return await postRequest(CONFIRMATION_URL, { id }, () => {});
+    const confirmEmail = async (email: string): Promise<string | null> => {
+        return await postRequest(CONFIRMATION_URL, { email }, () => {});
     };
 
     return { signup, login, logout, confirmEmail };
