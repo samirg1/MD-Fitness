@@ -19,8 +19,9 @@ const ConfirmEmail = () => {
          * Confirm an email of the user.
          */
         const confirm = async () => {
-            const response = await postRequest(CONFIRM_URL, {}, () => { });
-            if (!response) localStorage.setItem('verification', JSON.stringify(false));
+            const response = await postRequest(CONFIRM_URL, {}, () => {});
+            if (!response)
+                localStorage.setItem("verification", JSON.stringify(false));
             setError(response);
             setLoading(false);
         };

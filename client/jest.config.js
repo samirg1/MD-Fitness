@@ -3,6 +3,6 @@ module.exports = {
         "^.+\\.tsx?$": "ts-jest",
     },
     moduleNameMapper: {
-        '\\.(css|less)$': '<rootDir>/src/tests/__mocks__/styleMock.ts',
-      }
+        "\\.(css|less)$": "<rootDir>/src/tests/__mocks__/styleMock.ts",
+    },
 };

@@ -18,4 +18,5 @@ jobs:
         run: |
           cd client
           npm ci
+          npm run format
           npm test
