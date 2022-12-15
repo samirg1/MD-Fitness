@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { fireEvent, render } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import SnackBar from "../../components/SnackBar";
