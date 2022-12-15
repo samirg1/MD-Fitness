@@ -9,21 +9,19 @@ const SnackBar = () => {
     const { options, setOptions } = useSnackBar();
 
     return (
-        <>
-            <Snackbar
-                open={options !== null}
-                autoHideDuration={options?.duration || 3000}
-                onClose={() => setOptions(null)}
-                anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "center",
-                }}
-            >
-                <Alert severity={options?.type} sx={{ width: "100%" }}>
-                    {options?.message}
-                </Alert>
-            </Snackbar>
-        </>
+        <Snackbar
+            open={options !== null}
+            autoHideDuration={options?.duration || 3000}
+            onClose={() => setOptions(null)}
+            anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+            }}
+        >
+            <Alert severity={options?.type} sx={{ width: "100%" }}>
+                {options?.message}
+            </Alert>
+        </Snackbar>
     );
 };
 
