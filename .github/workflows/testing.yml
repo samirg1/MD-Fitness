@@ -1,4 +1,4 @@
-name: Node.js CI
+name: CI/CD client side
 on:
   push:
     branches: [ main ]
@@ -15,6 +15,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: cd client
+      - run: ls
       - run: npm i
       - run: npm run prettier
       - run: npm run linter
