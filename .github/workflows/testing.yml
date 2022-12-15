@@ -14,9 +14,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: cd client
-      - run: ls
-      - run: npm i
-      - run: npm run prettier
-      - run: npm run linter
-      - run: npm test
+      - name: Run formatting and tests
+        run: |
+          cd client
+          ls
+          npm ci
+          npm run prettier
+          npm run linter
+          npm test
