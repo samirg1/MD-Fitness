@@ -1,5 +1,5 @@
 {
-    "name": "gym-web-app",
+    "name": "md-fitness",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -60,6 +60,7 @@
         "babel-jest": "^29.3.1",
         "jest": "^29.3.1",
         "jest-environment-jsdom": "^29.3.1",
+        "node-notifier": "^10.0.1",
         "react-test-renderer": "^18.2.0"
     }
 }
