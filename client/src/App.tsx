@@ -11,7 +11,7 @@ import PersistentLogin from "./components/PersistentLogin";
 import Programs from "./components/programs/Programs";
 import RequireAuthentication from "./components/RequireAuthentication";
 import Layout from "./config/Layout";
-import PERMISSIONS from "./config/permissionsList";
+import PERMISSIONS from "./config/permissions";
 
 /**
  * Master component for the application.

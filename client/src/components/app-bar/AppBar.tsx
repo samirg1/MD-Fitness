@@ -14,24 +14,13 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PERMISSIONS from "../../config/permissionsList";
+import LINKS from "../../config/links";
+import { PUBLIC_SETTINGS, ADMIN_SETTINGS, USER_SETTINGS } from "../../config/pages";
+import PERMISSIONS from "../../config/permissions";
+import { TAuthentication } from "../../context/AuthProvider";
 import useAuthentication from "../../hooks/useAuthentication";
 import AppBarIconText from "./AppBarIconText";
 import LogoutPopup from "./LogoutPopup";
-
-const LINKS = {
-    Instagram: "https://instagram.com/mdonaldfit/",
-};
-
-/**
- * The currently available options in the settings menu.
- */
-enum AccountAction {
-    accountPage = "Account",
-    logout = "Logout",
-    loginSignup = "Login / Signup",
-    admin = "Admin",
-}
 
 /**
  * Responsive app bar component that changes depending on screen width.
@@ -45,16 +34,18 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const navigate = useNavigate();
     const { authentication } = useAuthentication();
 
-    const settings: string[] = [];
-    if (authentication) {
-        settings.push(AccountAction.accountPage);
-        if (authentication.permissions.includes(PERMISSIONS.admin)) {
-            settings.push(AccountAction.admin);
-        }
-        settings.push(AccountAction.logout);
-    } else {
-        settings.push(AccountAction.loginSignup);
+    const getSettings = (authentication: TAuthentication | null): string[] => {
+        if (!authentication) 
+            return Object.values(PUBLIC_SETTINGS);
+        
+        if (!authentication.permissions.includes(PERMISSIONS.admin))
+            return Object.values(USER_SETTINGS)
+        
+        return Object.values(ADMIN_SETTINGS);
     }
+
+    const settings: string[] = getSettings(authentication);
+    
 
     /**
      * Opens the navigation menu.
@@ -101,16 +92,16 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
      */
     const handleSettingClicked = (setting: string) => {
         switch (setting) {
-            case AccountAction.loginSignup:
+            case PUBLIC_SETTINGS.loginSignup:
                 changePage("login-signup");
                 break;
-            case AccountAction.logout:
+            case USER_SETTINGS.logout:
                 setLogoutPopupOpen(true);
                 break;
-            case AccountAction.admin:
+            case ADMIN_SETTINGS.admin:
                 changePage("admin");
                 break;
-            case AccountAction.accountPage:
+            case USER_SETTINGS.accountPage:
                 changePage("account");
                 break;
             default:
@@ -211,7 +202,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                         {/* Instagram link */}
                         <Tooltip title="Open Instagram account">
                             <IconButton
-                                onClick={() => openLink(LINKS.Instagram)}
+                                onClick={() => openLink(LINKS.instagram)}
                             >
                                 <InstagramIcon sx={{ color: "white" }} />
                             </IconButton>

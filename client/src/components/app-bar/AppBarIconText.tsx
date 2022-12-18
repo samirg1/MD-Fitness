@@ -1,8 +1,6 @@
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-
-const APP_NAME = "MD FITNESS";
-const APP_ICON: string = require("../../img/icon.jpg");
+import { APP_ICON, APP_NAME } from "../../config/details";
 
 /**
  * The app bar icon and title component.
