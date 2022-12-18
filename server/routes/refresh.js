@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const User = require("../models/User");
-const { verifyToken } = require("../api/jsonwebtoken");
+const { verifyToken, signToken } = require("../api/jsonwebtoken");
 
 /**
  * Refresh the user's access token.
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
             const permissions = Object.values(foundUser.permissions); // get user's permissions
 
             // create new access token
-            const accessToken = jsonwebtoken.sign(
+            const accessToken = signToken(
                 { email: decoded.email, permissions: permissions },
                 process.env.TOKEN_SECRET,
                 { expiresIn: "10s" }
