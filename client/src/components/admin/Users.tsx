@@ -4,6 +4,7 @@ import { getPrivateRequest } from "../../api/server";
 import useAuthentication from "../../hooks/useAuthentication";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useSnackBar from "../../hooks/useSnackBar";
+import Loader from "../Loader";
 
 const USERS_URL = "/users";
 
@@ -23,6 +24,7 @@ type TUsers = {
  */
 const Users = () => {
     const [users, setUsers] = useState<TUsers[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
@@ -32,13 +34,17 @@ const Users = () => {
 
     // get users with a private request
     useEffect(() => {
+        setLoading(true);
         let isMounted = true;
         const controller = new AbortController();
 
         getPrivateRequest(
             USERS_URL,
             controller.signal,
-            (response) => isMounted && setUsers(response.data),
+            (response) => {
+                isMounted && setUsers(response.data);
+                setLoading(false);
+            },
             () => {
                 setAuthentication(null);
                 setSnackBarOptions({
@@ -66,6 +72,7 @@ const Users = () => {
 
     return (
         <article>
+            <Loader isLoading={loading}/>
             <h2>Users List</h2>
             {users.length ? (
                 <ul>

@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
 import useAccount from "../../hooks/useAccount";
@@ -48,7 +48,7 @@ const AccountVerification = ({ email }: { email: string }) => {
         });
 
         setTimeLeft(INTERVAL_LENGTH);
-        setIntervalActive(!intervalActive);
+        setIntervalActive(true);
     };
 
     return (
