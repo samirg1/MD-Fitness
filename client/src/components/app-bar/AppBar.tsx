@@ -12,15 +12,20 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import React, { useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LINKS from "../../config/links";
-import { PUBLIC_SETTINGS, ADMIN_SETTINGS, USER_SETTINGS } from "../../config/pages";
+import {
+    ADMIN_SETTINGS,
+    PUBLIC_SETTINGS,
+    USER_SETTINGS,
+} from "../../config/pages";
 import PERMISSIONS from "../../config/permissions";
 import { TAuthentication } from "../../context/AuthProvider";
 import useAuthentication from "../../hooks/useAuthentication";
+import Loader from "../Loader";
 import AppBarIconText from "./AppBarIconText";
-import LogoutPopup from "./LogoutPopup";
+const LogoutPopup = lazy(() => import("./LogoutPopup"));
 
 /**
  * Responsive app bar component that changes depending on screen width.
@@ -35,17 +40,15 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     const { authentication } = useAuthentication();
 
     const getSettings = (authentication: TAuthentication | null): string[] => {
-        if (!authentication) 
-            return Object.values(PUBLIC_SETTINGS);
-        
+        if (!authentication) return Object.values(PUBLIC_SETTINGS);
+
         if (!authentication.permissions.includes(PERMISSIONS.admin))
-            return Object.values(USER_SETTINGS)
-        
+            return Object.values(USER_SETTINGS);
+
         return Object.values(ADMIN_SETTINGS);
-    }
+    };
 
     const settings: string[] = getSettings(authentication);
-    
 
     /**
      * Opens the navigation menu.
@@ -121,10 +124,12 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     return (
         <AppBar position="static" color="primary">
             {logoutPopupOpen ? (
-                <LogoutPopup
-                    open={logoutPopupOpen}
-                    handleClose={() => setLogoutPopupOpen(false)}
-                />
+                <Suspense fallback={<Loader isLoading />}>
+                    <LogoutPopup
+                        open={logoutPopupOpen}
+                        handleClose={() => setLogoutPopupOpen(false)}
+                    />
+                </Suspense>
             ) : null}
             <Container maxWidth="xl">
                 <Toolbar disableGutters>

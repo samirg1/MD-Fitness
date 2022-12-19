@@ -1,3 +1,4 @@
+import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -7,7 +8,6 @@ import { useEffect, useState } from "react";
 import useAccount from "../../hooks/useAccount";
 import useKeyDownHandler from "../../hooks/useKeyDownHandler";
 import useSnackBar from "../../hooks/useSnackBar";
-import Loader from "../Loader";
 
 const popupStyle = {
     position: "absolute" as "absolute",
@@ -59,7 +59,6 @@ const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
 
     return (
         <>
-            <Loader isLoading={isLoggingOut} />
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -82,18 +81,20 @@ const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
                                 variant="contained"
                                 sx={{ mt: 2 }}
                                 onClick={handleClose}
+                                disabled={isLoggingOut}
                             >
                                 Cancel
                             </Button>
                         </Grid>
                         <Grid item xs={6} style={{ textAlign: "center" }}>
                             <Button
+                                disabled={isLoggingOut}
                                 variant="contained"
                                 sx={{ mt: 2 }}
                                 color="error"
                                 onClick={handleLogout}
                             >
-                                Logout
+                                Logout {isLoggingOut ? <CircularProgress size={20} color="inherit" /> : null}
                             </Button>
                         </Grid>
                     </Grid>
