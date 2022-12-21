@@ -3,7 +3,7 @@
  */
 export const PUBLIC_SETTINGS = {
     loginSignup: "Login / Signup",
-};
+} as const;
 
 /**
  * The user settings menu options.
@@ -12,20 +12,20 @@ export const USER_SETTINGS = {
     loginSignup: "Login / Signup",
     accountPage: "Account",
     logout: "Logout",
-};
+} as const;
 
 /**
  * The admin settings menu options.
  */
 export const ADMIN_SETTINGS = {
-    accountPage: "Account",
+    accountPage: "Account" as const,
     admin: "Admin",
     logout: "Logout",
-};
+} as const;
 
 /**
  * The publicly available pages
  */
 export const PUBLIC_PAGES = {
-    programs: "Programs"
-}
+    programs: "Programs",
+} as const;

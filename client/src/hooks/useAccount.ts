@@ -11,14 +11,6 @@ const SEND_CONFIRM_URL = "/user/confirmation/send";
 const CONFIRM_URL = "/user/confirmation/confirm/"
 
 /**
- * Login object type.
- */
-export type TLogin = {
-    email: string;
-    password: string;
-};
-
-/**
  * Signup object type.
  */
 export type TSignup = {
@@ -26,6 +18,11 @@ export type TSignup = {
     email: string;
     password: string;
 };
+/**
+ * Login object type.
+ */
+export type TLogin = Omit<TSignup, "name">
+
 
 /**
  * Hook to use account functionality.
