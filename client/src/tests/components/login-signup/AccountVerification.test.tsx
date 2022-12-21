@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import AccountVerification from "../../../components/login-signup/AccountVerification";
 
-const accountReturn: any[] = [{ confirmEmail: () => {} }];
+const accountReturn: any[] = [{ sendConfirmationEmail: () => {} }];
 const snackbarReturn: any[] = [{ setOptions: () => {} }];
 const timerState = [120, (val: any) => (timerState[0] = val)];
 
@@ -76,7 +76,7 @@ describe("resend buton", () => {
     test("does button fire confirm email function", async () => {
         const mockConfirmEmail = jest.fn(() => "");
         const mockSetOptions = jest.fn();
-        accountReturn[0].confirmEmail = mockConfirmEmail;
+        accountReturn[0].sendConfirmationEmail = mockConfirmEmail;
         snackbarReturn[0] = { setOptions: mockSetOptions };
         timerState[0] = 0;
         render(<AccountVerification email="test" />);
@@ -93,7 +93,7 @@ describe("resend buton", () => {
     test("confirm email throws", async () => {
         const mockConfirmEmail = jest.fn(() => "error");
         const mockSetOptions = jest.fn();
-        accountReturn[0].confirmEmail = mockConfirmEmail;
+        accountReturn[0].sendConfirmationEmail = mockConfirmEmail;
         snackbarReturn[0] = { setOptions: mockSetOptions };
         timerState[0] = 0;
         render(<AccountVerification email="test" />);
