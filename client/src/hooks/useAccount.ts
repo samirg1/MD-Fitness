@@ -7,7 +7,8 @@ import useSnackBar from "./useSnackBar";
 const SIGNUP_URL = "/user/register";
 const LOGIN_URL = "/user/login";
 const LOGOUT_URL = "/user/logout";
-const CONFIRMATION_URL = "/user/confirmation";
+const SEND_CONFIRM_URL = "/user/confirmation/send";
+const CONFIRM_URL = "/user/confirmation/confirm/"
 
 /**
  * Login object type.
@@ -42,7 +43,7 @@ const useAccount = () => {
      */
     const signup = async (payload: TSignup): Promise<string | null> => {
         return await postRequest(SIGNUP_URL, payload, (response) => {
-            confirmEmail(response.data.email);
+            sendConfirmationEmail(response.data.email);
         });
     };
 
@@ -73,14 +74,23 @@ const useAccount = () => {
     };
 
     /**
-     * Confirm the email of a user.
+     * Send confirmation email.
      * @returns The error if any occured.
      */
-    const confirmEmail = async (email: string): Promise<string | null> => {
-        return await postRequest(CONFIRMATION_URL, { email }, () => {});
+    const sendConfirmationEmail = async (email: string): Promise<string | null> => {
+        return await postRequest(SEND_CONFIRM_URL, { email }, () => {});
     };
 
-    return { signup, login, logout, confirmEmail };
+    /**
+     * Confirm user's email.
+     * @param token The token that contains the user's id.
+     * @returns The error if any occured.
+     */
+    const confirmEmail = async (token: string) => {
+        return await postRequest(CONFIRM_URL + token, {}, () => { });
+    }
+
+    return { signup, login, logout, sendConfirmationEmail, confirmEmail };
 };
 
 export default useAccount;

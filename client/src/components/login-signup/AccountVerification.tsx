@@ -14,7 +14,7 @@ const AccountVerification = ({ email }: { email: string }) => {
     const [timeLeft, setTimeLeft] = useState(INTERVAL_LENGTH);
     const [intervalActive, setIntervalActive] = useState(false);
 
-    const { confirmEmail } = useAccount();
+    const { sendConfirmationEmail } = useAccount();
     const { setOptions: setSnackBarOptions } = useSnackBar();
 
     // interval to count down when the user can resend confirmation
@@ -33,7 +33,7 @@ const AccountVerification = ({ email }: { email: string }) => {
      * Resend the confirmation email.
      */
     const resend = async () => {
-        const response = await confirmEmail(email);
+        const response = await sendConfirmationEmail(email);
         if (response) {
             // if error
             return setSnackBarOptions({

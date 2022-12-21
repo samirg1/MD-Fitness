@@ -59,14 +59,6 @@ const fieldRegex = {
  */
 const Field = ({ name, value, setValue, disabled, type }: TField) => {
     const [showPassword, setShowPassword] = useState(false);
-
-    /**
-     * Toggle the showing of the password field.
-     */
-    const toggleShowPassword = () => {
-        setShowPassword((previous) => !previous);
-    };
-
     return (
         <>
             <Typography>{name}</Typography>
@@ -92,7 +84,7 @@ const Field = ({ name, value, setValue, disabled, type }: TField) => {
                                     {/* Visibility button */}
                                     <IconButton
                                         disabled={disabled}
-                                        onClick={toggleShowPassword}
+                                        onClick={() => setShowPassword((previous) => !previous)}
                                         edge="end"
                                     >
                                         {showPassword ? (

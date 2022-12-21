@@ -9,7 +9,7 @@ const { mongoConnect } = require("./api/mongoose");
 const credentials = require("./middles/credentials");
 const verifyTokenMiddleware = require("./middles/verifyAccessToken");
 
-const authenticationRoute = require("./routes/authentication");
+const authenticationRoute = require("./routes/user/authentication");
 const refreshRoute = require("./routes/refresh");
 const usersRoute = require("./routes/users");
 

@@ -1,9 +1,9 @@
 const router = require("express").Router();
 
-const { hashPassword, comparePassword } = require("../api/bcrypt");
-const { signToken, verifyToken } = require("../api/jsonwebtoken");
-const confirmationRoute = require("./confirmationEmail");
-const User = require("../models/User");
+const { hashPassword, comparePassword } = require("../../api/bcrypt");
+const { signToken } = require("../../api/jsonwebtoken");
+const confirmationRouter = require("./confirmation");
+const User = require("../../models/User");
 
 /**
  * Register a new user.
@@ -99,31 +99,6 @@ router.post("/logout", async (req, res) => {
     res.sendStatus(204);
 });
 
-/**
- * Confirm and activate a user's account.
- */
-router.post("/confirmEmail/:token", async (req, res) => {
-    const { token } = req.params; // get token param
-
-    // verify token to get id
-    let id;
-    verifyToken(token, process.env.CONFIRMATION_TOKEN_SECRET, (error, decoded) => {
-        if (error) return res.status(400).send("Link is not valid");
-        if (!decoded) return res.status(400).send("Link is not valid");
-        id = decoded.id;
-    });
-
-    try {
-        const user = await User.findOne({ _id: id }); // find the user
-        if (!user) return res.status(400).send("Specified user not found");
-        user.activated = true; // activate the user
-        await user.save();
-    } catch (error) {
-        return res.status(400).send("Specified user not found");
-    }
-    res.sendStatus(204);
-});
-
-router.use("/confirmation", confirmationRoute); // for sending confirmation email
+router.use("/confirmation", confirmationRouter); // for sending and accepting confirmation email
 
 module.exports = router;

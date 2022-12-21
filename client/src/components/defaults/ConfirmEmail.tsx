@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { postRequest } from "../../api/server";
+import useAccount from "../../hooks/useAccount";
 import Loader from "../Loader";
 import DefaultPage from "./DefaultPage";
 
@@ -12,14 +12,14 @@ const ConfirmEmail = () => {
     const [error, setError] = useState<string | null>(null);
 
     const { token } = useParams();
-    const CONFIRM_URL = `/user/confirmEmail/${token}`;
+    const { confirmEmail } = useAccount();
 
     useEffect(() => {
         /**
          * Confirm an email of the user.
          */
         const confirm = async () => {
-            const response = await postRequest(CONFIRM_URL, {}, () => {});
+            const response = await confirmEmail(token ?? "");
             if (!response)
                 localStorage.setItem("verification", JSON.stringify(false));
             setError(response);
@@ -27,7 +27,7 @@ const ConfirmEmail = () => {
         };
 
         confirm();
-    }, [CONFIRM_URL]);
+    }, [confirmEmail, token]);
 
     return (
         <>
