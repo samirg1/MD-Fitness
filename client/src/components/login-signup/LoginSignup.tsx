@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAccount from "../../hooks/useAccount";
 import useKeyDownHandler from "../../hooks/useKeyDownHandler";
@@ -34,6 +34,13 @@ const LoginSignup = () => {
     const keyDownHandler = useKeyDownHandler();
     const { setOptions: setSnackBarOptions } = useSnackBar();
     const from = location.state?.from?.pathname || "/"; // get from location if there is one
+
+    const emailInputRef = useRef<HTMLInputElement>();
+    const nameInputRef = useRef<HTMLInputElement>();
+    useEffect(() => {
+        loggingIn ? emailInputRef.current?.focus() : nameInputRef.current?.focus();
+    }, [loggingIn])
+
 
     // clear error when fields change
     useEffect(() => setLoginSignupError(null), [name, email, password]);
@@ -74,10 +81,7 @@ const LoginSignup = () => {
             email: email,
             password: password,
         });
-        // override default password error message
-        if (responseError?.startsWith('"password" with value'))
-            setLoginSignupError("invalid password");
-        else setLoginSignupError(responseError);
+        setLoginSignupError(responseError);
 
         setLoading(false);
         if (!responseError) {
@@ -101,7 +105,7 @@ const LoginSignup = () => {
         });
         // override default password error message
         if (responseError?.startsWith('"password" with value'))
-            setLoginSignupError("invalid password");
+            setLoginSignupError("invalid password - must be 8 characters long with an uppercase letter, lowercase letter, number and special character");
         else setLoginSignupError(responseError);
 
         setLoading(false);
@@ -191,6 +195,7 @@ const LoginSignup = () => {
                                 setValue={setName}
                                 disabled={loading || verifying}
                                 type={FieldType.text}
+                                ref={nameInputRef}
                             />
                         </Grid>
                     ) : null}
@@ -201,6 +206,7 @@ const LoginSignup = () => {
                             setValue={setEmail}
                             disabled={loading || verifying}
                             type={FieldType.email}
+                            ref={emailInputRef}
                         />
                     </Grid>
                     <Grid item xs={12}>

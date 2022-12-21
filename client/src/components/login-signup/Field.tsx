@@ -1,12 +1,11 @@
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 
 /**
  * The prop types of a field for login and signup forms.
@@ -57,18 +56,23 @@ const fieldRegex = {
  * @param disabled Whether the field is disabled or not.
  * @param type The type of the field.
  */
-const Field = ({ name, value, setValue, disabled, type }: TField) => {
+const Field = (
+    { name, value, setValue, disabled, type }: TField,
+    ref: React.ForwardedRef<HTMLInputElement | undefined>
+) => {
     const [showPassword, setShowPassword] = useState(false);
     return (
         <>
             <Typography>{name}</Typography>
-            <FormControl variant="outlined">
-                <Tooltip
-                    title={fieldTooltips[type]}
-                    enterTouchDelay={0} // for mobile devices
-                    leaveTouchDelay={5000} // for mobile devices
-                >
+            <Tooltip
+                title={fieldTooltips[type]}
+                enterTouchDelay={0} // for mobile devices
+                leaveTouchDelay={5000} // for mobile devices
+            >
+                <div style={{ display: "inline" }}>
                     <OutlinedInput
+                        inputRef={ref}
+                        required
                         error={!value.match(fieldRegex[type])}
                         disabled={disabled}
                         type={
@@ -84,7 +88,11 @@ const Field = ({ name, value, setValue, disabled, type }: TField) => {
                                     {/* Visibility button */}
                                     <IconButton
                                         disabled={disabled}
-                                        onClick={() => setShowPassword((previous) => !previous)}
+                                        onClick={() =>
+                                            setShowPassword(
+                                                (previous) => !previous
+                                            )
+                                        }
                                         edge="end"
                                     >
                                         {showPassword ? (
@@ -97,10 +105,10 @@ const Field = ({ name, value, setValue, disabled, type }: TField) => {
                             ) : null
                         }
                     />
-                </Tooltip>
-            </FormControl>
+                </div>
+            </Tooltip>
         </>
     );
 };
 
-export default Field;
+export default forwardRef(Field);

@@ -25,16 +25,19 @@ describe("rendering with proper types", () => {
     test
   </p>
   <div
-    class="MuiFormControl-root css-1nrlq1o-MuiFormControl-root"
+    aria-label="Maximum 50 characters"
+    class=""
+    data-mui-internal-clone-element="true"
+    style="display: inline;"
   >
     <div
-      aria-label="Maximum 50 characters"
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
-      data-mui-internal-clone-element="true"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+      required=""
     >
       <input
         aria-invalid="false"
         class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+        required=""
         type="text"
         value="some value"
       />
@@ -68,21 +71,24 @@ describe("rendering with proper types", () => {
     test
   </p>
   <div
-    class="MuiFormControl-root css-1nrlq1o-MuiFormControl-root"
+    aria-label="Minimum 8 characters with a lowercase and uppercase letter, a number and a symbol"
+    class=""
+    data-mui-internal-clone-element="true"
+    style="display: inline;"
   >
     <div
-      aria-label="Minimum 8 characters with a lowercase and uppercase letter, a number and a symbol"
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-error MuiInputBase-formControl MuiInputBase-adornedEnd css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root"
-      data-mui-internal-clone-element="true"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-error MuiInputBase-adornedEnd css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root"
+      required=""
     >
       <input
         aria-invalid="true"
         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
+        required=""
         type="password"
         value="some value"
       />
       <div
-        class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+        class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-1laqsz7-MuiInputAdornment-root"
       >
         <button
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
@@ -135,16 +141,19 @@ describe("rendering with proper types", () => {
     test
   </p>
   <div
-    class="MuiFormControl-root css-1nrlq1o-MuiFormControl-root"
+    aria-label="Enter a valid email"
+    class=""
+    data-mui-internal-clone-element="true"
+    style="display: inline;"
   >
     <div
-      aria-label="Enter a valid email"
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-error MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
-      data-mui-internal-clone-element="true"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-error css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+      required=""
     >
       <input
         aria-invalid="true"
         class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+        required=""
         type="email"
         value="some value"
       />
