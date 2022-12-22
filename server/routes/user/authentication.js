@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const { hashPassword, comparePassword } = require("../../api/bcrypt");
-const { signToken } = require("../../api/jsonwebtoken");
+const { signJWT } = require("../../api/jsonwebtoken");
 const confirmationRouter = require("./confirmation");
 const User = require("../../models/User");
 
@@ -58,14 +58,14 @@ router.post("/login", async (req, res) => {
     if (!validPassword) return res.status(400).send(errorMessage);
 
     // get an access token
-    const accessToken = signToken(
+    const accessToken = signJWT(
         { email: user.email, permissions: user.permissions },
         process.env.TOKEN_SECRET,
-        { expiresIn: "10s" }
+        { expiresIn: "10m" }
     );
 
     // get a refresh token
-    const refreshToken = signToken(
+    const refreshToken = signJWT(
         { email: user.email, permissions: user.permissions },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: "1d" }

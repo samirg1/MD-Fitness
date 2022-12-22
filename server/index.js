@@ -5,9 +5,10 @@ require("dotenv").config();
 
 const corsOptions = require("./config/corsOptions");
 const { mongoConnect } = require("./api/mongoose");
+const graphQlRoot = require("./schemas/root");
 
 const credentials = require("./middles/credentials");
-const verifyTokenMiddleware = require("./middles/verifyAccessToken");
+// const verifyTokenMiddleware = require("./middles/verifyAccessToken");
 
 const authenticationRoute = require("./routes/user/authentication");
 const refreshRoute = require("./routes/refresh");
@@ -16,15 +17,18 @@ const usersRoute = require("./routes/users");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+
 app.use(credentials);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
+app.use("/graphql", graphQlRoot);
 
 app.use("/api/user", authenticationRoute);
 app.use("/api/refresh", refreshRoute);
 
-app.use(verifyTokenMiddleware);
+// app.use(verifyTokenMiddleware);
+
 app.use("/api/users", usersRoute);
 
 // connect to database

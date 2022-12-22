@@ -7,7 +7,7 @@ const jsonwebtoken = require("jsonwebtoken");
  * @param {object | undefined} options Additional options for signing.
  * @returns {string} The signed token.
  */
-const signToken = (payload, secret, options = undefined) => {
+const signJWT = (payload, secret, options = undefined) => {
     return jsonwebtoken.sign(payload, secret, options);
 };
 
@@ -17,10 +17,10 @@ const signToken = (payload, secret, options = undefined) => {
  * @param {string} secret The secret to verify against.
  * @param {Function} callback The callback function to run once the token has been verified.
  */
-const verifyToken = (token, secret, callback) => {
+const verifyJWT = (token, secret, callback) => {
     jsonwebtoken.verify(token, secret, (error, decoded) =>
         callback(error, decoded)
     );
 };
 
-module.exports = { signToken, verifyToken };
+module.exports = { signJWT, verifyJWT };

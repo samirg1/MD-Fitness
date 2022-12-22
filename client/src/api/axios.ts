@@ -13,7 +13,7 @@ export default axios.create({
 
 // private axios instance
 export const axiosPrivate = axios.create({
-    baseURL: BASE_URL,
+    baseURL: "http://localhost:3001/",
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
 });

@@ -39,11 +39,18 @@ export const postRequest = async (
 export const getPrivateRequest = async (
     url: string,
     signal: AbortSignal,
+    query: string,
     onSuccess: (response: AxiosResponse) => void,
     onFailure: () => void
 ): Promise<void> => {
     try {
-        const response = await axiosPrivate.get(url, { signal: signal });
+        const response = await axiosPrivate(url, {
+            method: "POST",
+            signal: signal,
+            data: {
+                query: query,
+            },
+        });
         onSuccess(response);
     } catch (error: any) {
         if (error.code !== "ERR_CANCELED") onFailure(); // don't fail if get is cancelled

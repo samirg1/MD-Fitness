@@ -1,7 +1,7 @@
 const confirmationRouter = require("express").Router();
 
 const { sendConfirmationEmail } = require("../../api/mailer");
-const { verifyToken } = require("../../api/jsonwebtoken");
+const { verifyJWT } = require("../../api/jsonwebtoken");
 const User = require("../../models/User");
 
 /**
@@ -18,7 +18,7 @@ confirmationRouter.post("/confirm/:token", async (req, res) => {
 
     // verify token to get id
     let id;
-    verifyToken(token, process.env.CONFIRMATION_TOKEN_SECRET, (error, decoded) => {
+    verifyJWT(token, process.env.CONFIRMATION_TOKEN_SECRET, (error, decoded) => {
         if (error) return res.status(400).send("Link is not valid");
         if (!decoded) return res.status(400).send("Link is not valid");
         id = decoded.id;

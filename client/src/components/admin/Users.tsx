@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getPrivateRequest } from "../../api/server";
@@ -7,6 +8,19 @@ import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
 
 const USERS_URL = "/users";
+
+const endPoint = 'http://localhost:3001/graphql';
+const query = `
+{
+    users {
+        _id
+        name
+        email
+        dateCreated
+        permissions
+    }
+}
+`;
 
 /**
  * Type of user that is returned from database.
@@ -23,6 +37,11 @@ type TUsers = {
  * Users component for displaying the current users of the application in the database.
  */
 const Users = () => {
+    
+
+
+
+
     const [users, setUsers] = useState<TUsers[]>([]);
     const [loading, setLoading] = useState(false);
 
@@ -39,10 +58,12 @@ const Users = () => {
         const controller = new AbortController();
 
         getPrivateRequest(
-            USERS_URL,
+            endPoint,
             controller.signal,
+            query,
             (response) => {
-                isMounted && setUsers(response.data);
+                console.log(response.data.data)
+                isMounted && setUsers(response.data.data.users);
                 setLoading(false);
             },
             () => {

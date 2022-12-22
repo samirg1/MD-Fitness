@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const User = require("../models/User");
-const { verifyToken, signToken } = require("../api/jsonwebtoken");
+const { verifyJWT, signJWT } = require("../api/jsonwebtoken");
 
 /**
  * Refresh the user's access token.
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     const refreshToken = cookies.jwt; // get the refresh token
 
     // evaluate jwt
-    verifyToken(
+    verifyJWT(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         async (err, decoded) => {
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
             const permissions = Object.values(foundUser.permissions); // get user's permissions
 
             // create new access token
-            const accessToken = signToken(
+            const accessToken = signJWT(
                 { email: decoded.email, permissions: permissions },
                 process.env.TOKEN_SECRET,
                 { expiresIn: "10s" }
