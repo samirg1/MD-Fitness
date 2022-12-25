@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const corsOptions = require("./config/corsOptions");
 const { mongoConnect } = require("./api/mongoose");
-const graphQlRoot = require("./schemas/root");
+const graphQlRoot = require("./graphql/graphql");
 
 const credentials = require("./middles/credentials");
 // const verifyTokenMiddleware = require("./middles/verifyAccessToken");
@@ -16,7 +16,6 @@ const usersRoute = require("./routes/users");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 
 app.use(credentials);
 app.use(cors(corsOptions));
