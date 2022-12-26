@@ -1,4 +1,5 @@
 const { GraphQLObjectType } = require("graphql");
+
 const refresh = require("./refresh");
 const users = require("./users");
 

@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 
-const User = require('../models/User');
-const { signToken } = require('./jsonwebtoken');
+const User = require("../models/User");
+const { signToken } = require("./jsonwebtoken");
 
 /**
  * Send a confirmation email to a user to activate their account.
@@ -20,13 +20,9 @@ const sendConfirmationEmail = async (email) => {
     });
 
     const user = await User.findOne({ email: email }); // get user from email
-    
+
     // create token
-    const confirmationToken = signToken(
-        { id: user._id },
-        process.env.CONFIRMATION_TOKEN_SECRET,
-        { expiresIn: "1h" }
-    );
+    const confirmationToken = signToken({ id: user._id }, "confirmation");
 
     // send mail with defined transport object
     transporter.sendMail(
@@ -42,7 +38,7 @@ const sendConfirmationEmail = async (email) => {
             if (error) return error.message;
             console.log("Message sent: %s", info.messageId);
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-            return '';
+            return "";
         }
     );
 };

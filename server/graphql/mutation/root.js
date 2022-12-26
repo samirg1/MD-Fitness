@@ -1,10 +1,13 @@
 const { GraphQLObjectType } = require("graphql");
 const authentication = require("./authentication");
 
-const MutationQueryType = new GraphQLObjectType({
+/**
+ * Root type for GraphQL mutations.
+ */
+const RootMutationType = new GraphQLObjectType({
     name: "Mutation",
     description: "Root Mutation",
     fields: () => ({ ...authentication }),
 });
 
-module.exports = MutationQueryType;
+module.exports = RootMutationType;

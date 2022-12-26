@@ -3,7 +3,7 @@ const { GraphQLBoolean, GraphQLString } = require("graphql");
 const UserType = require("../types/User");
 const UserModel = require("../../models/User");
 const { hashPassword, comparePassword } = require("../../api/bcrypt");
-const { signAccessToken, signRefreshToken } = require("../../api/jsonwebtoken");
+const { signToken } = require("../../api/jsonwebtoken");
 
 const authentication = {
     login: {
@@ -36,16 +36,22 @@ const authentication = {
             if (!validPassword) throw new Error(errorMessage);
 
             // get an access token
-            const accessToken = signAccessToken({
-                email: user.email,
-                permissions: user.permissions,
-            });
+            const accessToken = signToken(
+                {
+                    email: user.email,
+                    permissions: user.permissions,
+                },
+                "access"
+            );
 
             // get a refresh token
-            const refreshToken = signRefreshToken({
-                email: user.email,
-                permissions: user.permissions,
-            });
+            const refreshToken = signToken(
+                {
+                    email: user.email,
+                    permissions: user.permissions,
+                },
+                "refresh"
+            );
 
             // store refresh token in secure cookie
             res.cookie("jwt", refreshToken, {

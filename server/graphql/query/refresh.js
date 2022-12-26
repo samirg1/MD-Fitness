@@ -1,10 +1,11 @@
 const { GraphQLString } = require("graphql");
-const {
-    signAccessToken,
-    verifyRefreshToken,
-} = require("../../api/jsonwebtoken");
+
+const { verifyToken, signToken } = require("../../api/jsonwebtoken");
 const UserModel = require("../../models/User");
 
+/**
+ * GraphQL Query object for refreshing an access token
+ */
 const refresh = {
     refresh: {
         type: GraphQLString,
@@ -16,7 +17,7 @@ const refresh = {
 
             // evaluate jwt
             let accessToken;
-            verifyRefreshToken(refreshToken, async (decoded) => {
+            verifyToken(refreshToken, "refresh", async (decoded) => {
                 const { email } = decoded;
                 const foundUser = await UserModel.findOne({ email }); // get user
                 if (!foundUser) throw new Error("Forbidden user");
@@ -24,7 +25,10 @@ const refresh = {
                 const permissions = Object.values(foundUser.permissions); // get user's permissions
 
                 // create new access token
-                const newAccessToken = signAccessToken({ email, permissions });
+                const newAccessToken = signToken(
+                    { email, permissions },
+                    "access"
+                );
 
                 accessToken = newAccessToken;
             });
