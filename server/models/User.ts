@@ -1,5 +1,5 @@
-const { createModel } = require("../api/mongoose");
-const { validateRegister, validateLogin } = require("../api/joi");
+import { createModel } from "../api/mongoose";
+import validateObject from "../api/joi";
 
 /**
  * User model for the database.
@@ -36,6 +36,6 @@ const UserModel = createModel("User", {
     },
 });
 
-Object.assign(UserModel, { validateRegister, validateLogin });
+Object.assign(UserModel, { validateObject });
 
-module.exports = UserModel;
+export default UserModel;
