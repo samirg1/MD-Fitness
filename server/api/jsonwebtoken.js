@@ -12,6 +12,28 @@ const signJWT = (payload, secret, options = undefined) => {
 };
 
 /**
+ * Sign and create a refresh token.
+ * @param {object} payload The payload to send in the token.
+ * @returns {string} The signed token.
+ */
+const signAccessToken = (payload) => {
+    return signJWT(payload, process.env.TOKEN_SECRET, {
+        expiresIn: "1d",
+    });
+};
+
+/**
+ * Sign and create an access token.
+ * @param {object} payload The payload to send in the token.
+ * @returns {string} The signed token.
+ */
+const signRefreshToken = (payload) => {
+    return signJWT(payload, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: "10m",
+    });
+};
+
+/**
  * Verify an access token.
  * @param {string} token The token to verify.
  * @param {string} secret The secret to verify against.
@@ -23,4 +45,4 @@ const verifyJWT = (token, secret, callback) => {
     );
 };
 
-module.exports = { signJWT, verifyJWT };
+module.exports = { signAccessToken, signRefreshToken, verifyJWT };

@@ -1,15 +1,12 @@
-const { GraphQLObjectType, GraphQLList } = require("graphql");
-
-const UserType = require("../types/User");
-const UserModel = require("../../models/User");
-const verifyAccessToken = require("../../middles/verifyAccessToken");
+const { GraphQLObjectType } = require("graphql");
+const authentication = require("./authentication");
 
 const MutationQueryType = new GraphQLObjectType({
     name: "Mutation",
     description: "Root Mutation",
     fields: () => {
         return {
-            
+            ...authentication,
         };
     },
 });
