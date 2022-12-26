@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.set('strictQuery', false);
+mongoose.set("strictQuery", false);
 
 /**
  * Connect to the mongoDB database.

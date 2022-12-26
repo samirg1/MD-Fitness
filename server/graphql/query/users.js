@@ -16,7 +16,7 @@ const users = {
                 context.headers.authorisation || context.headers.Authorisation; // get authorisation header
             if (!authorisationHeader?.startsWith("Bearer "))
                 throw new Error("Unauthorised");
-            
+
             const token = authorisationHeader.split(" ")[1]; // get and verify token
             verifyToken(token, "access", () => {}, [
                 Number(process.env.ADMIN_PERMISSION),

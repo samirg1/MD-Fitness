@@ -4,7 +4,7 @@ const {
     GraphQLInt,
     GraphQLList,
     GraphQLBoolean,
-    GraphQLNonNull
+    GraphQLNonNull,
 } = require("graphql");
 
 const UserType = new GraphQLObjectType({

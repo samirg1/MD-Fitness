@@ -15,7 +15,7 @@ const verifyAToken = (req, callback, permissions = null) => {
     const token = authHeader.split(" ")[1];
 
     verifyJWT(token, process.env.TOKEN_SECRET, (error, decoded) => {
-        console.log(error, decoded)
+        console.log(error, decoded);
         if (error) throw new Error("Invalid token");
         if (
             permissions &&

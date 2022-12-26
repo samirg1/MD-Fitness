@@ -1,7 +1,7 @@
 const { GraphQLObjectType } = require("graphql");
 
-const authentication = require("./authentication");
-const confirmation = require("./confirmation");
+const AuthenticationType = require("./authentication");
+const ConfirmationType = require("./confirmation");
 
 /**
  * Root type for GraphQL mutations.
@@ -9,7 +9,10 @@ const confirmation = require("./confirmation");
 const RootMutationType = new GraphQLObjectType({
     name: "Mutation",
     description: "Root Mutation",
-    fields: () => ({ ...authentication, ...confirmation }),
+    fields: () => ({
+        authentication: { type: AuthenticationType, resolve: () => true },
+        confirmation: { type: ConfirmationType, resolve: () => true },
+    }),
 });
 
 module.exports = RootMutationType;
