@@ -1,13 +1,13 @@
-const express = require("express");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 require("dotenv").config();
 
-const corsOptions = require("./config/corsOptions");
-const { mongoConnect } = require("./api/mongoose");
-const graphQlRoot = require("./middlware/graphql");
+import corsOptions from "./config/corsOptions";
+import { mongoConnect } from "./api/mongoose";
+import graphQlRoot from "./middlware/graphql";
 
-const credentials = require("./middlware/credentials");
+import credentials from "./middlware/credentials";
 
 const app = express();
 const PORT = process.env.PORT || 3001;

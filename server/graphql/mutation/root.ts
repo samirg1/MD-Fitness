@@ -1,7 +1,7 @@
-const { GraphQLObjectType } = require("graphql");
+import { GraphQLObjectType } from "graphql";
 
-const AuthenticationType = require("./authentication");
-const ConfirmationType = require("./confirmation");
+import AuthenticationType from "./authentication";
+import ConfirmationType from "./confirmation";
 
 /**
  * Root type for GraphQL mutations.
@@ -15,4 +15,4 @@ const RootMutationType = new GraphQLObjectType({
     }),
 });
 
-module.exports = RootMutationType;
+export default RootMutationType;

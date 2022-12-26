@@ -1,12 +1,10 @@
-const allowedOrigins = require("./allowedOrigins");
+import allowedOrigins from "./allowedOrigins";
 
 /**
  * The cors options for the server requests.
  */
-const corsOptions = {
+export default {
     origin: allowedOrigins,
     credentials: true,
     optionSuccessStatus: 200,
 };
-
-module.exports = corsOptions;

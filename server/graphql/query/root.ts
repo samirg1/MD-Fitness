@@ -1,7 +1,7 @@
-const { GraphQLObjectType } = require("graphql");
+import { GraphQLObjectType } from "graphql";
 
-const refresh = require("./refresh");
-const users = require("./users");
+import refresh from "./refresh";
+import users from "./users";
 
 /**
  * Root type for GraphQL queries.
@@ -12,4 +12,4 @@ const RootQueryType = new GraphQLObjectType({
     fields: () => ({ ...users, ...refresh }),
 });
 
-module.exports = RootQueryType;
+export default RootQueryType;

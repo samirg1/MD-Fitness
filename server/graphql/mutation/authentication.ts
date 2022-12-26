@@ -1,14 +1,15 @@
-const {
+import {
     GraphQLBoolean,
-    GraphQLString,
-    GraphQLObjectType,
     GraphQLNonNull,
-} = require("graphql");
+    GraphQLObjectType,
+    GraphQLString,
+} from "graphql";
 
-const UserType = require("../types/User");
-const UserModel = require("../../models/User");
-const { hashPassword, comparePassword } = require("../../api/bcrypt");
-const { signToken } = require("../../api/jsonwebtoken");
+import { comparePassword, hashPassword } from "../../api/bcrypt";
+import validateObject from "../../api/joi";
+import { signToken } from "../../api/jsonwebtoken";
+import UserModel from "../../models/User";
+import UserType from "../types/User";
 
 /**
  * GraphQL mutation object for logging in, registering and logging out.
@@ -27,8 +28,7 @@ const AuthenticationType = new GraphQLObjectType({
             resolve: async (_, { email, password }, { res }) => {
                 const errorMessage = "invalid email and/or password"; // default error message
 
-                if (UserModel.validateLogin({ email, password }))
-                    throw new Error(errorMessage); // validate login object
+                validateObject({ email, password }, "login"); // validate login object
 
                 const user = await UserModel.findOne({ email }); // get user
 
@@ -88,12 +88,7 @@ const AuthenticationType = new GraphQLObjectType({
             },
             resolve: async (_, { name, email, password }) => {
                 // validate the registration
-                const validationError = UserModel.validateRegister({
-                    name,
-                    email,
-                    password,
-                });
-                if (validationError) throw new Error(validationError.message);
+                validateObject({ name, email, password }, "register");
 
                 const emailExists = await UserModel.findOne({ email }); // check if the email exists
                 if (emailExists) throw new Error("email already exists");
@@ -129,4 +124,4 @@ const AuthenticationType = new GraphQLObjectType({
     }),
 });
 
-module.exports = AuthenticationType;
+export default AuthenticationType;
