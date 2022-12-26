@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
+import { Type } from "typescript";
 
 mongoose.set("strictQuery", false);
+
+export const TObjectId = mongoose.Types.ObjectId;
 
 /**
  * Connect to the mongoDB database.
@@ -16,6 +19,6 @@ export const mongoConnect = (callback: () => void) => {
  * @param schemaObject Schema object representing the model.
  * @returns The created model.
  */
-export const createModel = (name: string, schemaObject: object) => {
-    return mongoose.model(name, new mongoose.Schema(schemaObject));
+export const createModel = <T>(name: string, schemaObject: object) => {
+    return mongoose.model(name, new mongoose.Schema<T>(schemaObject));
 };

@@ -1,14 +1,10 @@
-const {
-    GraphQLBoolean,
-    GraphQLString,
-    GraphQLObjectType,
-    GraphQLNonNull,
-} = require("graphql");
+import { GraphQLBoolean, GraphQLString, GraphQLObjectType, GraphQLNonNull } from "graphql";
 
-const UserType = require("../types/User");
-const UserModel = require("../../models/User");
-const { hashPassword, comparePassword } = require("../../api/bcrypt");
-const { signToken } = require("../../api/jsonwebtoken");
+import UserType from "../types/User";
+import UserModel from "../../models/User";
+import { hashPassword, comparePassword } from "../../api/bcrypt";
+import { signToken } from "../../api/jsonwebtoken";
+import validateObject from "../../api/joi";
 
 /**
  * GraphQL mutation object for logging in, registering and logging out.
@@ -27,10 +23,9 @@ const AuthenticationType = new GraphQLObjectType({
             resolve: async (_, { email, password }, { res }) => {
                 const errorMessage = "invalid email and/or password"; // default error message
 
-                if (UserModel.validateLogin({ email, password }))
-                    throw new Error(errorMessage); // validate login object
+                validateObject({ email, password }, "login"); // validate login object
 
-                const user = await UserModel.findOne({ email }); // get user
+                const user = await UserModel.findOne({ email }) ; // get user
 
                 // ensure user exists and has been activated
                 if (!user) throw new Error(errorMessage);
