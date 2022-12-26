@@ -18,11 +18,15 @@ confirmationRouter.post("/confirm/:token", async (req, res) => {
 
     // verify token to get id
     let id;
-    verifyJWT(token, process.env.CONFIRMATION_TOKEN_SECRET, (error, decoded) => {
-        if (error) return res.status(400).send("Link is not valid");
-        if (!decoded) return res.status(400).send("Link is not valid");
-        id = decoded.id;
-    });
+    verifyJWT(
+        token,
+        process.env.CONFIRMATION_TOKEN_SECRET,
+        (error, decoded) => {
+            if (error) return res.status(400).send("Link is not valid");
+            if (!decoded) return res.status(400).send("Link is not valid");
+            id = decoded.id;
+        }
+    );
 
     try {
         console.log(id);
