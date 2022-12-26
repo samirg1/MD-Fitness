@@ -1,8 +1,8 @@
-const { GraphQLList } = require("graphql");
+import { GraphQLList } from "graphql";
 
-const UserType = require("../types/User");
-const UserModel = require("../../models/User");
-const { verifyToken } = require("../../api/jsonwebtoken");
+import UserType from "../types/User";
+import UserModel from "../../models/User";
+import { verifyToken } from "../../api/jsonwebtoken";
 
 /**
  * GraphQL Query object for getting all users
@@ -11,7 +11,7 @@ const users = {
     users: {
         type: new GraphQLList(UserType),
         description: "List of users",
-        resolve: (_, __, context) => {
+        resolve: (_: any, __: any, context: any) => {
             const authorisationHeader =
                 context.headers.authorisation || context.headers.Authorisation; // get authorisation header
             if (!authorisationHeader?.startsWith("Bearer "))
@@ -26,4 +26,4 @@ const users = {
     },
 };
 
-module.exports = users;
+export default users;

@@ -1,11 +1,10 @@
 {
-    "compilerOptions": { /* Docs: [https://www.typescriptlang.org/tsconfig](https://www.typescriptlang.org/tsconfig) */
+    "compilerOptions": {
       "target": "ES2020",
       "module": "commonjs",
       "outDir": "bin",
-      "rootDir": "src",
       "strict": true,
-      "noImplicitAny": false,
+      "noImplicitAny": true,
       "strictNullChecks": true,
       "checkJs": true,
       "allowJs": true,
@@ -20,10 +19,10 @@
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
       "allowUnreachableCode": true,
-       "useUnknownInCatchVariables": false,  // TypeScript 4.4+ only!
+       "useUnknownInCatchVariables": false, 
   },
     "include": [
-      "/**.ts",
+      "**/**.ts",
     ],
     "exclude": [
       "node_modules",

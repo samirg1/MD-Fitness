@@ -8,12 +8,10 @@ import allowedOrigins from "../config/allowedOrigins";
  * @param res Response object.
  * @param next Next callback.
  */
-const credentials = (req: Request, res: Response, next: NextFunction) => {
+export default (req: Request, res: Response, next: NextFunction) => {
     const origin = req.headers.origin as string;
     if (allowedOrigins.includes(origin)) {
         res.header("Access-Control-Allow-Credentials", JSON.stringify(true));
     }
     next();
 };
-
-module.exports = credentials;

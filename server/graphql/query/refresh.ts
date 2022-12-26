@@ -1,7 +1,7 @@
-const { GraphQLString } = require("graphql");
+import { GraphQLString } from "graphql";
 
-const { verifyToken, signToken } = require("../../api/jsonwebtoken");
-const UserModel = require("../../models/User");
+import { verifyToken, signToken } from "../../api/jsonwebtoken";
+import UserModel from "../../models/User";
 
 /**
  * GraphQL Query object for refreshing an access token
@@ -10,13 +10,13 @@ const refresh = {
     refresh: {
         type: GraphQLString,
         description: "Refresh an access token",
-        resolve: async (_, __, context) => {
+        resolve: async (_: any, __: any, context: any) => {
             const cookies = context.cookies;
             if (!cookies?.jwt) throw new Error("Cookie not found");
             const refreshToken = cookies.jwt; // get the refresh token
 
             // evaluate jwt
-            let accessToken;
+            let accessToken: string | undefined;
             verifyToken(refreshToken, "refresh", async (decoded) => {
                 const { email } = decoded;
                 const foundUser = await UserModel.findOne({ email }); // get user
@@ -37,4 +37,4 @@ const refresh = {
     },
 };
 
-module.exports = refresh;
+export default refresh;

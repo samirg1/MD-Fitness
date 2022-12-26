@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon index.js",
+        "start": "nodemon index.ts",
         "format": "npx prettier  --write ."
     },
     "keywords": [],
@@ -26,6 +26,8 @@
     },
     "devDependencies": {
         "@types/bcryptjs": "^2.4.2",
+        "@types/cookie-parser": "^1.4.3",
+        "@types/cors": "^2.8.13",
         "@types/express": "^4.17.15",
         "@types/hapi__joi": "^17.1.8",
         "@types/jsonwebtoken": "^9.0.0",
