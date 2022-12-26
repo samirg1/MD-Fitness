@@ -4,7 +4,7 @@ const { validateRegister, validateLogin } = require("../api/joi");
 /**
  * User model for the database.
  */
-const Model = createModel("User", {
+const UserModel = createModel("User", {
     name: {
         type: String,
         required: true,
@@ -36,6 +36,6 @@ const Model = createModel("User", {
     },
 });
 
-Object.assign(Model, { validateRegister, validateLogin });
+Object.assign(UserModel, { validateRegister, validateLogin });
 
-module.exports = Model;
+module.exports = UserModel;

@@ -4,11 +4,7 @@ const authentication = require("./authentication");
 const MutationQueryType = new GraphQLObjectType({
     name: "Mutation",
     description: "Root Mutation",
-    fields: () => {
-        return {
-            ...authentication,
-        };
-    },
+    fields: () => ({ ...authentication }),
 });
 
 module.exports = MutationQueryType;
