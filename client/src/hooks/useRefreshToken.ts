@@ -1,8 +1,6 @@
-import { getRequest } from "../api/server";
+import { graphQLRequest } from "../api/server";
 import { TAuthentication } from "../context/AuthProvider";
 import useAuthentication from "./useAuthentication";
-
-const REFRESH_URL = "/refresh";
 
 /**
  * Hook to get a new access token if the current refresh token is not expired.
@@ -16,25 +14,31 @@ const useRefreshToken = () => {
      * @returns New access token.
      */
     const refresh = async (): Promise<string | void> => {
-        let accessToken: string = "";
+        let newAccessToken: string = "";
 
-        await getRequest(
-            REFRESH_URL,
-            (response) => {
-                accessToken = response.data.accessToken;
-                setAuthentication((prev) => {
-                    return {
-                        ...prev,
-                        name: response.data.name,
-                        permissions: response.data.permissions,
-                        accessToken: accessToken,
-                    } as TAuthentication;
-                });
-            },
-            () => {}
+        await graphQLRequest<TAuthentication>(
+            `{
+                refresh {
+                    name
+                    permissions
+                    accessToken
+                }
+            }`,
+            ({ name, permissions, accessToken }) => {
+                newAccessToken = accessToken;
+                setAuthentication(
+                    (previous) =>
+                        ({
+                            ...previous,
+                            name,
+                            permissions,
+                            accessToken,
+                        } as TAuthentication)
+                );
+            }
         );
 
-        return accessToken;
+        return newAccessToken;
     };
     return refresh;
 };

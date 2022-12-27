@@ -74,7 +74,9 @@ const AuthenticationType = new GraphQLObjectType({
                 res.header("authentication-token", accessToken);
 
                 // send details
-                return user;
+                const returnObject = user;
+                returnObject.accessToken = accessToken;
+                return returnObject;
             },
         },
 

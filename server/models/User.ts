@@ -11,6 +11,7 @@ interface IUser {
     permissions: number[];
     dateCreated: Date;
     activated: boolean;
+    accessToken?: string;
 }
 
 /**
