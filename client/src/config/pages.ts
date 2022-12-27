@@ -9,7 +9,6 @@ export const PUBLIC_SETTINGS = {
  * The user settings menu options.
  */
 export const USER_SETTINGS = {
-    loginSignup: "Login / Signup",
     accountPage: "Account",
     logout: "Logout",
 } as const;

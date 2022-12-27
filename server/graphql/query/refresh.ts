@@ -15,8 +15,8 @@ const refresh = {
             const refreshToken = cookies.jwt; // get the refresh token
 
             // evaluate jwt
-            let user: typeof UserType | undefined;
-            verifyToken(refreshToken, "refresh", async (decoded) => {
+            let user: any | undefined;
+            await verifyToken(refreshToken, "refresh", async (decoded) => {
                 const { email } = decoded;
                 const foundUser = await UserModel.findOne({ email }); // get user
                 if (!foundUser) throw new Error("Forbidden user");
@@ -28,9 +28,9 @@ const refresh = {
                     { email, permissions },
                     "access"
                 );
-
+                 
                 foundUser.accessToken = newAccessToken;
-
+                user = foundUser;
             });
             return user;
         },

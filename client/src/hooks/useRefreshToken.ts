@@ -16,7 +16,7 @@ const useRefreshToken = () => {
     const refresh = async (): Promise<string | void> => {
         let newAccessToken: string = "";
 
-        await graphQLRequest<TAuthentication>(
+        await graphQLRequest<{ refresh: TAuthentication }>(
             `{
                 refresh {
                     name
@@ -24,7 +24,8 @@ const useRefreshToken = () => {
                     accessToken
                 }
             }`,
-            ({ name, permissions, accessToken }) => {
+            (data) => {
+                const { name, permissions, accessToken } = data.refresh;
                 newAccessToken = accessToken;
                 setAuthentication(
                     (previous) =>

@@ -33,7 +33,9 @@ const useAccount = () => {
      */
     const signup = async (payload: TSignup): Promise<string | null> => {
         const { name, email, password } = payload;
-        return await graphQLRequest<{ email: string }>(
+        return await graphQLRequest<{
+            authentication: { register: { email: string } };
+        }>(
             `mutation {
                 authentication {
                     register(name: "${name}", email: "${email}", password: "${password}") {
@@ -41,7 +43,7 @@ const useAccount = () => {
                     }
                 }
             }`,
-            (data) => sendConfirmationEmail(data.email)
+            (data) => sendConfirmationEmail(data.authentication.register.email)
         );
     };
 
@@ -52,7 +54,9 @@ const useAccount = () => {
      */
     const login = async (payload: TLogin): Promise<string | null> => {
         const { email, password } = payload;
-        return await graphQLRequest<TAuthentication>(
+        return await graphQLRequest<{
+            authentication: { login: TAuthentication };
+        }>(
             `mutation {
                 authentication {
                     login(email: "${email}", password: "${password}") {
@@ -63,7 +67,7 @@ const useAccount = () => {
                     }
                 }
             }`,
-            (data) => setAuthentication(data)
+            (data) => setAuthentication(data.authentication.login)
         );
     };
 

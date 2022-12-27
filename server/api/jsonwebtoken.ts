@@ -45,16 +45,16 @@ export const signToken = (
  * @param permissions The valid permissions for this token to have.
  * @throws If the token is invalid or authentication is denied.
  */
-export const verifyToken = (
+export const verifyToken = async (
     token: string,
     type: TTokenTypes,
     callback: (decoded: any) => void,
     permissions?: number[]
 ) => {
-    jsonwebtoken.verify(
+    await jsonwebtoken.verify(
         token,
         tokenTypes[type].secret,
-        (error, decoded: any) => {
+        async (error, decoded: any) => {
             if (error) throw new Error("Forbidden error");
             if (!decoded) throw new Error("Invalid credentials");
             if (permissions) {
@@ -63,7 +63,7 @@ export const verifyToken = (
                 );
                 if (!permisionFound) throw new Error("Unauthorised access");
             }
-            callback(decoded);
+            await callback(decoded);
         }
     );
 };
