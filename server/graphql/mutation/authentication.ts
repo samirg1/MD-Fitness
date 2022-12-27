@@ -16,7 +16,7 @@ import UserType from "../types/User";
  */
 const AuthenticationType = new GraphQLObjectType({
     name: "Authentication",
-    description: "Authentication resolvers for login, register, and logout",
+    description: "Authentication resolvers for login, signup, and logout",
     fields: () => ({
         login: {
             type: UserType,
@@ -80,7 +80,7 @@ const AuthenticationType = new GraphQLObjectType({
             },
         },
 
-        register: {
+        signup: {
             type: UserType,
             description: "Register a user",
             args: {
@@ -89,7 +89,7 @@ const AuthenticationType = new GraphQLObjectType({
                 password: { type: GraphQLNonNull(GraphQLString) },
             },
             resolve: async (_, { name, email, password }) => {
-                validateObject({ name, email, password }, "register"); // validate the registration
+                validateObject({ name, email, password }, "signup"); // validate the registration
 
                 const emailExists = await UserModel.findOne({ email }); // check if the email exists
                 if (emailExists) throw new Error("email already exists");

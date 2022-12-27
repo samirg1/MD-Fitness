@@ -1,14 +1,14 @@
 import Joi from "@hapi/joi";
 
-type TRegister = {
+type TSignup = {
     name: string;
     email: string;
     password: string;
 };
-type TLogin = Omit<TRegister, "name">;
+type TLogin = Omit<TSignup, "name">;
 
-type TValidatingObject = TLogin | TRegister; // objects to be validated
-type TValidatingTypes = "register" | "login"; // names of validating objects
+type TValidatingObject = TLogin | TSignup; // objects to be validated
+type TValidatingTypes = "signup" | "login"; // names of validating objects
 
 type TSchemaMap<T> = { [Property in keyof T]: Joi.StringSchema }; // map validating object to object with schema information
 type TValidationObjectMap<T> = { [Propery in TValidatingTypes]: TSchemaMap<T> }; // map validating object for each type
@@ -26,7 +26,7 @@ const password = Joi.string()
 
 // the validating objects
 const validatingObjects: TValidationObjectMap<TValidatingObject> = {
-    register: { name, email, password },
+    signup: { name, email, password },
     login: { email, password },
 };
 

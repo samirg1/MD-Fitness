@@ -34,16 +34,16 @@ const useAccount = () => {
     const signup = async (payload: TSignup): Promise<string | null> => {
         const { name, email, password } = payload;
         return await graphQLRequest<{
-            authentication: { register: { email: string } };
+            authentication: { signup: { email: string } };
         }>(
             `mutation {
                 authentication {
-                    register(name: "${name}", email: "${email}", password: "${password}") {
+                    signup(name: "${name}", email: "${email}", password: "${password}") {
                         email
                     }
                 }
             }`,
-            (data) => sendConfirmationEmail(data.authentication.register.email)
+            (data) => sendConfirmationEmail(data.authentication.signup.email)
         );
     };
 
