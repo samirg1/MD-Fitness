@@ -20,7 +20,7 @@ const tokenTypes = {
 type TTokenTypes = keyof typeof tokenTypes;
 
 /**
- * Sign and create an access token.
+ * Sign and create a JWT.
  * @param payload The payload to send in the token.
  * @param type The type of token to create.
  * @param options Additional options for signing.
@@ -31,7 +31,6 @@ export const signToken = (
     type: TTokenTypes,
     options?: jsonwebtoken.SignOptions
 ) => {
-    options = options || {};
     return jsonwebtoken.sign(payload, tokenTypes[type].secret, {
         ...options,
         expiresIn: tokenTypes[type].expiry,
@@ -52,7 +51,6 @@ export const verifyToken = (
     callback: (decoded: any) => void,
     permissions?: number[]
 ) => {
-    permissions = permissions || [];
     jsonwebtoken.verify(
         token,
         tokenTypes[type].secret,

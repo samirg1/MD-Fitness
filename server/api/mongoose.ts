@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { Type } from "typescript";
 
 mongoose.set("strictQuery", false);
 

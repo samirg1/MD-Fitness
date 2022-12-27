@@ -7,11 +7,11 @@ type TRegister = {
 };
 type TLogin = Omit<TRegister, "name">;
 
-type TValidatingObject = TLogin | TRegister;
-type TValidatingTypes = "register" | "login";
+type TValidatingObject = TLogin | TRegister; // objects to be validated
+type TValidatingTypes = "register" | "login"; // names of validating objects
 
-type TSchemaMap<T> = { [Property in keyof T]: Joi.StringSchema };
-type TValidationObjectMap<T> = { [Propery in TValidatingTypes]: TSchemaMap<T> };
+type TSchemaMap<T> = { [Property in keyof T]: Joi.StringSchema }; // map validating object to object with schema information
+type TValidationObjectMap<T> = { [Propery in TValidatingTypes]: TSchemaMap<T> }; // map validating object for each type
 
 // the validating fields
 const name = Joi.string().required().max(50);
@@ -24,6 +24,7 @@ const password = Joi.string()
         )
     );
 
+// the validating objects
 const validatingObjects: TValidationObjectMap<TValidatingObject> = {
     register: { name, email, password },
     login: { email, password },
@@ -35,11 +36,12 @@ const validatingObjects: TValidationObjectMap<TValidatingObject> = {
  * @param type The type of object to validate.
  * @throws If an error occurs whilst validating the object.
  */
-export default (
+const validateObject = (
     object: TValidatingObject,
     type: keyof typeof validatingObjects
 ) => {
-    const schema = Joi.object(validatingObjects[type]);
-    const { error } = schema.validate(object);
+    const { error } = Joi.object(validatingObjects[type]).validate(object);
     if (error) throw new Error(error.message);
 };
+
+export default validateObject;

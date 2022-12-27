@@ -87,8 +87,7 @@ const AuthenticationType = new GraphQLObjectType({
                 password: { type: GraphQLNonNull(GraphQLString) },
             },
             resolve: async (_, { name, email, password }) => {
-                // validate the registration
-                validateObject({ name, email, password }, "register");
+                validateObject({ name, email, password }, "register"); // validate the registration
 
                 const emailExists = await UserModel.findOne({ email }); // check if the email exists
                 if (emailExists) throw new Error("email already exists");
