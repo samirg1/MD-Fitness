@@ -13,6 +13,7 @@ const HomeTitle = ({ title }: { title: string }) => {
                 color="primary"
                 style={{
                     fontWeight: "bold",
+                    textShadow: "-1px -1px 0 #fff, 1px -1px 0 #fff, -1px  1px 0 #fff, 1px  1px 0 #fff",
                 }}
             >
                 {title}

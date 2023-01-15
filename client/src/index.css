@@ -11,3 +11,25 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
+
+body {
+    animation: animateBackground 10s linear infinite;
+    background-image: linear-gradient(
+        90deg,
+        #26499d,
+        #000000,
+        #558ac3,
+        #26499d,
+        #000000
+    );
+    background-size: 400% 100%;
+}
+
+@keyframes animateBackground {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 0%;
+    }
+}

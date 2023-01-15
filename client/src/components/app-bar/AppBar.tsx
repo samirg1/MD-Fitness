@@ -24,7 +24,10 @@ import PERMISSIONS from "../../config/permissions";
 import { TAuthentication } from "../../context/AuthProvider";
 import useAuthentication from "../../hooks/useAuthentication";
 import Loader from "../Loader";
+import TiktokIcon from "../TiktokIcon";
+import "./AppBar.css";
 import AppBarIconText from "./AppBarIconText";
+import LinkButton from "./LinkButton";
 const LogoutPopup = lazy(() => import("./LogoutPopup"));
 
 /**
@@ -113,16 +116,8 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
         handleCloseUserMenu();
     };
 
-    /**
-     * Open a link in a new tab.
-     * @param link The link to open.
-     */
-    const openLink = (link: string) => {
-        window.open(link, "_blank");
-    };
-
     return (
-        <AppBar position="static" color="primary">
+        <AppBar position="static" color="transparent">
             {logoutPopupOpen ? (
                 <Suspense fallback={<Loader isLoading />}>
                     <LogoutPopup
@@ -189,33 +184,39 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                         }}
                     >
                         {pages.map((page) => (
-                            <Button
+                            <Tooltip
+                                title={`View ${page.toLowerCase()}`}
                                 key={page}
-                                onClick={() => changePage(page)}
-                                sx={{
-                                    my: 2,
-                                    color: "white",
-                                    display: "block",
-                                }}
                             >
-                                {page}
-                            </Button>
+                                <Button
+                                    className="page-button"
+                                    onClick={() => changePage(page)}
+                                    sx={{
+                                        my: 2,
+                                        color: "white",
+                                        display: "block",
+                                    }}
+                                >
+                                    {page}
+                                </Button>
+                            </Tooltip>
                         ))}
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        {/* Instagram link */}
-                        <Tooltip title="Open Instagram account">
-                            <IconButton
-                                onClick={() => openLink(LINKS.instagram)}
-                            >
-                                <InstagramIcon sx={{ color: "white" }} />
-                            </IconButton>
-                        </Tooltip>
+                        <LinkButton
+                            url={LINKS.instagram}
+                            icon={<InstagramIcon sx={{ color: "white" }} />}
+                            title="Open Instagram account"
+                        />
+                        <LinkButton
+                            url={LINKS.tiktok}
+                            icon={<TiktokIcon />}
+                            title="Open TikTok account"
+                        />
                         <Tooltip title="Open account settings">
                             <IconButton
                                 onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}
                             >
                                 {authentication ? (
                                     <Avatar>{authentication.name[0]}</Avatar>

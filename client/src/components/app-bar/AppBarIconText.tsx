@@ -33,7 +33,7 @@ const AppBarIconText = ({ large }: { large: boolean }) => {
                     },
                     fontFamily: "arial",
                     fontWeight: 700,
-                    color: "inherit",
+                    color: "white",
                     textDecoration: "none",
                     flexGrow: Number(!large),
                 }}

@@ -55,7 +55,7 @@ const About = () => {
         <>
             <HomeTitle title={"ABOUT"} />
             <Grid item xs={6}>
-                <Typography>{text}</Typography>
+                <Typography color="white">{text}</Typography>
             </Grid>
         </>
     );
