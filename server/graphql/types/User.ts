@@ -18,6 +18,7 @@ const UserType = new GraphQLObjectType({
         permissions: { type: GraphQLNonNull(GraphQLList(GraphQLInt)) },
         dateCreated: { type: GraphQLNonNull(GraphQLString) },
         activated: { type: GraphQLNonNull(GraphQLBoolean) },
+        accessToken: { type: GraphQLString },
     }),
 });
 
