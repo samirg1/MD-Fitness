@@ -1,10 +1,23 @@
-const { createModel } = require("../api/mongoose");
-const { validateRegister, validateLogin } = require("../api/joi");
+import { createModel, TObjectId } from "../api/mongoose";
+
+/**
+ * Interface to represent user documents
+ */
+interface IUser {
+    _id: typeof TObjectId;
+    name: string;
+    email: string;
+    password: string;
+    permissions: number[];
+    dateCreated: Date;
+    activated: boolean;
+    accessToken?: string;
+}
 
 /**
  * User model for the database.
  */
-const Model = createModel("User", {
+const UserModel = createModel<IUser>("User", {
     name: {
         type: String,
         required: true,
@@ -36,6 +49,4 @@ const Model = createModel("User", {
     },
 });
 
-Object.assign(Model, { validateRegister, validateLogin });
-
-module.exports = Model;
+export default UserModel;

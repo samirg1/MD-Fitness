@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getPrivateRequest } from "../../api/server";
+import { graphQLRequest } from "../../api/server";
 import useAuthentication from "../../hooks/useAuthentication";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
-
-const USERS_URL = "/users";
 
 /**
  * Type of user that is returned from database.
@@ -38,14 +36,25 @@ const Users = () => {
         let isMounted = true;
         const controller = new AbortController();
 
-        getPrivateRequest(
-            USERS_URL,
-            controller.signal,
-            (response) => {
-                isMounted && setUsers(response.data);
-                setLoading(false);
-            },
-            () => {
+        const getAllUsers = async () => {
+            const error = await graphQLRequest<TUsers[]>(
+                `{
+                    users {
+                        _id
+                        name
+                        email
+                        dateCreated
+                        permissions
+                    }
+                }`,
+                (data) => {
+                    isMounted && setUsers(data);
+                    setLoading(false);
+                },
+                controller.signal
+            );
+
+            if (error) {
                 setAuthentication(null);
                 setSnackBarOptions({
                     message: "Please log in again",
@@ -56,7 +65,9 @@ const Users = () => {
                     replace: true,
                 });
             }
-        );
+        };
+
+        getAllUsers();
 
         return () => {
             isMounted = false;
@@ -72,7 +83,7 @@ const Users = () => {
 
     return (
         <article>
-            <Loader isLoading={loading}/>
+            <Loader isLoading={loading} />
             <h2>Users List</h2>
             {users.length ? (
                 <ul>

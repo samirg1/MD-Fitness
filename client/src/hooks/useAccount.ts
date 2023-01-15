@@ -1,14 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { postRequest } from "../api/server";
+import { graphQLRequest } from "../api/server";
+import { TAuthentication } from "../context/AuthProvider";
 import useAuthentication from "./useAuthentication";
 import useSnackBar from "./useSnackBar";
-
-// server urls
-const SIGNUP_URL = "/user/register";
-const LOGIN_URL = "/user/login";
-const LOGOUT_URL = "/user/logout";
-const SEND_CONFIRM_URL = "/user/confirmation/send";
-const CONFIRM_URL = "/user/confirmation/confirm/"
 
 /**
  * Signup object type.
@@ -21,8 +15,7 @@ export type TSignup = {
 /**
  * Login object type.
  */
-export type TLogin = Omit<TSignup, "name">
-
+export type TLogin = Omit<TSignup, "name">;
 
 /**
  * Hook to use account functionality.
@@ -39,9 +32,19 @@ const useAccount = () => {
      * @returns The error if any occured.
      */
     const signup = async (payload: TSignup): Promise<string | null> => {
-        return await postRequest(SIGNUP_URL, payload, (response) => {
-            sendConfirmationEmail(response.data.email);
-        });
+        const { name, email, password } = payload;
+        return await graphQLRequest<{
+            authentication: { signup: { email: string } };
+        }>(
+            `mutation {
+                authentication {
+                    signup(name: "${name}", email: "${email}", password: "${password}") {
+                        email
+                    }
+                }
+            }`,
+            (data) => sendConfirmationEmail(data.authentication.signup.email)
+        );
     };
 
     /**
@@ -50,9 +53,22 @@ const useAccount = () => {
      * @returns The error if any occured.
      */
     const login = async (payload: TLogin): Promise<string | null> => {
-        return await postRequest(LOGIN_URL, payload, (response) => {
-            setAuthentication(response.data);
-        });
+        const { email, password } = payload;
+        return await graphQLRequest<{
+            authentication: { login: TAuthentication };
+        }>(
+            `mutation {
+                authentication {
+                    login(email: "${email}", password: "${password}") {
+                        name
+                        email
+                        permissions
+                        accessToken
+                    }
+                }
+            }`,
+            (data) => setAuthentication(data.authentication.login)
+        );
     };
 
     /**
@@ -60,22 +76,35 @@ const useAccount = () => {
      * @returns The error if any occured.
      */
     const logout = async (): Promise<string | null> => {
-        return await postRequest(LOGOUT_URL, {}, () => {
-            setAuthentication(null);
-            setSnackBarMessage({
-                message: "Logout successful",
-                type: "success",
-            });
-            navigate("/");
-        });
+        return await graphQLRequest(
+            `mutation {
+                authentication {
+                    logout
+                }
+            }`,
+            () => {
+                setAuthentication(null);
+                setSnackBarMessage({
+                    message: "Logout successful",
+                    type: "success",
+                });
+                navigate("/");
+            }
+        );
     };
 
     /**
      * Send confirmation email.
      * @returns The error if any occured.
      */
-    const sendConfirmationEmail = async (email: string): Promise<string | null> => {
-        return await postRequest(SEND_CONFIRM_URL, { email }, () => {});
+    const sendConfirmationEmail = async (email: string) => {
+        return await graphQLRequest(
+            `mutation {
+                confirmation {
+                    send(email: "${email}")
+                }
+            }`
+        );
     };
 
     /**
@@ -84,8 +113,14 @@ const useAccount = () => {
      * @returns The error if any occured.
      */
     const confirmEmail = async (token: string) => {
-        return await postRequest(CONFIRM_URL + token, {}, () => { });
-    }
+        return await graphQLRequest(
+            `mutation {
+                confirmation {
+                    confirm(token: "${token}")
+                }
+            }`
+        );
+    };
 
     return { signup, login, logout, sendConfirmationEmail, confirmEmail };
 };
