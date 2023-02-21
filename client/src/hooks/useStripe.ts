@@ -37,7 +37,7 @@ const useStripe = () => {
         const checkoutOptions = {
             lineItems: [{ price: priceID, quantity: 1 }],
             mode: "payment" as "payment" | "subscription" | undefined,
-            successUrl: `${window.location.origin}${currentPage}`,
+            successUrl: `${window.location.origin}/account`,
             cancelUrl: `${window.location.origin}${currentPage}`,
         };
 
