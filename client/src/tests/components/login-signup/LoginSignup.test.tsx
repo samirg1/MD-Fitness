@@ -2,13 +2,13 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import LoginSignup from "../../../components/login-signup/LoginSignup";
 
 const keyDownReturn: any[] = [() => {}];
-const accountReturn: any[] = [{
-    signup: () => {},
-    login: () => {},
-}];
-const snackbarReturn: any[] = [
-    { setOptions: () => { } }
+const accountReturn: any[] = [
+    {
+        signup: () => {},
+        login: () => {},
+    },
 ];
+const snackbarReturn: any[] = [{ setOptions: () => {} }];
 
 jest.mock("../../../hooks/useKeyDownHandler", () => () => keyDownReturn[0]);
 jest.mock("../../../hooks/useSnackBar", () => () => snackbarReturn[0]);
@@ -57,14 +57,16 @@ describe("basic renders", () => {
         accountReturn[0].login = mockLogin;
 
         render(<LoginSignup />);
-        const submitButton = screen.getAllByRole("button")[3]
-        
+        const submitButton = screen.getAllByRole("button")[3];
+
         fireEvent.click(submitButton);
-        await screen.findByText("testError")
+        await screen.findByText("testError");
 
         const input = screen.getByRole("textbox");
         fireEvent.change(input, { target: { value: "a" } });
-        
-        await waitFor(() => expect(screen.queryByText("testError")).toBeFalsy());
+
+        await waitFor(() =>
+            expect(screen.queryByText("testError")).toBeFalsy()
+        );
     });
 });

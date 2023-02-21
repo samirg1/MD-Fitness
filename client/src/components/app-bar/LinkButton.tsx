@@ -19,9 +19,7 @@ const LinkButton = ({
     };
     return (
         <Tooltip title={title}>
-            <IconButton onClick={() => openLink(url)}>
-                {icon}
-            </IconButton>
+            <IconButton onClick={() => openLink(url)}>{icon}</IconButton>
         </Tooltip>
     );
 };

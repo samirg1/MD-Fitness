@@ -117,7 +117,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
     };
 
     return (
-        <AppBar position="static" color="transparent">
+        <AppBar position="static" color="primary">
             {logoutPopupOpen ? (
                 <Suspense fallback={<Loader isLoading />}>
                     <LogoutPopup
@@ -215,9 +215,7 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                             title="Open TikTok account"
                         />
                         <Tooltip title="Open account settings">
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                            >
+                            <IconButton onClick={handleOpenUserMenu}>
                                 {authentication ? (
                                     <Avatar>{authentication.name[0]}</Avatar>
                                 ) : (

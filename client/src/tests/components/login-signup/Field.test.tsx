@@ -189,10 +189,16 @@ describe("field functionality", () => {
                 type={FieldType.password}
             />
         );
-        expect(screen.getByRole("button").innerHTML).toMatch(/"VisibilityIcon"/);
+        expect(screen.getByRole("button").innerHTML).toMatch(
+            /"VisibilityIcon"/
+        );
         fireEvent.click(screen.getByRole("button"));
-        expect((screen.getByRole("textbox") as HTMLInputElement).type).toEqual("text");
-        expect(screen.getByRole("button").innerHTML).toMatch(/"VisibilityOffIcon"/);
+        expect((screen.getByRole("textbox") as HTMLInputElement).type).toEqual(
+            "text"
+        );
+        expect(screen.getByRole("button").innerHTML).toMatch(
+            /"VisibilityOffIcon"/
+        );
     });
 
     test("field change value", () => {
@@ -207,8 +213,10 @@ describe("field functionality", () => {
             />
         );
 
-        fireEvent.change(screen.getByRole("textbox"), {target: {value: 'testChange'}});
+        fireEvent.change(screen.getByRole("textbox"), {
+            target: { value: "testChange" },
+        });
         expect(mockSetValue).toBeCalledTimes(1);
-        expect(mockSetValue).lastCalledWith('testChange');
+        expect(mockSetValue).lastCalledWith("testChange");
     });
 });

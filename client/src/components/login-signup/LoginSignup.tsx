@@ -38,9 +38,10 @@ const LoginSignup = () => {
     const emailInputRef = useRef<HTMLInputElement>();
     const nameInputRef = useRef<HTMLInputElement>();
     useEffect(() => {
-        loggingIn ? emailInputRef.current?.focus() : nameInputRef.current?.focus();
-    }, [loggingIn])
-
+        loggingIn
+            ? emailInputRef.current?.focus()
+            : nameInputRef.current?.focus();
+    }, [loggingIn]);
 
     // clear error when fields change
     useEffect(() => setLoginSignupError(null), [name, email, password]);
@@ -105,7 +106,9 @@ const LoginSignup = () => {
         });
         // override default password error message
         if (responseError?.startsWith('"password" with value'))
-            setLoginSignupError("invalid password - must be 8 characters long with an uppercase letter, lowercase letter, number and special character");
+            setLoginSignupError(
+                "invalid password - must be 8 characters long with an uppercase letter, lowercase letter, number and special character"
+            );
         else setLoginSignupError(responseError);
 
         setLoading(false);
@@ -172,8 +175,8 @@ const LoginSignup = () => {
                     ) : null}
                     <Grid item xs={12}>
                         <ToggleButtonGroup
-                            onKeyDown={(e) => {}}
                             color="primary"
+                            sx={{ backgroundColor: "white" }}
                             value={loggingIn ? "login" : "signup"}
                             exclusive
                             onChange={toggleLoggingIn}
@@ -218,6 +221,7 @@ const LoginSignup = () => {
                             type={FieldType.password}
                         />
                         <IconButton
+                            color="secondary"
                             onClick={submit}
                             disabled={loading || verifying}
                         >

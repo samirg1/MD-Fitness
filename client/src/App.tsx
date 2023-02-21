@@ -5,6 +5,7 @@ import Layout from "./config/Layout";
 import PERMISSIONS from "./config/permissions";
 
 const Home = lazy(() => import("./components/homepage/Home"));
+const About = lazy(() => import("./components/about/About"));
 const Programs = lazy(() => import("./components/programs/Programs"));
 const Missing = lazy(() => import("./components/defaults/Missing"));
 const Unauthorised = lazy(() => import("./components/defaults/Unauthorised"));
@@ -27,6 +28,7 @@ const App = () => {
                 <Route path="/" element={<Layout />}>
                     {/* Public routes */}
                     <Route path="/" element={<Home />} />
+                    <Route path="about" element={<About />} />
                     <Route path="programs" element={<Programs />} />
                     <Route path="login-signup" element={<LoginSignup />} />
 

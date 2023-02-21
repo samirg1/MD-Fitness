@@ -5,7 +5,7 @@ import Users from "./Users";
  */
 const Admin = () => {
     return (
-        <div>
+        <div style={{ color: "white" }}>
             This is the admin page
             <Users />
         </div>

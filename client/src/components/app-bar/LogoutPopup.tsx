@@ -94,7 +94,13 @@ const LogoutPopup = ({ open, handleClose }: TLogoutPopupProps) => {
                                 color="error"
                                 onClick={handleLogout}
                             >
-                                Logout {isLoggingOut ? <CircularProgress size={20} color="inherit" /> : null}
+                                Logout{" "}
+                                {isLoggingOut ? (
+                                    <CircularProgress
+                                        size={20}
+                                        color="inherit"
+                                    />
+                                ) : null}
                             </Button>
                         </Grid>
                     </Grid>

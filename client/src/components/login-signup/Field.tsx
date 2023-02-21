@@ -63,7 +63,7 @@ const Field = (
     const [showPassword, setShowPassword] = useState(false);
     return (
         <>
-            <Typography>{name}</Typography>
+            <Typography color="white">{name}</Typography>
             <Tooltip
                 title={fieldTooltips[type]}
                 enterTouchDelay={0} // for mobile devices
@@ -71,6 +71,11 @@ const Field = (
             >
                 <div style={{ display: "inline" }}>
                     <OutlinedInput
+                        color="secondary"
+                        sx={{
+                            color: "white",
+                            border: "1px solid white !important",
+                        }}
                         inputRef={ref}
                         required
                         error={!value.match(fieldRegex[type])}
@@ -94,6 +99,7 @@ const Field = (
                                             )
                                         }
                                         edge="end"
+                                        color="secondary"
                                     >
                                         {showPassword ? (
                                             <VisibilityOff />

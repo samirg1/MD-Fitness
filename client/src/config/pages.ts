@@ -26,5 +26,6 @@ export const ADMIN_SETTINGS = {
  * The publicly available pages
  */
 export const PUBLIC_PAGES = {
+    about: "About",
     programs: "Programs",
 } as const;

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { graphQLRequest } from "../../api/server";
 import useAuthentication from "../../hooks/useAuthentication";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
 
@@ -24,7 +23,6 @@ const Users = () => {
     const [users, setUsers] = useState<TUsers[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
     const { setAuthentication } = useAuthentication();
@@ -73,13 +71,7 @@ const Users = () => {
             isMounted = false;
             controller.abort();
         };
-    }, [
-        axiosPrivate,
-        location,
-        navigate,
-        setAuthentication,
-        setSnackBarOptions,
-    ]);
+    }, [location, navigate, setAuthentication, setSnackBarOptions]);
 
     return (
         <article>
