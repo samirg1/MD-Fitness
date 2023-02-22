@@ -16,6 +16,7 @@ const UserType = new GraphQLObjectType({
         email: { type: GraphQLNonNull(GraphQLString) },
         password: { type: GraphQLNonNull(GraphQLString) },
         permissions: { type: GraphQLNonNull(GraphQLList(GraphQLInt)) },
+        purchases: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
         dateCreated: { type: GraphQLNonNull(GraphQLString) },
         activated: { type: GraphQLNonNull(GraphQLBoolean) },
         accessToken: { type: GraphQLString },

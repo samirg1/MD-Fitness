@@ -50,9 +50,14 @@ const Programs = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const purchaseItem = async (price_id: string): Promise<void> => {
+    /**
+     * Purchase a product.
+     * @param priceId The price identifier of the product.
+     * @param productId The product identifier.
+     */
+    const purchaseItem = async (priceId: string, productId: string): Promise<void> => {
         if (authentication)
-            return await redirectToCheckout(price_id, "/programs");
+            return await redirectToCheckout(priceId, productId, authentication.email, "/programs");
 
         setSnackBarOptions({
             message: "You must be logged in to purchase this product",
@@ -84,7 +89,7 @@ const Programs = () => {
                                     price / 100
                                 )}`}
                                 navTitle={isBuyLoading ? "Loading ..." : "Buy"}
-                                onClick={() => purchaseItem(price_id)}
+                                onClick={() => purchaseItem(price_id, id)}
                             >
                                 {description}
                             </Card>

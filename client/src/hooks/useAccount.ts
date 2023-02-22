@@ -63,6 +63,7 @@ const useAccount = () => {
                         name
                         email
                         permissions
+                        purchases
                         accessToken
                     }
                 }

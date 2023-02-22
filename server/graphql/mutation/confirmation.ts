@@ -20,7 +20,7 @@ const ConfirmationType = new GraphQLObjectType({
             type: GraphQLBoolean,
             description: "Send confirmation email",
             args: { email: { type: GraphQLNonNull(GraphQLString) } },
-            resolve: async (_, { email }, __) => {
+            resolve: async (_, { email }) => {
                 await sendConfirmationEmail(email); // get error if there was one
                 return true;
             },
@@ -30,10 +30,10 @@ const ConfirmationType = new GraphQLObjectType({
             type: GraphQLBoolean,
             description: "Confirm email",
             args: { token: { type: GraphQLNonNull(GraphQLString) } },
-            resolve: async (_, { token }, __) => {
+            resolve: async (_, { token }) => {
                 // verify token to get id
                 verifyToken(token, "confirmation", async (decoded) => {
-                    const user = await UserModel.findOne({ _id: decoded.id }); // find the user
+                    const user = await UserModel.findById(decoded.id); // find the user
                     if (!user) throw new Error("Specified user not found");
                     user.activated = true; // activate the user
 

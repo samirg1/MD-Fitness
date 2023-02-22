@@ -25,11 +25,15 @@ const useStripe = () => {
     /**
      * Redirect the current page to the Stripe checkout endpoint.
      * @param priceID The ID of the purchase item.
-     * @param currentPage The current page the user was on ('/programs', '/about' etc.).
+     * @param productID The ID of the product.
+     * @param customerEmail The email address of the customer.
+     * @param currentPagePath The current page the user was on ('/programs', '/about' etc.).
      */
     const redirectToCheckout = async (
         priceID: string,
-        currentPage: string = ""
+        productID: string,
+        customerEmail: string,
+        currentPagePath: string = ""
     ): Promise<void> => {
         setIsLoading(true);
 
@@ -37,8 +41,9 @@ const useStripe = () => {
         const checkoutOptions = {
             lineItems: [{ price: priceID, quantity: 1 }],
             mode: "payment" as "payment" | "subscription" | undefined,
-            successUrl: `${window.location.origin}/account`,
-            cancelUrl: `${window.location.origin}${currentPage}`,
+            successUrl: `${window.location.origin}/account?session_id={CHECKOUT_SESSION_ID}&product_id=${productID}`,
+            cancelUrl: `${window.location.origin}${currentPagePath}`,
+            customerEmail,
         };
 
         const stripe = await getStripe();
@@ -47,7 +52,7 @@ const useStripe = () => {
                 message: "Unable to connect to Stripe",
                 type: "error",
             });
-            navigate(currentPage);
+            navigate(currentPagePath);
             return setIsLoading(false);
         }
         const { error } = await stripe.redirectToCheckout(checkoutOptions);
@@ -56,7 +61,7 @@ const useStripe = () => {
                 message: "Checkout error: " + error.message,
                 type: "error",
             });
-            navigate(currentPage);
+            navigate(currentPagePath);
         }
     };
 
@@ -81,7 +86,27 @@ const useStripe = () => {
         return products;
     };
 
-    return { isLoading, redirectToCheckout, getProducts };
+    /**
+     * Add a new product to the list of user's purchases.
+     * @param sessionId The checkout session the user bought the product in.
+     * @param productId The product the user bought.
+     * @param userEmail The user's email address.
+     */
+    const addUserPurchase = async (sessionId: string, productId: string, userEmail: string) =>{
+        await graphQLRequest(
+            `mutation {
+                purchases {
+                    addPurchase(sessionId: "${sessionId}", productId: "${productId}", userEmail: "${userEmail}")
+                }
+            }`
+        );
+        setSnackBarOptions({
+            message: "Purchase successfull!",
+            type: "success",
+        });
+    }
+
+    return { isLoading, redirectToCheckout, getProducts, addUserPurchase };
 };
 
 export default useStripe;

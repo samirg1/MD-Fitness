@@ -7,6 +7,7 @@ export type TAuthentication = {
     name: string;
     email: string;
     permissions: number[];
+    purchases: string[];
     accessToken: string;
 };
 

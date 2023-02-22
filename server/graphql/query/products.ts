@@ -1,6 +1,6 @@
 import { GraphQLList } from "graphql";
 
-import getProducts from "../../api/stripe";
+import { getProducts } from "../../api/stripe";
 import ProductType from "../types/Product";
 
 /**

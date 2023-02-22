@@ -72,7 +72,6 @@ const AuthenticationType = new GraphQLObjectType({
                     maxAge: 24 * 60 * 60 * 1000,
                 });
                 res.header("authentication-token", accessToken);
-
                 // send details
                 const returnObject = user;
                 returnObject.accessToken = accessToken;

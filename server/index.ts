@@ -1,10 +1,10 @@
-import express from "express";
-import cors from "cors";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+import express from "express";
 require("dotenv").config();
 
-import corsOptions from "./config/corsOptions";
 import { mongoConnect } from "./api/mongoose";
+import corsOptions from "./config/corsOptions";
 import graphQlRoot from "./middlware/graphql";
 
 import credentials from "./middlware/credentials";
