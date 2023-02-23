@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { graphQLRequest } from "../api/server";
 import { getStripe } from "../api/stripe";
@@ -17,8 +16,6 @@ export type TProduct = {
  * @returns Function to redirect users to checkout and boolean whether this is loading or not.
  */
 const useStripe = () => {
-    const [isLoading, setIsLoading] = useState(false);
-
     const navigate = useNavigate();
     const { setOptions: setSnackBarOptions } = useSnackBar();
 
@@ -35,7 +32,6 @@ const useStripe = () => {
         customerEmail: string,
         currentPagePath: string = ""
     ): Promise<void> => {
-        setIsLoading(true);
 
         // checkout options for the checkout
         const checkoutOptions = {
@@ -52,8 +48,7 @@ const useStripe = () => {
                 message: "Unable to connect to Stripe",
                 type: "error",
             });
-            navigate(currentPagePath);
-            return setIsLoading(false);
+            return navigate(currentPagePath);
         }
         const { error } = await stripe.redirectToCheckout(checkoutOptions);
         if (error) {
@@ -106,7 +101,7 @@ const useStripe = () => {
         });
     }
 
-    return { isLoading, redirectToCheckout, getProducts, addUserPurchase };
+    return { redirectToCheckout, getProducts, addUserPurchase };
 };
 
 export default useStripe;

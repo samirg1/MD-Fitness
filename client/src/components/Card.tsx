@@ -13,14 +13,16 @@ const Card = ({
     onClick,
     navTitle,
     children,
+    disabled = false,
 }: {
     title: JSX.Element | string;
     onClick: () => void;
     navTitle?: string;
     children?: JSX.Element | string;
+    disabled?: boolean;
 }) => {
     return (
-        <button className="card" type="button" onClick={() => onClick()}>
+        <button className="card" type="button" disabled={disabled} onClick={() => onClick()}>
             <h3 className="card__title">{title}</h3>
             <p className="card__content">{children}</p>
             <br />

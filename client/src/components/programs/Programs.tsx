@@ -8,6 +8,13 @@ import Card from "../Card";
 import Loader from "../Loader";
 import PageTitle from "../PageTitle";
 
+type TProductDisplay = Pick<TProduct, "id" | "description"> & {
+    title: string;
+    navTitle: string;
+    onClick: () => Promise<void>;
+    purchased: boolean;
+};
+
 /**
  * Main component for the programs page.
  */
@@ -16,13 +23,9 @@ const Programs = () => {
     const navigate = useNavigate();
     const { setOptions: setSnackBarOptions } = useSnackBar();
 
-    const {
-        isLoading: isBuyLoading,
-        redirectToCheckout,
-        getProducts,
-    } = useStripe();
-    const [isProductsLoading, setIsProductsLoading] = useState(false);
-    const [products, setProducts] = useState<TProduct[]>([]);
+    const { redirectToCheckout, getProducts } = useStripe();
+    const [isLoading, setIsLoading] = useState(false);
+    const [products, setProducts] = useState<TProductDisplay[]>([]);
 
     /**
      * Convert a number into a price string.
@@ -38,12 +41,35 @@ const Programs = () => {
 
     // use effect to get the current products
     useEffect(() => {
-        setIsProductsLoading(true);
+        setIsLoading(true);
 
         const getAllProducts = async () => {
             const allProducts = await getProducts();
-            setProducts(allProducts);
-            setIsProductsLoading(false);
+            setProducts(
+                allProducts
+                    .map(({ name, description, id, price_id, price }) => {
+                        const purchased =
+                            authentication?.purchases.includes(id) ?? false;
+                        return {
+                            id,
+                            title:
+                                name +
+                                (!purchased
+                                    ? ` - ${formatNumberAsMoney(price / 100)}`
+                                    : ""),
+                            description,
+                            navTitle: purchased ? "View" : "Buy",
+                            onClick: handleProductClick(
+                                price_id,
+                                id,
+                                purchased
+                            ),
+                            purchased: purchased,
+                        };
+                    })
+                    .sort((a, b) => Number(a.purchased) - Number(b.purchased))
+            );
+            setIsLoading(false);
         };
 
         getAllProducts();
@@ -51,24 +77,47 @@ const Programs = () => {
     }, []);
 
     /**
-     * Purchase a product.
-     * @param priceId The price identifier of the product.
-     * @param productId The product identifier.
+     * Handle a product click.
+     * @param priceId The price identifier of the program.
+     * @param productId The program product identifier.
      */
-    const purchaseItem = async (priceId: string, productId: string): Promise<void> => {
-        if (authentication)
-            return await redirectToCheckout(priceId, productId, authentication.email, "/programs");
+    const handleProductClick = (
+        priceId: string,
+        productId: string,
+        purchased: boolean
+    ): (() => Promise<void>) => {
+        const inner = async () => {
+            if (!authentication) {
+                setSnackBarOptions({
+                    message: "You must be logged in to purchase this product",
+                    type: "info",
+                });
+                navigate("/login-signup", {
+                    state: { from: { pathname: "/programs" } },
+                });
+                return;
+            }
 
-        setSnackBarOptions({
-            message: "You must be logged in to purchase this product",
-            type: "info",
-        });
-        navigate("/login-signup", { state: { from: { pathname: "/programs" } } });
+            if (purchased) {
+                // TODO: send to viewing screen for product
+                return navigate("/account");
+            }
+
+            setIsLoading(true);
+            await redirectToCheckout(
+                priceId,
+                productId,
+                authentication.email,
+                "/programs"
+            );
+            setIsLoading(false);
+        };
+        return inner;
     };
 
     return (
         <>
-            <Loader isLoading={isBuyLoading || isProductsLoading} />
+            <Loader isLoading={isLoading} />
             <Box
                 style={{
                     position: "absolute",
@@ -82,14 +131,13 @@ const Programs = () => {
                     <p style={{ color: "white" }}>No programs to display.</p>
                 ) : (
                     products.map(
-                        ({ id, price, price_id, name, description }) => (
+                        ({ id, title, description, navTitle, onClick }) => (
                             <Card
                                 key={id}
-                                title={`${name} - ${formatNumberAsMoney(
-                                    price / 100
-                                )}`}
-                                navTitle={isBuyLoading ? "Loading ..." : "Buy"}
-                                onClick={() => purchaseItem(price_id, id)}
+                                title={title}
+                                navTitle={navTitle}
+                                onClick={onClick}
+                                disabled={isLoading}
                             >
                                 {description}
                             </Card>

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import useAuthentication from "../../hooks/useAuthentication";
 import useStripe from "../../hooks/useStripe";
+import PageTitle from "../PageTitle";
 
 /**
  * Main page for the user's account and profile.
@@ -18,13 +19,17 @@ const Account = () => {
             addUserPurchase(session_id, product_id, authentication.email);
             setSearchParams();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <div style={{ color: "white" }}>
-            This is the account page for {authentication?.name}
-        </div>
+        <>
+            <PageTitle size="small">ACCOUNT</PageTitle>
+            <div style={{ color: "white" }}>
+                This is the account page for {authentication?.name}{" "}
+                {authentication?.purchases}
+            </div>
+        </>
     );
 };
 
