@@ -15,10 +15,12 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: textclip 5s linear infinite;
+    margin-top: 0%;
+    margin-bottom: 5%;
 }
 
 .small {
-    font-size: 5vw;
+    font-size: calc(15px + 4vw);
 }
 
 .large {

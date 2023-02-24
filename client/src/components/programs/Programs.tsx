@@ -130,19 +130,23 @@ const Programs = () => {
                 {products.length === 0 ? (
                     <p style={{ color: "white" }}>No programs to display.</p>
                 ) : (
-                    products.map(
-                        ({ id, title, description, navTitle, onClick }) => (
-                            <Card
-                                key={id}
-                                title={title}
-                                navTitle={navTitle}
-                                onClick={onClick}
-                                disabled={isLoading}
-                            >
-                                {description}
-                            </Card>
-                        )
-                    )
+                        <ul style={{ listStyleType: "none", paddingLeft: '0px' }}>
+                        {products.map(
+                            ({ id, title, description, navTitle, onClick }) => (
+                                <li key={id} style={{ paddingBottom: "20px" }}>
+                                    <Card
+                                        title={title}
+                                        navTitle={navTitle}
+                                        onClick={onClick}
+                                        disabled={isLoading}
+                                    >
+                                        {description}
+                                    </Card>
+                                    {/* <br /> <br /> */}
+                                </li>
+                            )
+                        )}
+                    </ul>
                 )}
             </Box>
         </>

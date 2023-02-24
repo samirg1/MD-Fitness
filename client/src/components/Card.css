@@ -22,12 +22,12 @@
 
 .card .card__content {
     color: #ffff;
-    font-size: 1.5vw;
+    font-size: calc(10px + 0.5vw);
 }
 
 .card .card__title {
     padding: 0;
-    font-size: 2vw;
+    font-size: calc(10px + 1vw);
     font-weight: bold;
 }
 

@@ -18,7 +18,7 @@ type TProduct = {
  */
 export const getProducts = async () => {
     const { data } = (await stripe.products.list({
-        expand: ["data.default_price"],
+        expand: ["data.default_price"], active: true
     })) as { data: Array<TProduct> };
 
     return data.map(({ id, default_price, description, name }) => ({
