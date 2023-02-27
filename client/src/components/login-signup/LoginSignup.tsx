@@ -12,7 +12,7 @@ import useKeyDownHandler from "../../hooks/useKeyDownHandler";
 import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
 import AccountVerification from "./AccountVerification";
-import Field, { FieldType } from "./Field";
+import Field from "./Field";
 
 /**
  * Login and signup page.
@@ -197,7 +197,7 @@ const LoginSignup = () => {
                                 value={name}
                                 setValue={setName}
                                 disabled={loading || verifying}
-                                type={FieldType.text}
+                                type="text"
                                 ref={nameInputRef}
                             />
                         </Grid>
@@ -208,7 +208,7 @@ const LoginSignup = () => {
                             value={email}
                             setValue={setEmail}
                             disabled={loading || verifying}
-                            type={FieldType.email}
+                            type="email"
                             ref={emailInputRef}
                         />
                     </Grid>
@@ -218,7 +218,7 @@ const LoginSignup = () => {
                             value={password}
                             setValue={setPassword}
                             disabled={loading || verifying}
-                            type={FieldType.password}
+                            type="password"
                         />
                         <IconButton
                             color="secondary"

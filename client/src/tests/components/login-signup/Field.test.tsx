@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Field, { FieldType } from "../../../components/login-signup/Field";
+import Field from "../../../components/login-signup/Field";
 
 describe("rendering with proper types", () => {
-    const setup = (type: FieldType) => {
+    const setup = (type: "text" | "password" | "email") => {
         const { asFragment } = render(
             <Field
                 name="test"
@@ -16,7 +16,7 @@ describe("rendering with proper types", () => {
     };
 
     test("render a text field", () => {
-        const asFragment = setup(FieldType.text);
+        const asFragment = setup("text");
         expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
   <p
@@ -62,7 +62,7 @@ describe("rendering with proper types", () => {
     });
 
     test("render password field", () => {
-        const asFragment = setup(FieldType.password);
+        const asFragment = setup("password");
         expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
   <p
@@ -132,7 +132,7 @@ describe("rendering with proper types", () => {
     });
 
     test("render email field", () => {
-        const asFragment = setup(FieldType.email);
+        const asFragment = setup("email");
         expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
   <p
@@ -186,7 +186,7 @@ describe("field functionality", () => {
                 value="some value"
                 setValue={() => {}}
                 disabled={false}
-                type={FieldType.password}
+                type={"password"}
             />
         );
         expect(screen.getByRole("button").innerHTML).toMatch(
@@ -209,7 +209,7 @@ describe("field functionality", () => {
                 value="some value"
                 setValue={mockSetValue}
                 disabled={false}
-                type={FieldType.text}
+                type={"text"}
             />
         );
 
