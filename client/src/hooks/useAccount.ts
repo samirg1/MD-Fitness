@@ -123,7 +123,34 @@ const useAccount = () => {
         );
     };
 
-    return { signup, login, logout, sendConfirmationEmail, confirmEmail };
+    const editUser = async (
+        userEmail: string,
+        payload: TSignup
+    ): Promise<string | null> => {
+        const { name, email, password } = payload;
+        return await graphQLRequest<{
+            editAccount: { editUser: { name: string; email: string } };
+        }>(
+            `mutation {
+                editAccount {
+                    editUser(userEmail: "${userEmail}", name: "${name}", email: "${email}", password: "${password}") {
+                        name
+                        email
+                    }
+                }
+            }`,
+            (data) => {
+                const { name, email } = data.editAccount.editUser;
+                setAuthentication((previous) => ({
+                    ...previous!,
+                    name,
+                    email,
+                }));
+            }
+        );
+    };
+
+    return { signup, login, logout, sendConfirmationEmail, confirmEmail, editUser };
 };
 
 export default useAccount;

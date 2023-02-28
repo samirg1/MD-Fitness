@@ -2,6 +2,7 @@ import { GraphQLObjectType } from "graphql";
 
 import AuthenticationType from "./authentication";
 import ConfirmationType from "./confirmation";
+import EditUserType from "./editUser";
 import PurchaseType from "./purchases";
 
 /**
@@ -14,6 +15,7 @@ const RootMutationType = new GraphQLObjectType({
         authentication: { type: AuthenticationType, resolve: () => true },
         confirmation: { type: ConfirmationType, resolve: () => true },
         purchases: { type: PurchaseType, resolve: () => true },
+        editAccount: { type: EditUserType, resolve: () => true },
     }),
 });
 
