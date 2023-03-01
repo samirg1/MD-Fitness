@@ -1,7 +1,11 @@
+import InstagramIcon from "@mui/icons-material/Instagram";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import LINKS from "../../config/links";
+import LinkButton from "../app-bar/LinkButton";
 import PageTitle from "../PageTitle";
+import TiktokIcon from "../TiktokIcon";
 const ABOUT_IMAGE = require("../../img/aboutImage.jpeg");
 const BEFORE_IMAGE = require("../../img/before.jpeg");
 const AFTER_IMAGE = require("../../img/after.jpeg");
@@ -18,7 +22,20 @@ const About = () => {
             }}
         >
             <PageTitle size="small">About</PageTitle>
+
             <Grid container spacing={3}>
+                <Grid item xs={12} style={{ textAlign: "center" }}>
+                    <LinkButton
+                        url={LINKS.tiktok}
+                        icon={<TiktokIcon />}
+                        title="Open TikTok account"
+                    />
+                    <LinkButton
+                        url={LINKS.instagram}
+                        icon={<InstagramIcon sx={{ color: "white" }} />}
+                        title="Open Instagram account"
+                    />
+                </Grid>
                 <Grid item xs={6}>
                     <Typography color="white">
                         Jeff Cavaliere MSPT, CSCS served as both the Head

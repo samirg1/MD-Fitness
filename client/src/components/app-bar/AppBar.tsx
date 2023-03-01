@@ -203,7 +203,13 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "none", md: "flex" },
+                            flexDirection: "row-reverse",
+                        }}
+                    >
                         <LinkButton
                             url={LINKS.instagram}
                             icon={<InstagramIcon sx={{ color: "white" }} />}
@@ -214,6 +220,9 @@ const ResponsiveAppBar = ({ pages }: { pages: string[] }) => {
                             icon={<TiktokIcon />}
                             title="Open TikTok account"
                         />
+                    </Box>
+
+                    <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open account settings">
                             <IconButton onClick={handleOpenUserMenu}>
                                 {authentication ? (
