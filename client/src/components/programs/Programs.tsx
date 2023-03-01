@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthentication from "../../hooks/useAuthentication";
 import useSnackBar from "../../hooks/useSnackBar";
-import useStripe, { TProduct } from "../../hooks/useStripe";
+import useStripe, { TSellProduct } from "../../hooks/useStripe";
 import Card from "../Card";
 import Loader from "../Loader";
 import PageTitle from "../PageTitle";
 
-type TProductDisplay = Pick<TProduct, "id" | "description"> & {
+type TProductDisplay = Pick<TSellProduct, "id" | "description"> & {
     title: string;
     navTitle: string;
     onClick: () => Promise<void>;
@@ -130,7 +130,7 @@ const Programs = () => {
                 {products.length === 0 ? (
                     <p style={{ color: "white" }}>No programs to display.</p>
                 ) : (
-                        <ul style={{ listStyleType: "none", paddingLeft: '0px' }}>
+                    <ul style={{ listStyleType: "none", paddingLeft: "0px" }}>
                         {products.map(
                             ({ id, title, description, navTitle, onClick }) => (
                                 <li key={id} style={{ paddingBottom: "20px" }}>
@@ -142,7 +142,6 @@ const Programs = () => {
                                     >
                                         {description}
                                     </Card>
-                                    {/* <br /> <br /> */}
                                 </li>
                             )
                         )}

@@ -10,6 +10,7 @@ import users from "./users";
 const RootQueryType = new GraphQLObjectType({
     name: "Query",
     description: "Root Query",
+
     fields: () => ({ ...users, ...refresh, ...products }),
 });
 

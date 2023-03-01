@@ -8,6 +8,7 @@ type TProduct = {
         id: string;
         unit_amount: number;
     };
+    metadata: { [key: string]: string }
     description: string;
     name: string;
 };
@@ -21,14 +22,29 @@ export const getProducts = async () => {
         expand: ["data.default_price"], active: true
     })) as { data: Array<TProduct> };
 
-    return data.map(({ id, default_price, description, name }) => ({
+    return data.map(({ id, default_price, description, name, metadata }) => ({
         id,
         price_id: default_price.id,
         price: default_price.unit_amount,
         description,
         name,
+        metadata: JSON.stringify(metadata)
     }));
 };
+
+export const getProductById = async (id: string) => {
+    const { data } = (await stripe.products.list({ids: [id]})) as { data: Array<TProduct> };
+
+    if (data.length === 0) return null;
+
+    const { id: productId, description, name, metadata } = data[0];
+    return {
+        id: productId,
+        description,
+        name,
+        metadata: JSON.stringify(metadata)
+    };
+}
 
 /**
  * Add a purchase to a user account.

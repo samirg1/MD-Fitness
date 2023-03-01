@@ -13,7 +13,7 @@
     border-radius: 50px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    transition: all 0.5 ease
+    transition: all 0.5 ease;
 }
 
 #fieldEditing:active {
@@ -45,4 +45,16 @@
     outline: none !important;
     border: 1px solid red !important;
     color: #26499d;
+}
+
+ul {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    padding-left: 0px;
+}
+
+.account-header {
+    color: white;
+    font-size: calc(10px + 1vw);
 }
