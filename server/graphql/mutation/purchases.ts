@@ -1,4 +1,9 @@
-import { GraphQLBoolean, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
+import {
+    GraphQLBoolean,
+    GraphQLNonNull,
+    GraphQLObjectType,
+    GraphQLString,
+} from "graphql";
 
 import { addUsersPurchase } from "../../api/stripe";
 

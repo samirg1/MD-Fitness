@@ -1,4 +1,9 @@
-import { GraphQLBoolean, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
+import {
+    GraphQLBoolean,
+    GraphQLNonNull,
+    GraphQLObjectType,
+    GraphQLString,
+} from "graphql";
 import { hashPassword } from "../../api/bcrypt";
 import validateObject from "../../api/joi";
 import UserModel from "../../models/User";
@@ -24,19 +29,19 @@ const EditUserType = new GraphQLObjectType({
             resolve: async (_, { userEmail, name, email, password }) => {
                 try {
                     validateObject({ name, email, password }, "signup");
-                }
-                catch (validationError) {
+                } catch (validationError) {
                     if (password) throw validationError;
-                    if (!validationError.message.startsWith(`"password"`)) throw validationError;
+                    if (!validationError.message.startsWith(`"password"`))
+                        throw validationError;
                 }
 
                 const user: any = await UserModel.findOne({ email: userEmail });
                 if (!user) throw new Error("Current user not found");
 
                 await user.updateOne({ name, email });
-                
+
                 if (password) {
-                    password = await hashPassword(password)
+                    password = await hashPassword(password);
                     await user.updateOne({ password });
                 }
 

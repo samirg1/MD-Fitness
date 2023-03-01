@@ -115,26 +115,25 @@ const Account = () => {
                 <PageTitle size="small">ACCOUNT</PageTitle>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                            <button
-                                id="fieldEditing"
-                                onClick={handleEditingClick}
-                                disabled={Boolean(editingError)}
-                            >
-                                {isEditing ? (
-                                    <>
-                                        <SaveOutlined color="secondary" />
-                                        Save
-                                    </>
-                                ) : (
-                                    <>
-                                        <EditOutlined color="secondary" />
-                                        Edit
-                                    </>
-                                )}
-                            </button>
-                        <p style={{ color: "red", textAlign: "center" }}>
-                            {editingError}
-                        </p>
+                        <button
+                            id="fieldEditing"
+                            onClick={handleEditingClick}
+                            disabled={Boolean(editingError)}
+                            // style={{ display: "inline" }}
+                        >
+                            {isEditing ? (
+                                <>
+                                    <SaveOutlined color="secondary" />
+                                    Save
+                                </>
+                            ) : (
+                                <>
+                                    <EditOutlined color="secondary" />
+                                    Edit
+                                </>
+                            )}
+                        </button>
+                        <span style={{ color: "red" }}>{editingError}</span>
                     </Grid>
                     <Grid container spacing={3}>
                         <Grid item xs>
@@ -187,7 +186,6 @@ const Account = () => {
                         ) : (
                             ""
                         )}
-                        <Grid item xs={isEditing ? 2 : 7}></Grid>
                     </Grid>
                     <Grid item xs={12}>
                         <AccountHeader title="My Programs" />

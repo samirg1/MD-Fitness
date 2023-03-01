@@ -17,7 +17,7 @@ const products = {
         description: "A product",
         args: { id: { type: GraphQLNonNull(GraphQLString) } },
         resolve: async (_: any, args: any) => await getProductById(args.id),
-    }
+    },
 };
 
 export default products;

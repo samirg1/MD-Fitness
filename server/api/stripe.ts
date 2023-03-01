@@ -8,7 +8,7 @@ type TProduct = {
         id: string;
         unit_amount: number;
     };
-    metadata: { [key: string]: string }
+    metadata: { [key: string]: string };
     description: string;
     name: string;
 };
@@ -19,7 +19,8 @@ type TProduct = {
  */
 export const getProducts = async () => {
     const { data } = (await stripe.products.list({
-        expand: ["data.default_price"], active: true
+        expand: ["data.default_price"],
+        active: true,
     })) as { data: Array<TProduct> };
 
     return data.map(({ id, default_price, description, name, metadata }) => ({
@@ -28,12 +29,14 @@ export const getProducts = async () => {
         price: default_price.unit_amount,
         description,
         name,
-        metadata: JSON.stringify(metadata)
+        metadata: JSON.stringify(metadata),
     }));
 };
 
 export const getProductById = async (id: string) => {
-    const { data } = (await stripe.products.list({ids: [id]})) as { data: Array<TProduct> };
+    const { data } = (await stripe.products.list({ ids: [id] })) as {
+        data: Array<TProduct>;
+    };
 
     if (data.length === 0) return null;
 
@@ -42,9 +45,9 @@ export const getProductById = async (id: string) => {
         id: productId,
         description,
         name,
-        metadata: JSON.stringify(metadata)
+        metadata: JSON.stringify(metadata),
     };
-}
+};
 
 /**
  * Add a purchase to a user account.
@@ -52,11 +55,20 @@ export const getProductById = async (id: string) => {
  * @param productId The product id of the product the user bought.
  * @param userEmail The email address of the user.
  */
-export const addUsersPurchase = async (sessionId: string, productId: string, userEmail: string) => {
-    const { payment_intent } = await stripe.checkout.sessions.retrieve(sessionId, { expand: ["payment_intent"]});
+export const addUsersPurchase = async (
+    sessionId: string,
+    productId: string,
+    userEmail: string
+) => {
+    const { payment_intent } = await stripe.checkout.sessions.retrieve(
+        sessionId,
+        { expand: ["payment_intent"] }
+    );
 
     if (payment_intent.metadata.fulfilled) return;
-    await stripe.paymentIntents.update(payment_intent.id, { metadata: { fulfilled: true } });
+    await stripe.paymentIntents.update(payment_intent.id, {
+        metadata: { fulfilled: true },
+    });
 
     const user = await UserModel.findOne({ email: userEmail });
     if (!user) return;

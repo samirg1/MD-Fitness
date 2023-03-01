@@ -150,7 +150,14 @@ const useAccount = () => {
         );
     };
 
-    return { signup, login, logout, sendConfirmationEmail, confirmEmail, editUser };
+    return {
+        signup,
+        login,
+        logout,
+        sendConfirmationEmail,
+        confirmEmail,
+        editUser,
+    };
 };
 
 export default useAccount;

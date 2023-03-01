@@ -35,10 +35,12 @@ const EditableField = ({
             }}
             value={value}
             onChange={(event) => {
-                if (!event.target.value.match(fieldRegex[type]) && (type !== "password" || event.target.value !== "" )) {
+                if (
+                    !event.target.value.match(fieldRegex[type]) &&
+                    (type !== "password" || event.target.value !== "")
+                ) {
                     setError(`${type} field invalid`);
-                }
-                else setError(null);
+                } else setError(null);
                 setValue(event.target.value);
             }}
         />

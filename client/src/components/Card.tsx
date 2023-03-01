@@ -22,7 +22,12 @@ const Card = ({
     disabled?: boolean;
 }) => {
     return (
-        <button className="card" type="button" disabled={disabled} onClick={() => onClick()}>
+        <button
+            className="card"
+            type="button"
+            disabled={disabled}
+            onClick={() => onClick()}
+        >
             <h3 className="card__title">{title}</h3>
             <p className="card__content">{children}</p>
             <br />

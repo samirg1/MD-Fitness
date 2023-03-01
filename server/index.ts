@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/graphql", graphQlRoot);
 
-getProductById('1')
+getProductById("1");
 
 // connect to database
 mongoConnect(() => console.log("Connected to database"));

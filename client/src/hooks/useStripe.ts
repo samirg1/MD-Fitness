@@ -11,7 +11,9 @@ export type TSellProduct = {
     name: string;
 };
 
-export type TViewProduct = Pick<TSellProduct, "id" | "description" | "name"> & { metadata: { [key: string]: string } }
+export type TViewProduct = Pick<TSellProduct, "id" | "description" | "name"> & {
+    metadata: { [key: string]: string };
+};
 
 /**
  * Stripe hook.
@@ -89,7 +91,11 @@ const useStripe = () => {
      */
     const getProductById = async (id: string): Promise<TViewProduct | null> => {
         let product: TViewProduct | null = null;
-        await graphQLRequest<{ product: (Omit<TViewProduct, "metadata"> & { metadata: string }) | null }>(
+        await graphQLRequest<{
+            product:
+                | (Omit<TViewProduct, "metadata"> & { metadata: string })
+                | null;
+        }>(
             `query {
                 product(id: "${id}") {
                     id
@@ -106,7 +112,7 @@ const useStripe = () => {
                     id,
                     description,
                     name,
-                    metadata: JSON.parse(metadata) as TViewProduct["metadata"]
+                    metadata: JSON.parse(metadata) as TViewProduct["metadata"],
                 };
             }
         );
