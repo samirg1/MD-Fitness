@@ -1,4 +1,5 @@
 import UserModel from "../models/User";
+import separateObjectByKey from "../utils/separateObjectByKey";
 
 const stripe = require("stripe")(process.env.STRIPE_API);
 
@@ -45,7 +46,7 @@ export const getProductById = async (id: string) => {
         id: productId,
         description,
         name,
-        metadata: JSON.stringify(metadata),
+        metadata: JSON.stringify(separateObjectByKey(metadata, (key) => key.split(" - "))),
     };
 };
 

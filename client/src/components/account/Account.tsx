@@ -12,6 +12,7 @@ import PageTitle from "../PageTitle";
 import "./Account.css";
 import AccountHeader from "./AccountHeader";
 import EditableField from "./EditableField";
+import ProgramView from "./ProgramView";
 
 /**
  * Main page for the user's account and profile.
@@ -39,6 +40,8 @@ const Account = () => {
     };
 
     const [editingError, setEditingError] = useState<string | null>(null);
+
+    const [productOpen, setProductOpen] = useState<TViewProduct | null>(null);
 
     useEffect(() => {
         const addPurchase = async () => {
@@ -103,6 +106,10 @@ const Account = () => {
 
     return (
         <>
+            <ProgramView
+                product={productOpen}
+                handleClose={() => setProductOpen(null)}
+            />
             <Loader isLoading={isLoading} />
             <Box
                 style={{
@@ -198,9 +205,7 @@ const Account = () => {
                                     <Card
                                         title={product.name}
                                         navTitle={"Go"}
-                                        onClick={() => {
-                                            console.log(product);
-                                        }}
+                                        onClick={() => setProductOpen(product)}
                                         disabled={isLoading}
                                     />
                                 </li>
