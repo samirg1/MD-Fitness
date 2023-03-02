@@ -98,10 +98,7 @@ const Programs = () => {
                 return;
             }
 
-            if (purchased) {
-                // TODO: send to viewing screen for product
-                return navigate("/account");
-            }
+            if (purchased) return navigate("/account", { state: { to: productId } });
 
             setIsLoading(true);
             await redirectToCheckout(

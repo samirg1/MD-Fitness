@@ -2,7 +2,7 @@ import { EditOutlined, SaveOutlined } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { SetStateAction, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import useAccount from "../../hooks/useAccount";
 import useAuthentication from "../../hooks/useAuthentication";
 import useStripe, { TViewProduct } from "../../hooks/useStripe";
@@ -23,6 +23,7 @@ const Account = () => {
 
     const { authentication } = useAuthentication();
     const { editUser } = useAccount();
+    const location = useLocation();
     const { addUserPurchase, getProductById } = useStripe();
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -67,6 +68,13 @@ const Account = () => {
                     if (product !== null) products.push(product);
                 })
             );
+
+            if (location?.state?.to) {
+                const product = products.find(
+                    (product) => product.id === location.state.to
+                );
+                if (product) setProductOpen(product);
+            }
 
             setProducts(products);
         };
@@ -126,7 +134,6 @@ const Account = () => {
                             id="fieldEditing"
                             onClick={handleEditingClick}
                             disabled={Boolean(editingError)}
-                            // style={{ display: "inline" }}
                         >
                             {isEditing ? (
                                 <>
