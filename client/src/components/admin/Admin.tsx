@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import Users from "./Users";
 
 /**
@@ -5,10 +6,16 @@ import Users from "./Users";
  */
 const Admin = () => {
     return (
-        <div style={{ color: "white" }}>
-            This is the admin page
+        <Box
+            style={{
+                position: "absolute",
+                top: "15%",
+                left: "10%",
+                right: "10%",
+            }}
+        >
             <Users />
-        </div>
+        </Box>
     );
 };
 

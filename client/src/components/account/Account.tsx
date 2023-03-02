@@ -203,7 +203,7 @@ const Account = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <AccountHeader title="My Programs" />
-                        <ul>
+                        <ul id="account-programs">
                             {products.map((product) => (
                                 <li
                                     key={product.id}

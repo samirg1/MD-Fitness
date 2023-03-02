@@ -1,8 +1,8 @@
 import { GraphQLList } from "graphql";
 
-import UserType from "../types/User";
-import UserModel from "../../models/User";
 import { verifyToken } from "../../api/jsonwebtoken";
+import UserModel from "../../models/User";
+import UserType from "../types/User";
 
 /**
  * GraphQL Query object for getting all users
@@ -11,17 +11,19 @@ const users = {
     users: {
         type: new GraphQLList(UserType),
         description: "List of users",
-        resolve: (_: any, __: any, context: any) => {
-            const authorisationHeader =
-                context.headers.authorisation || context.headers.Authorisation; // get authorisation header
-            if (!authorisationHeader?.startsWith("Bearer "))
-                throw new Error("Unauthorised");
+        resolve: async (_: any, __: any, context: any) => {
+            const token = context.headers.cookie?.split("=")[1]; // get jwt
+            if (!token) throw new Error("Unauthorised");
 
-            const token = authorisationHeader.split(" ")[1]; // get and verify token
-            verifyToken(token, "access", () => {}, [
+            await verifyToken(token, "refresh", () => {}, [
                 Number(process.env.ADMIN_PERMISSION),
             ]);
-            return UserModel.find({});
+
+            return (await UserModel.find({})).map((user) => ({
+                // @ts-ignore
+                ...user._doc,
+                dateCreated: JSON.stringify(user.dateCreated),
+            }));
         },
     },
 };
