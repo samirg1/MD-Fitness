@@ -31,16 +31,28 @@ const ProgramView = ({ product, handleClose }: TProgramView) => {
         <Modal open onClose={handleClose}>
             <Box sx={popupStyle}>
                 <iframe
+                    onLoad={() => {
+                        const frame =
+                            document.getElementsByClassName("programView")[0];
+
+                        const url = product.metadata.link;
+                        let newDiv = document.createElement("div");
+                        newDiv.style.userSelect = "none";
+                        newDiv.style.padding = "2%";
+
+                        newDiv.classList.add("embeddedProgram");
+                        frame.parentElement!.replaceChild(newDiv, frame);
+
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("GET", url, true);
+                        xhr.onload = () =>
+                            (newDiv.innerHTML = xhr.responseText);
+                        xhr.send();
+                    }}
                     className="programView"
                     title="Program View"
                     src={product.metadata.link}
-                    style={{
-                        width: "96%",
-                        height: "96%",
-                        border: "1px solid white",
-                        padding: "2%",
-                        borderRadius: "40px",
-                    }}
+                    style={{ border: "none" }}
                 ></iframe>
             </Box>
         </Modal>
