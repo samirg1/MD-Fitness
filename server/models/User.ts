@@ -9,6 +9,7 @@ interface IUser {
     email: string;
     password: string;
     permissions: number[];
+    purchases: string[];
     dateCreated: Date;
     activated: boolean;
     accessToken?: string;
@@ -42,6 +43,10 @@ const UserModel = createModel<IUser>("User", {
     permissions: {
         type: Array,
         default: [1],
+    },
+    purchases: {
+        type: Array,
+        default: [],
     },
     activated: {
         type: Boolean,

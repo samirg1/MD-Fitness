@@ -20,22 +20,15 @@ const useRefreshToken = () => {
             `{
                 refresh {
                     name
+                    email
                     permissions
+                    purchases
                     accessToken
                 }
             }`,
             (data) => {
-                const { name, permissions, accessToken } = data.refresh;
-                newAccessToken = accessToken;
-                setAuthentication(
-                    (previous) =>
-                        ({
-                            ...previous,
-                            name,
-                            permissions,
-                            accessToken,
-                        } as TAuthentication)
-                );
+                newAccessToken = data.refresh.accessToken;
+                setAuthentication(data.refresh);
             }
         );
 

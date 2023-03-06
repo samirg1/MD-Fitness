@@ -1,4 +1,5 @@
 import { GraphQLObjectType } from "graphql";
+import products from "./products";
 
 import refresh from "./refresh";
 import users from "./users";
@@ -9,7 +10,8 @@ import users from "./users";
 const RootQueryType = new GraphQLObjectType({
     name: "Query",
     description: "Root Query",
-    fields: () => ({ ...users, ...refresh }),
+
+    fields: () => ({ ...users, ...refresh, ...products }),
 });
 
 export default RootQueryType;

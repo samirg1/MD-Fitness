@@ -28,8 +28,6 @@ const AuthenticationType = new GraphQLObjectType({
             resolve: async (_, { email, password }, { res }) => {
                 const errorMessage = "invalid email and/or password"; // default error message
 
-                validateObject({ email, password }, "login"); // validate login object
-
                 const user = await UserModel.findOne({ email }); // get user
 
                 // ensure user exists and has been activated
@@ -72,7 +70,6 @@ const AuthenticationType = new GraphQLObjectType({
                     maxAge: 24 * 60 * 60 * 1000,
                 });
                 res.header("authentication-token", accessToken);
-
                 // send details
                 const returnObject = user;
                 returnObject.accessToken = accessToken;
@@ -98,12 +95,7 @@ const AuthenticationType = new GraphQLObjectType({
                 password = await hashPassword(password);
                 const user = new UserModel({ name, email, password });
 
-                // save user
-                try {
-                    return await user.save();
-                } catch (savingError) {
-                    throw new Error(savingError);
-                }
+                return await user.save();
             },
         },
 

@@ -17,5 +17,5 @@ module.exports = {
     },
     verbose: true,
     notify: true,
-    notifyMode: "always"
+    notifyMode: "always",
 };

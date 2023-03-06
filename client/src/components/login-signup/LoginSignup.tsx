@@ -12,7 +12,7 @@ import useKeyDownHandler from "../../hooks/useKeyDownHandler";
 import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
 import AccountVerification from "./AccountVerification";
-import Field, { FieldType } from "./Field";
+import Field from "./Field";
 
 /**
  * Login and signup page.
@@ -38,9 +38,10 @@ const LoginSignup = () => {
     const emailInputRef = useRef<HTMLInputElement>();
     const nameInputRef = useRef<HTMLInputElement>();
     useEffect(() => {
-        loggingIn ? emailInputRef.current?.focus() : nameInputRef.current?.focus();
-    }, [loggingIn])
-
+        loggingIn
+            ? emailInputRef.current?.focus()
+            : nameInputRef.current?.focus();
+    }, [loggingIn]);
 
     // clear error when fields change
     useEffect(() => setLoginSignupError(null), [name, email, password]);
@@ -105,7 +106,9 @@ const LoginSignup = () => {
         });
         // override default password error message
         if (responseError?.startsWith('"password" with value'))
-            setLoginSignupError("invalid password - must be 8 characters long with an uppercase letter, lowercase letter, number and special character");
+            setLoginSignupError(
+                "invalid password - must be 8 characters long with an uppercase letter, lowercase letter, number and special character"
+            );
         else setLoginSignupError(responseError);
 
         setLoading(false);
@@ -172,8 +175,8 @@ const LoginSignup = () => {
                     ) : null}
                     <Grid item xs={12}>
                         <ToggleButtonGroup
-                            onKeyDown={(e) => {}}
                             color="primary"
+                            sx={{ backgroundColor: "white" }}
                             value={loggingIn ? "login" : "signup"}
                             exclusive
                             onChange={toggleLoggingIn}
@@ -194,7 +197,7 @@ const LoginSignup = () => {
                                 value={name}
                                 setValue={setName}
                                 disabled={loading || verifying}
-                                type={FieldType.text}
+                                type="text"
                                 ref={nameInputRef}
                             />
                         </Grid>
@@ -205,7 +208,7 @@ const LoginSignup = () => {
                             value={email}
                             setValue={setEmail}
                             disabled={loading || verifying}
-                            type={FieldType.email}
+                            type="email"
                             ref={emailInputRef}
                         />
                     </Grid>
@@ -215,9 +218,10 @@ const LoginSignup = () => {
                             value={password}
                             setValue={setPassword}
                             disabled={loading || verifying}
-                            type={FieldType.password}
+                            type="password"
                         />
                         <IconButton
+                            color="secondary"
                             onClick={submit}
                             disabled={loading || verifying}
                         >

@@ -1,0 +1,60 @@
+#fieldEditing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-image: linear-gradient(to top, #26499d 0%, #26759d 100%);
+    border: solid 3px transparent;
+    background-clip: padding-box;
+    box-shadow: 0px 0px 0px 3px #ffffff00;
+    color: white;
+    min-height: 43px;
+    padding: 0 13px 0 13px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.5 ease;
+}
+
+#fieldEditing:active {
+    transform: scale(0.9);
+    transition: all 100ms ease;
+}
+
+#fieldEditing:hover {
+    box-shadow: 0px 0px 0px 3px #30a1b8;
+}
+
+#fieldEditing svg {
+    width: 16px;
+}
+
+#fieldEditing:disabled {
+    background-image: none;
+}
+
+#fieldEditing:disabled:hover {
+    box-shadow: none;
+}
+
+#fieldEditing:disabled:active {
+    transform: none;
+}
+
+.error:focus {
+    outline: none !important;
+    border: 1px solid red !important;
+    color: #26499d;
+}
+
+#account-programs {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    padding-left: 0px;
+}
+
+.account-header {
+    color: white;
+    font-size: calc(10px + 1vw);
+}

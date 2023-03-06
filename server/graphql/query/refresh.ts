@@ -28,7 +28,7 @@ const refresh = {
                     { email, permissions },
                     "access"
                 );
-                 
+
                 foundUser.accessToken = newAccessToken;
                 user = foundUser;
             });

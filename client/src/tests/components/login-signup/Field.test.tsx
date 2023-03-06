@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Field, { FieldType } from "../../../components/login-signup/Field";
+import Field from "../../../components/login-signup/Field";
 
 describe("rendering with proper types", () => {
-    const setup = (type: FieldType) => {
+    const setup = (type: "text" | "password" | "email") => {
         const { asFragment } = render(
             <Field
                 name="test"
@@ -16,11 +16,11 @@ describe("rendering with proper types", () => {
     };
 
     test("render a text field", () => {
-        const asFragment = setup(FieldType.text);
+        const asFragment = setup("text");
         expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
   <p
-    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+    class="MuiTypography-root MuiTypography-body1 css-jb1ygz-MuiTypography-root"
   >
     test
   </p>
@@ -31,7 +31,7 @@ describe("rendering with proper types", () => {
     style="display: inline;"
   >
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary css-fdjsk8-MuiInputBase-root-MuiOutlinedInput-root"
       required=""
     >
       <input
@@ -62,11 +62,11 @@ describe("rendering with proper types", () => {
     });
 
     test("render password field", () => {
-        const asFragment = setup(FieldType.password);
+        const asFragment = setup("password");
         expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
   <p
-    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+    class="MuiTypography-root MuiTypography-body1 css-jb1ygz-MuiTypography-root"
   >
     test
   </p>
@@ -77,7 +77,7 @@ describe("rendering with proper types", () => {
     style="display: inline;"
   >
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-error MuiInputBase-adornedEnd css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary Mui-error MuiInputBase-adornedEnd css-qrg736-MuiInputBase-root-MuiOutlinedInput-root"
       required=""
     >
       <input
@@ -91,7 +91,7 @@ describe("rendering with proper types", () => {
         class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-1laqsz7-MuiInputAdornment-root"
       >
         <button
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorSecondary MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-wss7r8-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
@@ -132,11 +132,11 @@ describe("rendering with proper types", () => {
     });
 
     test("render email field", () => {
-        const asFragment = setup(FieldType.email);
+        const asFragment = setup("email");
         expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
   <p
-    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+    class="MuiTypography-root MuiTypography-body1 css-jb1ygz-MuiTypography-root"
   >
     test
   </p>
@@ -147,7 +147,7 @@ describe("rendering with proper types", () => {
     style="display: inline;"
   >
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-error css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary Mui-error css-fdjsk8-MuiInputBase-root-MuiOutlinedInput-root"
       required=""
     >
       <input
@@ -186,13 +186,19 @@ describe("field functionality", () => {
                 value="some value"
                 setValue={() => {}}
                 disabled={false}
-                type={FieldType.password}
+                type={"password"}
             />
         );
-        expect(screen.getByRole("button").innerHTML).toMatch(/"VisibilityIcon"/);
+        expect(screen.getByRole("button").innerHTML).toMatch(
+            /"VisibilityIcon"/
+        );
         fireEvent.click(screen.getByRole("button"));
-        expect((screen.getByRole("textbox") as HTMLInputElement).type).toEqual("text");
-        expect(screen.getByRole("button").innerHTML).toMatch(/"VisibilityOffIcon"/);
+        expect((screen.getByRole("textbox") as HTMLInputElement).type).toEqual(
+            "text"
+        );
+        expect(screen.getByRole("button").innerHTML).toMatch(
+            /"VisibilityOffIcon"/
+        );
     });
 
     test("field change value", () => {
@@ -203,12 +209,14 @@ describe("field functionality", () => {
                 value="some value"
                 setValue={mockSetValue}
                 disabled={false}
-                type={FieldType.text}
+                type={"text"}
             />
         );
 
-        fireEvent.change(screen.getByRole("textbox"), {target: {value: 'testChange'}});
+        fireEvent.change(screen.getByRole("textbox"), {
+            target: { value: "testChange" },
+        });
         expect(mockSetValue).toBeCalledTimes(1);
-        expect(mockSetValue).lastCalledWith('testChange');
+        expect(mockSetValue).lastCalledWith("testChange");
     });
 });

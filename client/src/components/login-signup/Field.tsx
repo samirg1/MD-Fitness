@@ -15,22 +15,13 @@ type TField = {
     value: string;
     setValue: React.Dispatch<React.SetStateAction<string>>;
     disabled: boolean;
-    type: FieldType;
+    type: "password" | "email" | "text";
 };
-
-/**
- * The type of a field for login and signup forms.
- */
-export enum FieldType {
-    password = "password",
-    email = "email",
-    text = "text",
-}
 
 /**
  * Tooltips for each field type to be displayed for accessability.
  */
-const fieldTooltips = {
+export const fieldTooltips = {
     password:
         "Minimum 8 characters with a lowercase and uppercase letter, a number and a symbol",
     email: "Enter a valid email",
@@ -40,7 +31,7 @@ const fieldTooltips = {
 /**
  * RegExp patters for each field type for easy to see validation.
  */
-const fieldRegex = {
+export const fieldRegex = {
     password: new RegExp(
         "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
     ),
@@ -63,7 +54,7 @@ const Field = (
     const [showPassword, setShowPassword] = useState(false);
     return (
         <>
-            <Typography>{name}</Typography>
+            <Typography color="white">{name}</Typography>
             <Tooltip
                 title={fieldTooltips[type]}
                 enterTouchDelay={0} // for mobile devices
@@ -71,19 +62,24 @@ const Field = (
             >
                 <div style={{ display: "inline" }}>
                     <OutlinedInput
+                        color="secondary"
+                        sx={{
+                            color: "white",
+                            border: "1px solid white !important",
+                        }}
                         inputRef={ref}
                         required
                         error={!value.match(fieldRegex[type])}
                         disabled={disabled}
                         type={
-                            showPassword && type === FieldType.password // ensure we account for password visibility
-                                ? FieldType.text
+                            showPassword && type === "password" // ensure we account for password visibility
+                                ? "text"
                                 : type
                         }
                         value={value}
                         onChange={(event) => setValue(event.target.value)}
                         endAdornment={
-                            type === FieldType.password ? (
+                            type === "password" ? (
                                 <InputAdornment position="end">
                                     {/* Visibility button */}
                                     <IconButton
@@ -94,6 +90,7 @@ const Field = (
                                             )
                                         }
                                         edge="end"
+                                        color="secondary"
                                     >
                                         {showPassword ? (
                                             <VisibilityOff />
