@@ -12,7 +12,7 @@ export type TSellProduct = {
 };
 
 export type TViewProduct = Pick<TSellProduct, "id" | "description" | "name"> & {
-    metadata: { [key: string]: string };
+    metadata: { link: string; client?: string };
 };
 
 /**
@@ -85,19 +85,20 @@ const useStripe = () => {
     };
 
     /**
-     * Retrieve a product based on its id.
-     * @param id The id of the product to retrieve.
-     * @returns The product with the id.
+     * Get the products specifc to a user.
+     * @param ids The ids of the products to retrieve.
+     * @param email The email address of the user.
+     * @returns The products that the user has access to.
      */
-    const getProductById = async (id: string): Promise<TViewProduct | null> => {
-        let product: TViewProduct | null = null;
+    const getProductsForUser = async (ids: string[], email: string) => {
+        let products: TViewProduct[] = [];
         await graphQLRequest<{
-            product:
-                | (Omit<TViewProduct, "metadata"> & { metadata: string })
-                | null;
+            userProducts: (Omit<TViewProduct, "metadata"> & {
+                metadata: string;
+            })[];
         }>(
             `query {
-                product(id: "${id}") {
+                userProducts(ids: ${JSON.stringify(ids)}, email: "${email}") {
                     id
                     description
                     name
@@ -105,18 +106,19 @@ const useStripe = () => {
                 }
             }`,
             (data) => {
-                if (data.product === null) return;
-
-                const { id, description, name, metadata } = data.product;
-                product = {
-                    id,
-                    description,
-                    name,
-                    metadata: JSON.parse(metadata) as TViewProduct["metadata"],
-                };
+                products = data.userProducts.map(
+                    ({ id, description, name, metadata }) => ({
+                        id,
+                        description,
+                        name,
+                        metadata: JSON.parse(
+                            metadata
+                        ) as TViewProduct["metadata"],
+                    })
+                );
             }
         );
-        return product;
+        return products;
     };
 
     /**
@@ -143,7 +145,12 @@ const useStripe = () => {
         });
     };
 
-    return { redirectToCheckout, getProducts, getProductById, addUserPurchase };
+    return {
+        redirectToCheckout,
+        getProducts,
+        getProductsForUser,
+        addUserPurchase,
+    };
 };
 
 export default useStripe;

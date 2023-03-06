@@ -20,7 +20,7 @@ describe("rendering with proper types", () => {
         expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
   <p
-    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+    class="MuiTypography-root MuiTypography-body1 css-jb1ygz-MuiTypography-root"
   >
     test
   </p>
@@ -31,7 +31,7 @@ describe("rendering with proper types", () => {
     style="display: inline;"
   >
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary css-fdjsk8-MuiInputBase-root-MuiOutlinedInput-root"
       required=""
     >
       <input
@@ -66,7 +66,7 @@ describe("rendering with proper types", () => {
         expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
   <p
-    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+    class="MuiTypography-root MuiTypography-body1 css-jb1ygz-MuiTypography-root"
   >
     test
   </p>
@@ -77,7 +77,7 @@ describe("rendering with proper types", () => {
     style="display: inline;"
   >
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-error MuiInputBase-adornedEnd css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary Mui-error MuiInputBase-adornedEnd css-qrg736-MuiInputBase-root-MuiOutlinedInput-root"
       required=""
     >
       <input
@@ -91,7 +91,7 @@ describe("rendering with proper types", () => {
         class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-1laqsz7-MuiInputAdornment-root"
       >
         <button
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorSecondary MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-wss7r8-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
@@ -136,7 +136,7 @@ describe("rendering with proper types", () => {
         expect(asFragment()).toMatchInlineSnapshot(`
 <DocumentFragment>
   <p
-    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+    class="MuiTypography-root MuiTypography-body1 css-jb1ygz-MuiTypography-root"
   >
     test
   </p>
@@ -147,7 +147,7 @@ describe("rendering with proper types", () => {
     style="display: inline;"
   >
     <div
-      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-error css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary Mui-error css-fdjsk8-MuiInputBase-root-MuiOutlinedInput-root"
       required=""
     >
       <input

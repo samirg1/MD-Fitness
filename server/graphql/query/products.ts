@@ -1,6 +1,6 @@
 import { GraphQLList, GraphQLNonNull, GraphQLString } from "graphql";
 
-import { getProductById, getProducts } from "../../api/stripe";
+import { getProductsForUser, getProducts } from "../../api/stripe";
 import ProductType from "../types/Product";
 
 /**
@@ -12,11 +12,15 @@ const products = {
         description: "List of products",
         resolve: async () => await getProducts(),
     },
-    product: {
-        type: ProductType,
-        description: "A product",
-        args: { id: { type: GraphQLNonNull(GraphQLString) } },
-        resolve: async (_: any, args: any) => await getProductById(args.id),
+    userProducts: {
+        type: new GraphQLList(ProductType),
+        description: "List of products for a specific user",
+        args: {
+            ids: { type: GraphQLNonNull(new GraphQLList(GraphQLString)) },
+            email: { type: GraphQLNonNull(GraphQLString) },
+        },
+        resolve: async (_: any, args: any) =>
+            await getProductsForUser(args.ids, args.email),
     },
 };
 

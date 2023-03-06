@@ -36,8 +36,11 @@ const Users = () => {
         <>
             <Loader isLoading={loading} />
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650, maxHeight: 800 }} aria-label="simple table">
-                    <TableHead sx={{bgcolor: "grey"}}>
+                <Table
+                    sx={{ minWidth: 650, maxHeight: 800 }}
+                    aria-label="simple table"
+                >
+                    <TableHead sx={{ bgcolor: "grey" }}>
                         <TableRow>
                             <TableCell>Name</TableCell>
                             <TableCell>Email</TableCell>

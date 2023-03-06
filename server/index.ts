@@ -8,7 +8,6 @@ import corsOptions from "./config/corsOptions";
 import graphQlRoot from "./middlware/graphql";
 
 import credentials from "./middlware/credentials";
-import { getProductById } from "./api/stripe";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -18,8 +17,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/graphql", graphQlRoot);
-
-getProductById("1");
 
 // connect to database
 mongoConnect(() => console.log("Connected to database"));

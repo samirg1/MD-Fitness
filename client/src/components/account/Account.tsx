@@ -24,7 +24,7 @@ const Account = () => {
     const { authentication } = useAuthentication();
     const { editUser } = useAccount();
     const location = useLocation();
-    const { addUserPurchase, getProductById } = useStripe();
+    const { addUserPurchase, getProductsForUser } = useStripe();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [products, setProducts] = useState<TViewProduct[]>([]);
@@ -61,12 +61,9 @@ const Account = () => {
         };
 
         const getPurchases = async () => {
-            const products: TViewProduct[] = [];
-            await Promise.all(
-                authentication!.purchases.map(async (purchaseId) => {
-                    const product = await getProductById(purchaseId);
-                    if (product !== null) products.push(product);
-                })
+            const products: TViewProduct[] = await getProductsForUser(
+                authentication!.purchases,
+                authentication!.email
             );
 
             if (location?.state?.to) {
@@ -203,21 +200,27 @@ const Account = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <AccountHeader title="My Programs" />
-                        <ul id="account-programs">
-                            {products.map((product) => (
-                                <li
-                                    key={product.id}
-                                    style={{ paddingBottom: "20px" }}
-                                >
-                                    <Card
-                                        title={product.name}
-                                        navTitle={"Go"}
-                                        onClick={() => setProductOpen(product)}
-                                        disabled={isLoading}
-                                    />
-                                </li>
-                            ))}
-                        </ul>
+                        {products.length === 0 ? (
+                            <p style={{ color: "white" }}>No programs yet</p>
+                        ) : (
+                            <ul id="account-programs">
+                                {products.map((product) => (
+                                    <li
+                                        key={product.id}
+                                        style={{ paddingBottom: "20px" }}
+                                    >
+                                        <Card
+                                            title={product.name}
+                                            navTitle={"Go"}
+                                            onClick={() =>
+                                                setProductOpen(product)
+                                            }
+                                            disabled={isLoading}
+                                        />
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </Grid>
                 </Grid>
             </Box>

@@ -38,7 +38,7 @@ const useAdmin = () => {
             (data) =>
                 (users = data.users.map((user) => ({
                     ...user,
-                    dateCreated: (JSON.parse(user.dateCreated) as Date),
+                    dateCreated: JSON.parse(user.dateCreated) as Date,
                 })))
         );
 

@@ -48,10 +48,11 @@ const Programs = () => {
             setProducts(
                 allProducts
                     .map(({ name, description, id, price_id, price }) => {
-                        const purchased =
+                        const purchased: boolean =
                             authentication?.purchases.includes(id) ?? false;
                         return {
                             id,
+                            // if the product is purchased, don't show the price
                             title:
                                 name +
                                 (!purchased
@@ -67,7 +68,7 @@ const Programs = () => {
                             purchased: purchased,
                         };
                     })
-                    .sort((a, b) => Number(a.purchased) - Number(b.purchased))
+                    .sort((a, b) => Number(a.purchased) - Number(b.purchased)) // sort purchased products to the bottom
             );
             setIsLoading(false);
         };
@@ -81,12 +82,13 @@ const Programs = () => {
      * @param priceId The price identifier of the program.
      * @param productId The program product identifier.
      */
-    const handleProductClick = (
-        priceId: string,
-        productId: string,
-        purchased: boolean
-    ): (() => Promise<void>) => {
-        const inner = async () => {
+    const handleProductClick =
+        (
+            priceId: string,
+            productId: string,
+            purchased: boolean
+        ): (() => Promise<void>) =>
+        async () => {
             if (!authentication) {
                 setSnackBarOptions({
                     message: "You must be logged in to purchase this product",
@@ -98,7 +100,8 @@ const Programs = () => {
                 return;
             }
 
-            if (purchased) return navigate("/account", { state: { to: productId } });
+            if (purchased)
+                return navigate("/account", { state: { to: productId } });
 
             setIsLoading(true);
             await redirectToCheckout(
@@ -109,8 +112,6 @@ const Programs = () => {
             );
             setIsLoading(false);
         };
-        return inner;
-    };
 
     return (
         <>
@@ -125,7 +126,9 @@ const Programs = () => {
             >
                 <PageTitle size="small">PROGRAMS</PageTitle>
                 {products.length === 0 ? (
-                    <p style={{ color: "white" }}>No programs to display.</p>
+                    <p style={{ color: "white" }}>
+                        No public programs to display.
+                    </p>
                 ) : (
                     <ul style={{ listStyleType: "none", paddingLeft: "0px" }}>
                         {products.map(

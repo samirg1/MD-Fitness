@@ -1,5 +1,4 @@
 import UserModel from "../models/User";
-import separateObjectByKey from "../utils/separateObjectByKey";
 
 const stripe = require("stripe")(process.env.STRIPE_API);
 
@@ -24,30 +23,38 @@ export const getProducts = async () => {
         active: true,
     })) as { data: Array<TProduct> };
 
-    return data.map(({ id, default_price, description, name, metadata }) => ({
+    const publicProducts = data.filter(({ metadata }) => !metadata.client);
+
+    return publicProducts.map(({ id, default_price, description, name }) => ({
         id,
         price_id: default_price.id,
         price: default_price.unit_amount,
         description,
         name,
-        metadata: JSON.stringify(metadata),
     }));
 };
 
-export const getProductById = async (id: string) => {
-    const { data } = (await stripe.products.list({ ids: [id] })) as {
+/**
+ * Get the products specifc to a user.
+ * @param ids The ids of the products to retrieve.
+ * @param email The user's email
+ * @returns The products that the user has access to.
+ */
+export const getProductsForUser = async (ids: string[], email: string) => {
+    const { data } = (await stripe.products.list()) as {
         data: Array<TProduct>;
     };
 
-    if (data.length === 0) return null;
+    const usersProducts = data.filter(
+        ({ id, metadata }) => ids.includes(id) || metadata.client === email
+    );
 
-    const { id: productId, description, name, metadata } = data[0];
-    return {
-        id: productId,
+    return usersProducts.map(({ id, description, name, metadata }) => ({
+        id,
         description,
         name,
-        metadata: JSON.stringify(separateObjectByKey(metadata, (key) => key.split(" - "))),
-    };
+        metadata: JSON.stringify(metadata),
+    }));
 };
 
 /**
