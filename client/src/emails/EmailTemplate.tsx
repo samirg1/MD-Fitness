@@ -131,8 +131,6 @@ const EmailTemplate = ({ children }: { children: JSX.Element }) => {
                                 textDecoration: "underline",
                             }}
                             href={`${process.env.REACT_APP_DOMAIN}/about`}
-                            target="_blank"
-                            rel="noopener noreferrer"
                         >
                             About
                         </Link>

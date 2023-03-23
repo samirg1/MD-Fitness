@@ -1,8 +1,6 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
-import PurchaseConfirmation from "../../emails/PurchaseConfirmation";
-import useAccount from "../../hooks/useAccount";
 import Card from "../Card";
 import PageTitle from "../PageTitle";
 
@@ -11,8 +9,6 @@ import PageTitle from "../PageTitle";
  */
 const Home = () => {
     const navigate = useNavigate();
-
-    const { sendConfirmationEmail } = useAccount();
 
     return (
         <Box
@@ -23,8 +19,6 @@ const Home = () => {
                 right: "10%",
             }}
         >
-            <PurchaseConfirmation />
-            <button onClick={() => sendConfirmationEmail("srgupta@bigpond.com")}>send</button>
             <PageTitle>
                 <>
                     Welcome to <br /> MD-Fitness

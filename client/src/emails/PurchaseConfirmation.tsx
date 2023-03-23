@@ -23,9 +23,9 @@ const PurchaseConfirmation = () => (
                         marginBottom: "30px",
                     }}
                 >
-                '%PROGRAM_NAME%' has been successfully purchased.
+                '%PRODUCT_NAME%' has been successfully purchased.
                 <br /> <br />
-                To get started view the program on your <a href={`${process.env.REACT_APP_DOMAIN}/account`}>account</a> page.
+                To get started view the program on your <a href={`${process.env.REACT_APP_DOMAIN}/account`} target="_blank" rel="noreferrer">account</a> page.
                 </Text>
             </>
     </EmailTemplate>

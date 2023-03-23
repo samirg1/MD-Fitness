@@ -70,7 +70,7 @@ export const sendConfirmationEmail = async (
     if (!user) throw new Error("User not found");
 
     const confirmationToken = signToken({ id: user._id }, "confirmation");
-    emailHtml.replace("%CONFIRMATION_TOKEN%", confirmationToken);
+    emailHtml = emailHtml.replace("%CONFIRMATION_TOKEN%", confirmationToken);
 
     sendEmail(userEmail, emailHtml, "Confirm your Email");
 };
@@ -79,11 +79,12 @@ export const sendWelcomeEmail = async (userEmail: string, emailHtml: string) => 
     const user = await UserModel.findOne({ email: userEmail });
     if (!user) throw new Error("User not found");
 
-    emailHtml.replace("%USER_NAME%", user.name);
+    emailHtml = emailHtml.replace("%USER_NAME%", user.name);
     sendEmail(userEmail, emailHtml, "Welcome!");
 }
 
 export const sendPurchaseConfirmationEmail = async (userEmail: string, emailHtml: string, productName: string) => {
-    emailHtml.replace("%PRODUCT_NAME%", productName);
+    emailHtml = emailHtml.replace("%PRODUCT_NAME%", productName);
+    sendEmail(userEmail, emailHtml, "Purchase Confirmation");
 }
 

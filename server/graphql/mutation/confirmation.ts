@@ -38,7 +38,7 @@ const ConfirmationType = new GraphQLObjectType({
             },
             resolve: async (_, { token, emailHtml }) => {
                 // verify token to get id
-                verifyToken(token, "confirmation", async (decoded) => {
+                await verifyToken(token, "confirmation", async (decoded) => {
                     const user = await UserModel.findById(decoded.id); // find the user
                     if (!user) throw new Error("Specified user not found");
                     user.activated = true; // activate the user

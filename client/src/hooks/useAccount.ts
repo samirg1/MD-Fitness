@@ -44,10 +44,7 @@ const useAccount = () => {
                     }
                 }
             }`,
-            (data) =>
-                console.log(
-                    sendConfirmationEmail(data.authentication.signup.email)
-                )
+            (data) => sendConfirmationEmail(data.authentication.signup.email)            
         );
     };
 

@@ -44,7 +44,7 @@ const ConfirmEmail = () => {
                             verticalAlign: "middle",
                             textTransform: "uppercase",
                         }}
-                        href={`${process.env.DOMAIN}/confirm-email/%CONFIRMATION_TOKEN%`}
+                        href={`${process.env.REACT_APP_DOMAIN}/confirm-email/%CONFIRMATION_TOKEN%`}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
