@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { graphQLRequest } from "../api/server";
+import { EmailType, renderEmail } from "../components/emails/renderEmail";
 import { TAuthentication } from "../context/AuthProvider";
-import { EmailType, renderEmail } from "../emails/renderEmail";
 import useAuthentication from "./useAuthentication";
 import useSnackBar from "./useSnackBar";
 
@@ -44,7 +44,7 @@ const useAccount = () => {
                     }
                 }
             }`,
-            (data) => sendConfirmationEmail(data.authentication.signup.email)            
+            (data) => sendConfirmationEmail(data.authentication.signup.email)
         );
     };
 

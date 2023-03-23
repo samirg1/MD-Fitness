@@ -11,7 +11,7 @@ import {
     Section,
     Text,
 } from "@react-email/components";
-import LINKS from "../config/links";
+import LINKS from "../../config/links";
 
 const EmailTemplate = ({ children }: { children: JSX.Element }) => {
     return (

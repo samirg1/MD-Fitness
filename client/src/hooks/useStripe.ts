@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { graphQLRequest } from "../api/server";
 import { getStripe } from "../api/stripe";
-import { EmailType, renderEmail } from "../emails/renderEmail";
+import { EmailType, renderEmail } from "../components/emails/renderEmail";
 import useSnackBar from "./useSnackBar";
 
 export type TSellProduct = {
