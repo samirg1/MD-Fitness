@@ -8,7 +8,7 @@ import { signToken } from "./jsonwebtoken";
  * @param email The id of the user to send the email to.
  * @throws If user is not found or if there is an error during sending.
  */
-export const sendConfirmationEmail = async (email: string) => {
+export const sendConfirmationEmail = async (email: string, emailHtml: string) => {
     const testAccount = await nodemailer.createTestAccount();
     const transporter = nodemailer.createTransport({
         host: "smtp.ethereal.email",
@@ -32,9 +32,7 @@ export const sendConfirmationEmail = async (email: string) => {
             from: '"MD-Fitness" <srgupta@bigpond.com>', // sender address
             to: `${user.email}`, // list of receivers
             subject: "Confirmation email", // Subject line
-            html: `<b>Hello ${user.name}</b>
-            <p>Link here : <a target="_" href="${process.env.DOMAIN}/confirm-email/${confirmationToken}">Link</a></p>
-            `, // html body
+            html: emailHtml // html body
         },
         (error, info) => {
             if (error) throw new Error(error.message);

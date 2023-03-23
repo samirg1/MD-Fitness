@@ -17,5 +17,5 @@
         "noEmit": true,
         "jsx": "react-jsx"
     },
-    "include": ["src", "src/**/*.ts"]
+    "include": ["src", "src/**/*.ts", "emails"]
 }

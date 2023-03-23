@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { graphQLRequest } from "../api/server";
 import { TAuthentication } from "../context/AuthProvider";
+import { EmailType, renderEmail } from "../emails/renderEmail";
 import useAuthentication from "./useAuthentication";
 import useSnackBar from "./useSnackBar";
 
@@ -43,7 +44,10 @@ const useAccount = () => {
                     }
                 }
             }`,
-            (data) => sendConfirmationEmail(data.authentication.signup.email)
+            (data) =>
+                console.log(
+                    sendConfirmationEmail(data.authentication.signup.email)
+                )
         );
     };
 
@@ -99,10 +103,11 @@ const useAccount = () => {
      * @returns The error if any occured.
      */
     const sendConfirmationEmail = async (email: string) => {
+        const emailHtml = renderEmail(EmailType.confirmEmail);
         return await graphQLRequest(
             `mutation {
                 confirmation {
-                    send(email: "${email}")
+                  send(email:"${email}", emailHtml: "${emailHtml}")
                 }
             }`
         );

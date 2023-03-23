@@ -19,9 +19,12 @@ const ConfirmationType = new GraphQLObjectType({
         send: {
             type: GraphQLBoolean,
             description: "Send confirmation email",
-            args: { email: { type: GraphQLNonNull(GraphQLString) } },
-            resolve: async (_, { email }) => {
-                await sendConfirmationEmail(email); // get error if there was one
+            args: {
+                email: { type: GraphQLNonNull(GraphQLString) },
+                emailHtml: { type: GraphQLNonNull(GraphQLString) },
+            },
+            resolve: async (_, { email, emailHtml }) => {
+                await sendConfirmationEmail(email, emailHtml); // get error if there was one
                 return true;
             },
         },
