@@ -56,6 +56,7 @@ const Account = () => {
                     authentication.email
                 );
                 setIsLoading(false);
+                window.location.reload();
                 setSearchParams();
             }
         };
