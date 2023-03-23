@@ -82,3 +82,8 @@ export const sendWelcomeEmail = async (userEmail: string, emailHtml: string) => 
     emailHtml.replace("%USER_NAME%", user.name);
     sendEmail(userEmail, emailHtml, "Welcome!");
 }
+
+export const sendPurchaseConfirmationEmail = async (userEmail: string, emailHtml: string, productName: string) => {
+    emailHtml.replace("%PRODUCT_NAME%", productName);
+}
+

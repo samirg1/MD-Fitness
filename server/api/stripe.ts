@@ -1,4 +1,5 @@
 import UserModel from "../models/User";
+import { sendPurchaseConfirmationEmail } from "./mailer";
 
 const stripe = require("stripe")(process.env.STRIPE_API);
 
@@ -66,7 +67,8 @@ export const getProductsForUser = async (ids: string[], email: string) => {
 export const addUsersPurchase = async (
     sessionId: string,
     productId: string,
-    userEmail: string
+    userEmail: string,
+    emailHtml: string,
 ) => {
     const { payment_intent } = await stripe.checkout.sessions.retrieve(
         sessionId,
@@ -83,5 +85,8 @@ export const addUsersPurchase = async (
     if (user.purchases.includes(productId)) return;
 
     user.purchases.push(productId);
-    await user.save();
+    user.save();
+
+    const { name } = await stripe.products.retrieve(productId);
+    sendPurchaseConfirmationEmail(userEmail, emailHtml, name);
 };
