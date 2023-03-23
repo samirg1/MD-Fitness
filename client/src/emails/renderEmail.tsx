@@ -11,7 +11,7 @@ export enum EmailType {
     confirmEmail,
 }
 
-export const renderEmail = (type: EmailType) => {
+export const renderEmail = (type: EmailType, props?: { [key: string]: string }) => {
     let email;
 
     switch (type) {

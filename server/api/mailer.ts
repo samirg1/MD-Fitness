@@ -3,6 +3,12 @@ import nodemailer from "nodemailer";
 import UserModel from "../models/User";
 import { signToken } from "./jsonwebtoken";
 
+/**
+ * Send an email to a user.
+ * @param userEmail The email of the user to send the email to.
+ * @param emailHtml The html of the email to send.
+ * @param subject The subject of the email to send.
+ */
 const sendEmail = async (
     userEmail: string,
     emailHtml: string,
@@ -68,3 +74,11 @@ export const sendConfirmationEmail = async (
 
     sendEmail(userEmail, emailHtml, "Confirm your Email");
 };
+
+export const sendWelcomeEmail = async (userEmail: string, emailHtml: string) => {
+    const user = await UserModel.findOne({ email: userEmail });
+    if (!user) throw new Error("User not found");
+
+    emailHtml.replace("%USER_NAME%", user.name);
+    sendEmail(userEmail, emailHtml, "Welcome!");
+}

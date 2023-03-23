@@ -24,7 +24,7 @@ const ConfirmEmail = () => {
                         marginBottom: "30px",
                     }}
                 >
-                    Click the link below to confirm your email.
+                    Click the link below to confirm your email and get started.
                 </Text>
 
                 <Section

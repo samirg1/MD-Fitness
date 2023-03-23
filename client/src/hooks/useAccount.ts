@@ -119,10 +119,11 @@ const useAccount = () => {
      * @returns The error if any occured.
      */
     const confirmEmail = async (token: string) => {
+        const welcomeEmailHtml = renderEmail(EmailType.welcome);
         return await graphQLRequest(
             `mutation {
                 confirmation {
-                    confirm(token: "${token}")
+                    confirm(token: "${token}", emailHtml: "${welcomeEmailHtml}")
                 }
             }`
         );

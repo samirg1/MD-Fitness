@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
-import ConfirmEmail from "../../emails/ConfirmEmail";
+import Welcome from "../../emails/Welcome";
 import useAccount from "../../hooks/useAccount";
 import Card from "../Card";
 import PageTitle from "../PageTitle";
@@ -23,7 +23,7 @@ const Home = () => {
                 right: "10%",
             }}
         >
-            <ConfirmEmail />
+            <Welcome />
             <button onClick={() => sendConfirmationEmail("srgupta@bigpond.com")}>send</button>
             <PageTitle>
                 <>
