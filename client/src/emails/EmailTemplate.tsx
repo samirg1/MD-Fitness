@@ -14,7 +14,6 @@ import {
 import LINKS from "../config/links";
 
 const EmailTemplate = ({ children }: { children: JSX.Element }) => {
-    const imageSource = "./mdfit-favicons/android-chrome-512x512.png";
     return (
         <Html>
             <Head />
@@ -40,7 +39,7 @@ const EmailTemplate = ({ children }: { children: JSX.Element }) => {
                         }}
                     >
                         <Img
-                            src={imageSource}
+                            src="cid:logo"
                             width="60"
                             height="60"
                             alt="MD-Fitness"
@@ -72,7 +71,7 @@ const EmailTemplate = ({ children }: { children: JSX.Element }) => {
                         >
                             <Column style={{ width: "100%" }}>
                                 <Img
-                                    src={imageSource}
+                                    src="cid:logo"
                                     width="60"
                                     height="60"
                                     alt="MD-Fitness"
@@ -83,7 +82,7 @@ const EmailTemplate = ({ children }: { children: JSX.Element }) => {
                                     <Column>
                                         <Link href={LINKS.instagram}>
                                             <Img
-                                                src="./instagram_icon.png"
+                                                src="cid:instagram_icon"
                                                 width="32"
                                                 height="32"
                                                 alt="Instagram"
@@ -97,7 +96,7 @@ const EmailTemplate = ({ children }: { children: JSX.Element }) => {
                                     <Column>
                                         <Link href={LINKS.tiktok}>
                                             <Img
-                                                src="./tiktok_icon.png"
+                                                src="cid:tiktok_icon"
                                                 width="32"
                                                 height="32"
                                                 alt="TikTok"
