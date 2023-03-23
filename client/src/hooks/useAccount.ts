@@ -102,12 +102,12 @@ const useAccount = () => {
      * Send confirmation email.
      * @returns The error if any occured.
      */
-    const sendConfirmationEmail = async (email: string) => {
+    const sendConfirmationEmail = async (userEmail: string) => {
         const emailHtml = renderEmail(EmailType.confirmEmail);
         return await graphQLRequest(
             `mutation {
                 confirmation {
-                  send(email:"${email}", emailHtml: "${emailHtml}")
+                  send(email:"${userEmail}", emailHtml: "${emailHtml}")
                 }
             }`
         );

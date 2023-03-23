@@ -3,12 +3,7 @@ import nodemailer from "nodemailer";
 import UserModel from "../models/User";
 import { signToken } from "./jsonwebtoken";
 
-/**
- * Send a confirmation email to a user to activate their account.
- * @param email The id of the user to send the email to.
- * @throws If user is not found or if there is an error during sending.
- */
-export const sendConfirmationEmail = async (email: string, emailHtml: string) => {
+const sendEmail = async (userEmail: string, emailHtml: string, subject: string) => {
     const testAccount = await nodemailer.createTestAccount();
     const transporter = nodemailer.createTransport({
         host: "smtp.ethereal.email",
@@ -20,19 +15,12 @@ export const sendConfirmationEmail = async (email: string, emailHtml: string) =>
         },
     });
 
-    const user = await UserModel.findOne({ email }); // get user from email
-    if (!user) throw new Error("User not found");
-
-    // create token
-    const confirmationToken = signToken({ id: user._id }, "confirmation");
-
-    // send mail with defined transport object
     transporter.sendMail(
         {
-            from: '"MD-Fitness" <srgupta@bigpond.com>', // sender address
-            to: `${user.email}`, // list of receivers
-            subject: "Confirmation email", // Subject line
-            html: emailHtml // html body
+            from: '"MD-Fitness" <srgupta@bigpond.com', 
+            to: `${userEmail}`, 
+            subject, 
+            html: emailHtml
         },
         (error, info) => {
             if (error) throw new Error(error.message);
@@ -40,4 +28,19 @@ export const sendConfirmationEmail = async (email: string, emailHtml: string) =>
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
         }
     );
+}
+
+/**
+ * Send a confirmation email to a user to activate their account.
+ * @param userEmail The email of the user to send the email to.
+ * @throws If user is not found or if there is an error during sending.
+ */
+export const sendConfirmationEmail = async (userEmail: string, emailHtml: string) => {
+    const user = await UserModel.findOne({ email: userEmail }); // get user from email
+    if (!user) throw new Error("User not found");
+
+    const confirmationToken = signToken({ id: user._id }, "confirmation");
+    emailHtml.replace("%CONFIRMATION_TOKEN%", confirmationToken);
+
+    sendEmail(userEmail, emailHtml, "Confirm your Email");
 };

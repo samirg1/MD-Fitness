@@ -29,5 +29,5 @@ export const renderEmail = (type: EmailType) => {
             break;
     }
 
-    return render(email);
+    return render(email).replaceAll('"', "'");
 };
