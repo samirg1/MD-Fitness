@@ -4,11 +4,16 @@ import UserModel from "../models/User";
 import { signToken } from "./jsonwebtoken";
 
 /**
- * Send a confirmation email to a user to activate their account.
- * @param email The id of the user to send the email to.
- * @throws If user is not found or if there is an error during sending.
+ * Send an email to a user.
+ * @param userEmail The email of the user to send the email to.
+ * @param emailHtml The html of the email to send.
+ * @param subject The subject of the email to send.
  */
-export const sendConfirmationEmail = async (email: string) => {
+const sendEmail = async (
+    userEmail: string,
+    emailHtml: string,
+    subject: string
+) => {
     const testAccount = await nodemailer.createTestAccount();
     const transporter = nodemailer.createTransport({
         host: "smtp.ethereal.email",
@@ -20,21 +25,29 @@ export const sendConfirmationEmail = async (email: string) => {
         },
     });
 
-    const user = await UserModel.findOne({ email }); // get user from email
-    if (!user) throw new Error("User not found");
-
-    // create token
-    const confirmationToken = signToken({ id: user._id }, "confirmation");
-
-    // send mail with defined transport object
     transporter.sendMail(
         {
-            from: '"MD-Fitness" <srgupta@bigpond.com>', // sender address
-            to: `${user.email}`, // list of receivers
-            subject: "Confirmation email", // Subject line
-            html: `<b>Hello ${user.name}</b>
-            <p>Link here : <a target="_" href="${process.env.DOMAIN}/confirm-email/${confirmationToken}">Link</a></p>
-            `, // html body
+            from: '"MD-Fitness" <srgupta@bigpond.com',
+            to: `${userEmail}`,
+            subject,
+            attachments: [
+                {
+                    filename: "tiktok_icon.png",
+                    path: __dirname + "/mailerAttachments/tiktok_icon.png",
+                    cid: "tiktok_icon",
+                },
+                {
+                    filename: "instagram_icon.png",
+                    path: __dirname + "/mailerAttachments/instagram_icon.png",
+                    cid: "instagram_icon",
+                },
+                {
+                    filename: "logo.png",
+                    path: __dirname + "/mailerAttachments/logo.png",
+                    cid: "logo",
+                },
+            ],
+            html: emailHtml,
         },
         (error, info) => {
             if (error) throw new Error(error.message);
@@ -43,3 +56,35 @@ export const sendConfirmationEmail = async (email: string) => {
         }
     );
 };
+
+/**
+ * Send a confirmation email to a user to activate their account.
+ * @param userEmail The email of the user to send the email to.
+ * @throws If user is not found or if there is an error during sending.
+ */
+export const sendConfirmationEmail = async (
+    userEmail: string,
+    emailHtml: string
+) => {
+    const user = await UserModel.findOne({ email: userEmail }); // get user from email
+    if (!user) throw new Error("User not found");
+
+    const confirmationToken = signToken({ id: user._id }, "confirmation");
+    emailHtml = emailHtml.replace("%CONFIRMATION_TOKEN%", confirmationToken);
+
+    sendEmail(userEmail, emailHtml, "Confirm your Email");
+};
+
+export const sendWelcomeEmail = async (userEmail: string, emailHtml: string) => {
+    const user = await UserModel.findOne({ email: userEmail });
+    if (!user) throw new Error("User not found");
+
+    emailHtml = emailHtml.replace("%USER_NAME%", user.name);
+    sendEmail(userEmail, emailHtml, "Welcome!");
+}
+
+export const sendPurchaseConfirmationEmail = async (userEmail: string, emailHtml: string, productName: string) => {
+    emailHtml = emailHtml.replace("%PRODUCT_NAME%", productName);
+    sendEmail(userEmail, emailHtml, "Purchase Confirmation");
+}
+

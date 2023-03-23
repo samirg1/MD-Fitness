@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { graphQLRequest } from "../api/server";
 import { getStripe } from "../api/stripe";
+import { EmailType, renderEmail } from "../components/emails/renderEmail";
 import useSnackBar from "./useSnackBar";
 
 export type TSellProduct = {
@@ -132,10 +133,13 @@ const useStripe = () => {
         productId: string,
         userEmail: string
     ) => {
+        const purchaseConfirmationEmailHtml = renderEmail(
+            EmailType.purchaseConfirmation
+        );
         await graphQLRequest(
             `mutation {
                 purchases {
-                    addPurchase(sessionId: "${sessionId}", productId: "${productId}", userEmail: "${userEmail}")
+                    addPurchase(sessionId: "${sessionId}", productId: "${productId}", userEmail: "${userEmail}", emailHtml: "${purchaseConfirmationEmailHtml}")
                 }
             }`
         );
