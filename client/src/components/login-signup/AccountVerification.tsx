@@ -53,16 +53,18 @@ const AccountVerification = ({ email }: { email: string }) => {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} sx={{ textAlign: "center" }}>
+            <Grid item xs={12} sx={{ textAlign: "center", color: "white" }}>
                 {`A confirmation link has been sent to '${email}' to verify your account.`}
+                {timeLeft !== 0 ? ` Resend in ${timeLeft} seconds.` : ""}
             </Grid>
             <Grid item xs={12} sx={{ textAlign: "center" }}>
                 <Button
                     variant="contained"
                     disabled={timeLeft !== 0}
                     onClick={resend}
+                    color="secondary" 
                 >
-                    {`Resend ${timeLeft !== 0 ? timeLeft : ""}`}
+                    Resend
                 </Button>
             </Grid>
         </Grid>
