@@ -54,7 +54,7 @@ const EmailTemplate = ({
     return (
         <Html>
             <Head />
-            <Preview>Confirm your email address</Preview>
+            <Preview>{title}</Preview>
             <Body
                 style={{
                     backgroundColor: "#ffffff",
