@@ -88,3 +88,8 @@ export const sendPurchaseConfirmationEmail = async (userEmail: string, emailHtml
     sendEmail(userEmail, emailHtml, "Purchase Confirmation");
 }
 
+export const sendPasswordResetEmail = async (userEmail: string, emailHtml: string, code: string) => {
+    emailHtml = emailHtml.replace("%RESET_CODE%", code);
+    sendEmail(userEmail, emailHtml, "Password Reset");
+}
+
