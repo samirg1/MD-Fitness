@@ -1,9 +1,11 @@
-import { Html } from "@react-email/components";
+import EmailTemplate from "./EmailTemplate";
 
 const ConfirmResetPassword = () => (
-    <Html>
-        <h1>Reset your password</h1>
-    </Html>
+    <EmailTemplate
+        title="Password change"
+        mainText="Your password has been successfully changed."
+        smallText="If this wasn't you, please contact me as soon as possible through the social links below to resolve this issue."
+    />
 );
 
 export default ConfirmResetPassword;

@@ -3,6 +3,7 @@ import {
     Column,
     Container,
     Head,
+    Heading,
     Html,
     Img,
     Link,
@@ -13,7 +14,43 @@ import {
 } from "@react-email/components";
 import LINKS from "../../config/links";
 
-const EmailTemplate = ({ children }: { children: JSX.Element }) => {
+/* 
+Email Template looks like this:
+-------------------------------------
+|              LOGO                 |
+|            MD-FITNESS             |
+|                                   |
+|   {title}                         |
+|   {mainText}                      |
+|                                   |
+|         {codeBoxContent?}         |
+|                                   |
+|   {children?}                     |
+|                                   |
+|   {smallText?}                    |    
+|                                   |
+|    LOGO            SOCIAL LINKS   |
+|                                   |
+|    HOME | ABOUT                   |
+|    COPYRIGHT                      |
+-------------------------------------
+*/
+
+type TEMailTemplateProps = {
+    title: string;
+    mainText: string | JSX.Element;
+    smallText?: string | JSX.Element;
+    codeBoxContent?: string | JSX.Element;
+    children?: JSX.Element[] | JSX.Element;
+};
+
+const EmailTemplate = ({
+    title,
+    mainText,
+    smallText,
+    codeBoxContent,
+    children,
+}: TEMailTemplateProps) => {
     return (
         <Html>
             <Head />
@@ -59,7 +96,53 @@ const EmailTemplate = ({ children }: { children: JSX.Element }) => {
                             MD-Fitness
                         </Text>
                     </Section>
+                    <Heading
+                        style={{
+                            color: "#1d1c1d",
+                            fontSize: "30px",
+                            fontWeight: "400",
+                            margin: "30px 0",
+                            padding: "0",
+                            lineHeight: "42px",
+                        }}
+                    >
+                        {title}
+                    </Heading>
+                    <Text
+                        style={{
+                            fontSize: "20px",
+                            lineHeight: "28px",
+                            marginBottom: "30px",
+                        }}
+                    >
+                        {mainText}
+                    </Text>
+                    {codeBoxContent && (
+                        <Section
+                            style={{
+                                background: "rgb(245, 244, 245)",
+                                borderRadius: "4px",
+                                marginRight: "50px",
+                                marginBottom: "30px",
+                                padding: "43px 23px",
+                                textAlign: "center",
+                            }}
+                        >
+                            {codeBoxContent}
+                        </Section>
+                    )}
                     {children}
+                    {smallText && (
+                        <Text
+                            style={{
+                                color: "#000",
+                                fontSize: "14px",
+                                lineHeight: "24px",
+                            }}
+                        >
+                            {smallText}
+                        </Text>
+                    )}
                     <Section>
                         <Row
                             style={{
