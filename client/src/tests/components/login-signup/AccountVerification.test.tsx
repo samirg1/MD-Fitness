@@ -21,20 +21,20 @@ describe("testing button initial state and countdown", () => {
     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1fpckdt-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1ojf2vw-MuiGrid-root"
     >
-      A confirmation link has been sent to 'test' to verify your account.
+      A confirmation link has been sent to 'test' to verify your account. Resend in 120 seconds.
     </div>
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1fpckdt-MuiGrid-root"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium Mui-disabled Mui-focusVisible MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium Mui-disabled Mui-focusVisible MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-zcbmsk-MuiButtonBase-root-MuiButton-root"
         disabled=""
         tabindex="-1"
         type="button"
       >
-        Resend 120
+        Resend
       </button>
     </div>
   </div>
@@ -51,7 +51,7 @@ describe("testing button initial state and countdown", () => {
     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1fpckdt-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1ojf2vw-MuiGrid-root"
     >
       A confirmation link has been sent to 'test' to verify your account.
     </div>
@@ -59,11 +59,11 @@ describe("testing button initial state and countdown", () => {
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1fpckdt-MuiGrid-root"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-zcbmsk-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
-        Resend 
+        Resend
       </button>
     </div>
   </div>
