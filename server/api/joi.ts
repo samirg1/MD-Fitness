@@ -7,8 +7,8 @@ type TSignup = {
 };
 type TLogin = Omit<TSignup, "name">;
 
-type TValidatingObject = TLogin | TSignup; // objects to be validated
-type TValidatingTypes = "signup" | "login"; // names of validating objects
+type TValidatingObject = TLogin | TSignup | { password: string }; // objects to be validated
+type TValidatingTypes = "signup" | "login" | "newPassword"; // names of validating objects
 
 type TSchemaMap<T> = { [Property in keyof T]: Joi.StringSchema }; // map validating object to object with schema information
 type TValidationObjectMap<T> = { [Propery in TValidatingTypes]: TSchemaMap<T> }; // map validating object for each type
@@ -28,6 +28,7 @@ const password = Joi.string()
 const validatingObjects: TValidationObjectMap<TValidatingObject> = {
     signup: { name, email, password },
     login: { email, password },
+    newPassword: { password },
 };
 
 /**

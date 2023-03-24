@@ -14,6 +14,7 @@ interface IUser {
     activated: boolean;
     accessToken?: string;
     resetPasswordCode?: string;
+    resetPasswordAttemptsLeft? : number;
 }
 
 /**
@@ -56,6 +57,10 @@ const UserModel = createModel<IUser>("User", {
     resetPasswordCode: {
         type: String,
         default: "",
+    },
+    resetPasswordAttemptsLeft: {
+        type: Number,
+        default: 5,
     }
 });
 
