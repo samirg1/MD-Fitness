@@ -2,6 +2,8 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
+import useResetPassword from "../../hooks/useResetPassword";
+import useSnackBar from "../../hooks/useSnackBar";
 import ResetPasswordField from "./ResetPasswordField";
 
 type TResetPasswordModalProps = {
@@ -32,16 +34,41 @@ const ResetPasswordModal = ({
     const [code, setCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
 
-    const requestResetPasswordCode = (email: string) => {
+    const { requestResetCode, resetPassword } = useResetPassword();
+    const { setOptions: setSnackBarOptions } = useSnackBar();
+
+    const handleRequestCode = async (email: string) => {
         setIsLoading(true);
-        console.log(email);
-        setViewingCode(true);
+        const response = await requestResetCode(email);
+        if (response === null) {
+            setIsLoading(false);
+            setViewingCode(true);
+            return;
+        }
+
+        alert(response);
         setIsLoading(false);
     };
 
-    const resetPassword = (code: string, newPassword: string) => {
+    const handleReset = async (
+        email: string,
+        code: string,
+        newPassword: string
+    ) => {
         setIsLoading(true);
-        console.log(code, newPassword);
+        const response = await resetPassword(email, code, newPassword);
+        if (response === null) {
+            setIsLoading(false);
+            setSnackBarOptions({
+                message: "Password reset successfully",
+                type: "success",
+            });
+            handleClose();
+            return;
+        }
+        
+        alert(response);
+        setIsLoading(false);
     };
 
     return (
@@ -67,7 +94,7 @@ const ResetPasswordModal = ({
                                 setValue={(newEmail) => setEmail(newEmail)}
                                 loading={isLoading}
                                 showButton
-                                onClick={() => requestResetPasswordCode(email)}
+                                onClick={() => handleRequestCode(email)}
                             />
                         ) : (
                             <>
@@ -86,7 +113,7 @@ const ResetPasswordModal = ({
                                     loading={isLoading}
                                     showButton
                                     onClick={() =>
-                                        resetPassword(code, newPassword)
+                                        handleReset(email, code, newPassword)
                                     }
                                 />
                             </>

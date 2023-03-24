@@ -39,7 +39,7 @@ const ResetPasswordType = new GraphQLObjectType({
             },
         },
 
-        resetPassword: {
+        reset: {
             type: GraphQLBoolean,
             description: "Reset a user's password",
             args: {
