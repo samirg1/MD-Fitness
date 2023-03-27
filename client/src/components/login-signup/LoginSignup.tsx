@@ -170,7 +170,11 @@ const LoginSignup = () => {
                     right: "10%",
                 }}
             >
-                <ResetPasswordModal open={resetPasswordModalOpen} handleClose={() => setResetPasswordModalOpen(false)} startEmail={email} />
+                <ResetPasswordModal
+                    open={resetPasswordModalOpen}
+                    handleClose={() => setResetPasswordModalOpen(false)}
+                    startEmail={email}
+                />
                 <Grid container spacing={3}>
                     {verifying ? (
                         <Grid item xs={12} sx={{ textAlign: "center" }}>

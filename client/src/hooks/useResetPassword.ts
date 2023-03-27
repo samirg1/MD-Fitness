@@ -13,7 +13,11 @@ const useResetPassword = () => {
         );
     };
 
-    const resetPassword = async (userEmail: string, resetPasswordCode: string, newPassword: string) => {
+    const resetPassword = async (
+        userEmail: string,
+        resetPasswordCode: string,
+        newPassword: string
+    ) => {
         const emailHtml = renderEmail(EmailType.confirmResetPassword);
         return await graphQLRequest(
             `mutation {
@@ -22,7 +26,7 @@ const useResetPassword = () => {
                 }
             }`
         );
-    }
+    };
 
     return { requestResetCode, resetPassword };
 };

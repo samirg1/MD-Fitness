@@ -19,7 +19,7 @@ const ConfirmEmail = () => {
          * Confirm an email of the user.
          */
         const confirm = async () => {
-            console.log('here')
+            console.log("here");
             const response = await confirmEmail(token ?? "");
             if (!response)
                 localStorage.setItem("verification", JSON.stringify(false));
@@ -28,7 +28,7 @@ const ConfirmEmail = () => {
         };
 
         confirm();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

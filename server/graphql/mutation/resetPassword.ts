@@ -76,10 +76,7 @@ const ResetPasswordType = new GraphQLObjectType({
                     resetPasswordCode,
                     foundUser.resetPasswordCode!
                 );
-                if (
-                    !validResetCode ||
-                    foundUser.resetPasswordCode === ""
-                ) {
+                if (!validResetCode || foundUser.resetPasswordCode === "") {
                     const current = foundUser.resetPasswordAttemptsLeft!;
                     foundUser.resetPasswordAttemptsLeft = current - 1;
                     await foundUser.save();

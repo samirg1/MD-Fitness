@@ -28,7 +28,7 @@ const popupStyle = {
 const ResetPasswordModal = ({
     open,
     handleClose,
-    startEmail
+    startEmail,
 }: TResetPasswordModalProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const [viewingCode, setViewingCode] = useState(false);
@@ -50,7 +50,7 @@ const ResetPasswordModal = ({
         setResetError("");
         setViewingCode(false);
         handleClose();
-    }
+    };
 
     const handleRequestCode = async (email: string) => {
         setIsLoading(true);

@@ -13,9 +13,7 @@ export enum EmailType {
     confirmEmail,
 }
 
-export const renderEmail = (
-    type: EmailType,
-) => {
+export const renderEmail = (type: EmailType) => {
     let email;
 
     switch (type) {

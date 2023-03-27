@@ -68,7 +68,7 @@ export const addUsersPurchase = async (
     sessionId: string,
     productId: string,
     userEmail: string,
-    emailHtml: string,
+    emailHtml: string
 ) => {
     const { payment_intent } = await stripe.checkout.sessions.retrieve(
         sessionId,
