@@ -150,8 +150,12 @@ const LoginSignup = () => {
         }
     };
 
+    const onEnter = () => {
+        if (!resetPasswordModalOpen) submit();
+    }
+
     // when user presses enter the form submits
-    useEffect(() => keyDownHandler("Enter", submit));
+    useEffect(() => keyDownHandler("Enter", onEnter));
 
     // listen for local storage changes
     useEffect(() => {

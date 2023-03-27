@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import { useEffect, useState } from "react";
+import useKeyDownHandler from "../../hooks/useKeyDownHandler";
 import useResetPassword from "../../hooks/useResetPassword";
 import useSnackBar from "../../hooks/useSnackBar";
 import ResetPasswordField from "./ResetPasswordField";
@@ -40,8 +41,17 @@ const ResetPasswordModal = ({
 
     const { requestResetCode, resetPassword } = useResetPassword();
     const { setOptions: setSnackBarOptions } = useSnackBar();
+    const keyDownHandler = useKeyDownHandler();
 
     useEffect(() => setResetError(""), [email, code, newPassword]);
+    useEffect(() => keyDownHandler("Enter", handleEnter));
+
+    const handleEnter = () => {
+        if (isLoading) return;
+        if (!viewingCode)
+            handleRequestCode(email);
+        else handleReset(email, code, newPassword);
+    }
 
     const closeModal = () => {
         setEmail(startEmail);
@@ -107,6 +117,7 @@ const ResetPasswordModal = ({
                                 loading={isLoading}
                                 showButton
                                 onClick={() => handleRequestCode(email)}
+                                type="email"
                             />
                         ) : (
                             <>
