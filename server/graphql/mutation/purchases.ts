@@ -23,8 +23,16 @@ const PurchaseType = new GraphQLObjectType({
                 userEmail: { type: GraphQLNonNull(GraphQLString) },
                 emailHtml: { type: GraphQLNonNull(GraphQLString) },
             },
-            resolve: async (_, { sessionId, productId, userEmail, emailHtml }) => {
-                await addUsersPurchase(sessionId, productId, userEmail, emailHtml);
+            resolve: async (
+                _,
+                { sessionId, productId, userEmail, emailHtml }
+            ) => {
+                await addUsersPurchase(
+                    sessionId,
+                    productId,
+                    userEmail,
+                    emailHtml
+                );
                 return true;
             },
         },

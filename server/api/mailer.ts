@@ -57,11 +57,6 @@ const sendEmail = async (
     );
 };
 
-/**
- * Send a confirmation email to a user to activate their account.
- * @param userEmail The email of the user to send the email to.
- * @throws If user is not found or if there is an error during sending.
- */
 export const sendConfirmationEmail = async (
     userEmail: string,
     emailHtml: string
@@ -75,16 +70,38 @@ export const sendConfirmationEmail = async (
     sendEmail(userEmail, emailHtml, "Confirm your Email");
 };
 
-export const sendWelcomeEmail = async (userEmail: string, emailHtml: string) => {
+export const sendWelcomeEmail = async (
+    userEmail: string,
+    emailHtml: string
+) => {
     const user = await UserModel.findOne({ email: userEmail });
     if (!user) throw new Error("User not found");
 
     emailHtml = emailHtml.replace("%USER_NAME%", user.name);
     sendEmail(userEmail, emailHtml, "Welcome!");
-}
+};
 
-export const sendPurchaseConfirmationEmail = async (userEmail: string, emailHtml: string, productName: string) => {
+export const sendPurchaseConfirmationEmail = async (
+    userEmail: string,
+    emailHtml: string,
+    productName: string
+) => {
     emailHtml = emailHtml.replace("%PRODUCT_NAME%", productName);
     sendEmail(userEmail, emailHtml, "Purchase Confirmation");
-}
+};
 
+export const sendPasswordResetEmail = async (
+    userEmail: string,
+    emailHtml: string,
+    code: string
+) => {
+    emailHtml = emailHtml.replace("%RESET_CODE%", code);
+    sendEmail(userEmail, emailHtml, "Password Reset Code");
+};
+
+export const sendPasswordResetConfirmationEmail = async (
+    userEmail: string,
+    emailHtml: string
+) => {
+    sendEmail(userEmail, emailHtml, "Password Change Confirmation");
+};

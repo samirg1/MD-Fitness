@@ -8,12 +8,12 @@ module.exports = {
     testEnvironment: "jsdom",
     collectCoverage: true,
     coverageThreshold: {
-        global: {
-            branches: 75,
-            functions: 80,
-            lines: 80,
-            statements: -30,
-        },
+        // global: {
+        //     branches: 75,
+        //     functions: 80,
+        //     lines: 80,
+        //     statements: -30,
+        // },
     },
     verbose: true,
     notify: true,

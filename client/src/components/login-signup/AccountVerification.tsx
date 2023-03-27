@@ -62,7 +62,7 @@ const AccountVerification = ({ email }: { email: string }) => {
                     variant="contained"
                     disabled={timeLeft !== 0}
                     onClick={resend}
-                    color="secondary" 
+                    color="secondary"
                 >
                     Resend
                 </Button>

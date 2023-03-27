@@ -13,6 +13,8 @@ import useSnackBar from "../../hooks/useSnackBar";
 import Loader from "../Loader";
 import AccountVerification from "./AccountVerification";
 import Field from "./Field";
+import "./ResetPasswordButton.css";
+import ResetPasswordModal from "./ResetPasswordModal";
 
 /**
  * Login and signup page.
@@ -27,6 +29,7 @@ const LoginSignup = () => {
     const [loginSignupError, setLoginSignupError] = useState<string | null>(
         null
     );
+    const [resetPasswordModalOpen, setResetPasswordModalOpen] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -147,8 +150,12 @@ const LoginSignup = () => {
         }
     };
 
+    const onEnter = () => {
+        if (!resetPasswordModalOpen) submit();
+    }
+
     // when user presses enter the form submits
-    useEffect(() => keyDownHandler("Enter", submit));
+    useEffect(() => keyDownHandler("Enter", onEnter));
 
     // listen for local storage changes
     useEffect(() => {
@@ -167,6 +174,11 @@ const LoginSignup = () => {
                     right: "10%",
                 }}
             >
+                <ResetPasswordModal
+                    open={resetPasswordModalOpen}
+                    handleClose={() => setResetPasswordModalOpen(false)}
+                    startEmail={email}
+                />
                 <Grid container spacing={3}>
                     {verifying ? (
                         <Grid item xs={12} sx={{ textAlign: "center" }}>
@@ -228,6 +240,19 @@ const LoginSignup = () => {
                             <ArrowCircleRightIcon />
                         </IconButton>
                     </Grid>
+                    {loggingIn ? (
+                        <Grid item xs={12}>
+                            <button
+                                className="reset-password-button"
+                                type="button"
+                                onClick={() => setResetPasswordModalOpen(true)}
+                            >
+                                <span className="hover-underline-animation">
+                                    Forgot password?
+                                </span>
+                            </button>
+                        </Grid>
+                    ) : null}
                     {loginSignupError ? (
                         <Grid item xs={12}>
                             <Alert severity="error">{loginSignupError}</Alert>

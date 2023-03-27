@@ -1,4 +1,5 @@
 import { EditOutlined, SaveOutlined } from "@mui/icons-material";
+import { Alert } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { SetStateAction, useEffect, useState } from "react";
@@ -145,7 +146,6 @@ const Account = () => {
                                 </>
                             )}
                         </button>
-                        <span style={{ color: "red" }}>{editingError}</span>
                     </Grid>
                     <Grid container spacing={3}>
                         <Grid item xs>
@@ -199,6 +199,11 @@ const Account = () => {
                             ""
                         )}
                     </Grid>
+                    {editingError && (
+                        <Grid item xs={12}>
+                            <Alert severity="error">{editingError}</Alert>
+                        </Grid>
+                    )}
                     <Grid item xs={12}>
                         <AccountHeader title="My Programs" />
                         {products.length === 0 ? (
