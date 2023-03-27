@@ -10,6 +10,7 @@ type TResetPasswordFieldProps = {
     value: string;
     loading: boolean;
     setValue: (value: string) => void;
+    type?: string;
     showButton?: boolean;
     onClick?: () => void;
 };
@@ -19,6 +20,7 @@ const ResetPasswordField = ({
     value,
     loading,
     setValue,
+    type = "text",
     showButton = false,
     onClick = () => {},
 }: TResetPasswordFieldProps) => {
@@ -32,6 +34,7 @@ const ResetPasswordField = ({
                     sx={{ width: "100%" }}
                     value={value}
                     onChange={(event) => setValue(event.target.value)}
+                    type={type}
                 />
             </Grid>
             {showButton && (

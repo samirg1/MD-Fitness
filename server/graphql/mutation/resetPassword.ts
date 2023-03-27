@@ -6,13 +6,19 @@ import {
     GraphQLObjectType,
     GraphQLString,
 } from "graphql";
-import { hashPassword } from "../../api/bcrypt";
+import { comparePassword, hashPassword } from "../../api/bcrypt";
 import validateObject from "../../api/joi";
-import { sendPasswordResetConfirmationEmail, sendPasswordResetEmail } from "../../api/mailer";
+import {
+    sendPasswordResetConfirmationEmail,
+    sendPasswordResetEmail,
+} from "../../api/mailer";
 import UserModel from "../../models/User";
 
+const RESET_PASSWORD_ATTEMPTS = 5;
+const RESET_PASSWORD_CODE_LENGTH = 12;
+
 const ResetPasswordType = new GraphQLObjectType({
-    name: "Password Reset",
+    name: "PasswordReset",
     description: "Restting a user's password",
     fields: () => ({
         requestResetCode: {
@@ -28,13 +34,19 @@ const ResetPasswordType = new GraphQLObjectType({
                     throw new Error("No user found with that email");
 
                 const resetPasswordCode = crypto
-                    .randomBytes(3)
-                    .toString("hex")
-                    .toUpperCase();
-                foundUser.resetPasswordCode = resetPasswordCode;
+                    .randomBytes(RESET_PASSWORD_CODE_LENGTH)
+                    .toString("base64");
+                foundUser.resetPasswordCode = await hashPassword(
+                    resetPasswordCode
+                );
+                foundUser.resetPasswordAttemptsLeft = RESET_PASSWORD_ATTEMPTS;
                 await foundUser.save();
 
-                sendPasswordResetEmail(userEmail, emailHtml, resetPasswordCode);
+                await sendPasswordResetEmail(
+                    userEmail,
+                    emailHtml,
+                    resetPasswordCode
+                );
                 return true;
             },
         },
@@ -55,18 +67,32 @@ const ResetPasswordType = new GraphQLObjectType({
                 const foundUser = await UserModel.findOne({ email: userEmail });
                 if (!foundUser)
                     throw new Error("No user found with that email");
-                if (foundUser.resetPasswordAttemptsLeft === 0) 
-                    throw new Error("Too many attempts, please attempt to reset password again");
-                if (foundUser.resetPasswordCode !== resetPasswordCode) {
-                    foundUser.resetPasswordAttemptsLeft = (foundUser.resetPasswordAttemptsLeft ?? 5) - 1;
+                if (foundUser.resetPasswordAttemptsLeft === 0)
+                    throw new Error(
+                        "Too many attempts, please attempt to reset password again"
+                    );
+
+                const validResetCode = await comparePassword(
+                    resetPasswordCode,
+                    foundUser.resetPasswordCode!
+                );
+                if (
+                    !validResetCode ||
+                    foundUser.resetPasswordCode === ""
+                ) {
+                    const current = foundUser.resetPasswordAttemptsLeft!;
+                    foundUser.resetPasswordAttemptsLeft = current - 1;
                     await foundUser.save();
-                    throw new Error("Invalid reset code");
+                    throw new Error(
+                        `Invalid reset code (${current} attempt${
+                            current === 1 ? "" : "s"
+                        } left)`
+                    );
                 }
-                
+
                 validateObject({ password: newPassword }, "newPassword");
                 foundUser.password = await hashPassword(newPassword);
                 foundUser.resetPasswordCode = "";
-                foundUser.resetPasswordAttemptsLeft = 5;
                 await foundUser.save();
 
                 sendPasswordResetConfirmationEmail(userEmail, emailHtml);

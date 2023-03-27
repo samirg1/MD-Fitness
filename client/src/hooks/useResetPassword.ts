@@ -7,7 +7,7 @@ const useResetPassword = () => {
         return await graphQLRequest(
             `mutation {
                 resetPassword {
-                    requestResetCode(email: "${userEmail}", emailHtml: "${emailHtml}")
+                    requestResetCode(userEmail: "${userEmail}", emailHtml: "${emailHtml}")
                 }
             }`
         );
@@ -18,7 +18,7 @@ const useResetPassword = () => {
         return await graphQLRequest(
             `mutation {
                 resetPassword {
-                    reset(email: "${userEmail}", resetPasswordCode: "${resetPasswordCode}", newPassword: "${newPassword}", emailHtml: "${emailHtml}")
+                    reset(userEmail: "${userEmail}", resetPasswordCode: "${resetPasswordCode}", newPassword: "${newPassword}", emailHtml: "${emailHtml}")
                 }
             }`
         );

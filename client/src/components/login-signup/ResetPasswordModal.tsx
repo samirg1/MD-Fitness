@@ -1,7 +1,8 @@
+import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useResetPassword from "../../hooks/useResetPassword";
 import useSnackBar from "../../hooks/useSnackBar";
 import ResetPasswordField from "./ResetPasswordField";
@@ -9,6 +10,7 @@ import ResetPasswordField from "./ResetPasswordField";
 type TResetPasswordModalProps = {
     open: boolean;
     handleClose: () => void;
+    startEmail: string;
 };
 
 const popupStyle = {
@@ -26,28 +28,41 @@ const popupStyle = {
 const ResetPasswordModal = ({
     open,
     handleClose,
+    startEmail
 }: TResetPasswordModalProps) => {
     const [isLoading, setIsLoading] = useState(false);
-    const [email, setEmail] = useState("");
-
     const [viewingCode, setViewingCode] = useState(false);
+    const [resetError, setResetError] = useState("");
+
+    const [email, setEmail] = useState(startEmail);
     const [code, setCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
 
     const { requestResetCode, resetPassword } = useResetPassword();
     const { setOptions: setSnackBarOptions } = useSnackBar();
 
+    useEffect(() => setResetError(""), [email, code, newPassword]);
+
+    const closeModal = () => {
+        setEmail(startEmail);
+        setCode("");
+        setNewPassword("");
+        setResetError("");
+        setViewingCode(false);
+        handleClose();
+    }
+
     const handleRequestCode = async (email: string) => {
         setIsLoading(true);
         const response = await requestResetCode(email);
-        if (response === null) {
-            setIsLoading(false);
-            setViewingCode(true);
-            return;
+        if (response !== null) {
+            setResetError(response);
+            return setIsLoading(false);
         }
 
-        alert(response);
+        setResetError("");
         setIsLoading(false);
+        setViewingCode(true);
     };
 
     const handleReset = async (
@@ -57,31 +72,28 @@ const ResetPasswordModal = ({
     ) => {
         setIsLoading(true);
         const response = await resetPassword(email, code, newPassword);
-        if (response === null) {
-            setIsLoading(false);
-            setSnackBarOptions({
-                message: "Password reset successfully",
-                type: "success",
-            });
-            handleClose();
-            return;
+        if (response !== null) {
+            if (response.startsWith('"password"'))
+                setResetError(
+                    "Invalid password, must have 8 characters with an uppercase letter, lowercase letter, number and special character"
+                );
+            else setResetError(response);
+            return setIsLoading(false);
         }
-        
-        alert(response);
+
         setIsLoading(false);
+        setSnackBarOptions({
+            message: "Password reset successfully",
+            type: "success",
+        });
+        closeModal();
     };
 
     return (
         <>
             <Modal
                 open={open}
-                onClose={() => {
-                    setEmail("");
-                    setCode("");
-                    setNewPassword("");
-                    setViewingCode(false);
-                    handleClose();
-                }}
+                onClose={closeModal}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
@@ -115,9 +127,15 @@ const ResetPasswordModal = ({
                                     onClick={() =>
                                         handleReset(email, code, newPassword)
                                     }
+                                    type="password"
                                 />
                             </>
                         )}
+                        {resetError ? (
+                            <Grid item xs={12}>
+                                <Alert severity="error">{resetError}</Alert>
+                            </Grid>
+                        ) : null}
                     </Grid>
                 </Box>
             </Modal>

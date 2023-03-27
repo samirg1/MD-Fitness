@@ -96,12 +96,12 @@ export const sendPasswordResetEmail = async (
     code: string
 ) => {
     emailHtml = emailHtml.replace("%RESET_CODE%", code);
-    sendEmail(userEmail, emailHtml, "Password Reset");
+    sendEmail(userEmail, emailHtml, "Password Reset Code");
 };
 
 export const sendPasswordResetConfirmationEmail = async (
     userEmail: string,
     emailHtml: string
 ) => {
-    sendEmail(userEmail, emailHtml, "Password Reset Confirmation");
+    sendEmail(userEmail, emailHtml, "Password Change Confirmation");
 };
