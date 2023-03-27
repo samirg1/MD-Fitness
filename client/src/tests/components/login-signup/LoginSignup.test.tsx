@@ -16,6 +16,7 @@ jest.mock("../../../hooks/useAccount", () => () => accountReturn[0]);
 jest.mock("../../../components/login-signup/AccountVerification", () => () => (
     <div>Verify</div>
 ));
+jest.mock("@react-email/render", () => () => {});
 
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
