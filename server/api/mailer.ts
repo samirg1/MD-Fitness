@@ -3,6 +3,8 @@ import nodemailer from "nodemailer";
 import UserModel from "../models/User";
 import { signToken } from "./jsonwebtoken";
 
+let transporter: nodemailer.Transporter;
+
 /**
  * Send an email to a user.
  * @param userEmail The email of the user to send the email to.
@@ -14,20 +16,20 @@ const sendEmail = async (
     emailHtml: string,
     subject: string
 ) => {
-    const testAccount = await nodemailer.createTestAccount();
-    const transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: testAccount.user, // generated ethereal user
-            pass: testAccount.pass, // generated ethereal password
-        },
-    });
+    if (transporter === undefined) {
+        transporter = nodemailer.createTransport({
+            service: "gmail",
+            host: 'smtp.gmail.com',
+            auth: {
+                user: "mdfitness3152@gmail.com", // generated ethereal user
+                pass: process.env.GMAIL_PASSWORD, // generated ethereal password
+            },
+        });
+    }
 
     transporter.sendMail(
         {
-            from: '"MD-Fitness" <srgupta@bigpond.com',
+            from: '"MD-Fitness" <mdfitness3512@gmail.com>',
             to: `${userEmail}`,
             subject,
             attachments: [
