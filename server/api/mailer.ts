@@ -36,12 +36,12 @@ const sendEmail = async (
                 {
                     filename: "tiktok_icon.png",
                     path: __dirname + "/mailerAttachments/tiktok_icon.png",
-                    cid: "tiktok_icon",
+                    cid: "tiktok",
                 },
                 {
                     filename: "instagram_icon.png",
                     path: __dirname + "/mailerAttachments/instagram_icon.png",
-                    cid: "instagram_icon",
+                    cid: "instagram",
                 },
                 {
                     filename: "logo.png",
@@ -51,10 +51,8 @@ const sendEmail = async (
             ],
             html: emailHtml,
         },
-        (error, info) => {
+        (error, _) => {
             if (error) throw new Error(error.message);
-            console.log("Message sent: %s", info.messageId);
-            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
         }
     );
 };
