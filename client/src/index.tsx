@@ -8,6 +8,9 @@ import { SnackBarProvider } from "./context/SnackBarProvider";
 import "./index.css";
 import theme from "./theme";
 
+import LogRocket from "logrocket";
+LogRocket.init(process.env.REACT_APP_LOGROCKET_ID as string);
+
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
