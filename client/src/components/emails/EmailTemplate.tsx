@@ -165,7 +165,7 @@ const EmailTemplate = ({
                                     <Column>
                                         <Link href={LINKS.instagram}>
                                             <Img
-                                                src="cid:instagram_icon"
+                                                src="cid:instagram"
                                                 width="32"
                                                 height="32"
                                                 alt="Instagram"
@@ -179,7 +179,7 @@ const EmailTemplate = ({
                                     <Column>
                                         <Link href={LINKS.tiktok}>
                                             <Img
-                                                src="cid:tiktok_icon"
+                                                src="cid:tiktok"
                                                 width="32"
                                                 height="32"
                                                 alt="TikTok"

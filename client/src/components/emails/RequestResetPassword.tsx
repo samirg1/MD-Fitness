@@ -5,7 +5,7 @@ const RequestResetPassword = () => (
     <EmailTemplate
         title="Request to reset password"
         mainText="Use the code below to reset your password."
-        smallText="If you didn't request this email, please contact me as soon as possible through the social links below to resolve this issue."
+        smallText="If you didn't request this email, you can safely ignore it."
         codeBoxContent={
             <Text
                 style={{
