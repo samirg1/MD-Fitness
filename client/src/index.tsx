@@ -21,14 +21,7 @@ root.render(
             <AuthProvider>
                 <ThemeProvider theme={theme}>
                     <SnackBarProvider>
-                        <ErrorBoundary
-                            fallbackRender={ErrorFallback}
-                            onError={(error, { componentStack }) => {
-                                LogRocket.captureException(error, {
-                                    tags: { componentStack },
-                                });
-                            }}
-                        >
+                        <ErrorBoundary fallbackRender={ErrorFallback}>
                             <Routes>
                                 <Route path="/*" element={<App />} />
                             </Routes>
