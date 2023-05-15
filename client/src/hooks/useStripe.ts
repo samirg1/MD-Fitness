@@ -65,6 +65,7 @@ const useStripe = () => {
                     price_id
                     price
                     description
+                    name
                 }
             }`,
             (data) => (products = data.products)
