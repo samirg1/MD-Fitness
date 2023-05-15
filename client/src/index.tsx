@@ -10,6 +10,8 @@ import { AuthProvider } from "./context/AuthProvider";
 import { SnackBarProvider } from "./context/SnackBarProvider";
 import "./index.css";
 import theme from "./theme";
+import { disableReactDevTools } from "@fvilers/disable-react-devtools";
+if (process.env.NODE_ENV === "production") disableReactDevTools();
 
 LogRocket.init(process.env.REACT_APP_LOGROCKET_ID as string);
 const root = ReactDOM.createRoot(

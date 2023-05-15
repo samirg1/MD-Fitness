@@ -48,10 +48,9 @@ const ResetPasswordModal = ({
 
     const handleEnter = () => {
         if (isLoading) return;
-        if (!viewingCode)
-            handleRequestCode(email);
+        if (!viewingCode) handleRequestCode(email);
         else handleReset(email, code, newPassword);
-    }
+    };
 
     const closeModal = () => {
         setEmail(startEmail);

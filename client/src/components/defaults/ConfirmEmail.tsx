@@ -19,7 +19,6 @@ const ConfirmEmail = () => {
          * Confirm an email of the user.
          */
         const confirm = async () => {
-            console.log("here");
             const response = await confirmEmail(token ?? "");
             if (!response)
                 localStorage.setItem("verification", JSON.stringify(false));

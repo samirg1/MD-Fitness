@@ -1,14 +1,8 @@
 import axios from "axios";
 
-// base url depending on which device app is running on
-const BASE_URL =
-    window.location.hostname === "localhost"
-        ? "http://localhost:3001/graphql"
-        : "http://192.168.8.199:3001/graphql";
-
 // default axios instance
 export default axios.create({
-    baseURL: BASE_URL,
+    baseURL: "https://md-fitness-api.onrender.com/graphql",
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
 });

@@ -152,7 +152,7 @@ const LoginSignup = () => {
 
     const onEnter = () => {
         if (!resetPasswordModalOpen) submit();
-    }
+    };
 
     // when user presses enter the form submits
     useEffect(() => keyDownHandler("Enter", onEnter));
