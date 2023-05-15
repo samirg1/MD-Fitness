@@ -5,9 +5,9 @@ import {
     GraphQLString,
 } from "graphql";
 
-import { verifyToken } from "../../api/jsonwebtoken";
-import { sendConfirmationEmail, sendWelcomeEmail } from "../../api/mailer";
-import UserModel from "../../models/User";
+import { verifyToken } from "../../api/jsonwebtoken.js";
+import { sendConfirmationEmail, sendWelcomeEmail } from "../../api/mailer.js";
+import UserModel from "../../models/User.js";
 
 /**
  * GraphQL mutation object for confirming user emails.

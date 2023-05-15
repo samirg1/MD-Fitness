@@ -1,6 +1,6 @@
-import { verifyToken, signToken } from "../../api/jsonwebtoken";
-import UserModel from "../../models/User";
-import UserType from "../types/User";
+import { verifyToken, signToken } from "../../api/jsonwebtoken.js";
+import UserModel from "../../models/User.js";
+import UserType from "../types/User.js";
 
 /**
  * GraphQL Query object for refreshing an access token

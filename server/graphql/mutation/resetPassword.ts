@@ -6,13 +6,13 @@ import {
     GraphQLObjectType,
     GraphQLString,
 } from "graphql";
-import { comparePassword, hashPassword } from "../../api/bcrypt";
-import validateObject from "../../api/joi";
+import { comparePassword, hashPassword } from "../../api/bcrypt.js";
+import validateObject from "../../api/joi.js";
 import {
     sendPasswordResetConfirmationEmail,
     sendPasswordResetEmail,
-} from "../../api/mailer";
-import UserModel from "../../models/User";
+} from "../../api/mailer.js";
+import UserModel from "../../models/User.js";
 
 const RESET_PASSWORD_ATTEMPTS = 5;
 const RESET_PASSWORD_CODE_LENGTH = 12;

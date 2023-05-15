@@ -5,7 +5,7 @@ import {
     GraphQLString,
 } from "graphql";
 
-import { addUsersPurchase } from "../../api/stripe";
+import { addUsersPurchase } from "../../api/stripe.js";
 
 /**
  * GraphQL Query object for accessing purchases

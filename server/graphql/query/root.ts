@@ -1,8 +1,8 @@
 import { GraphQLObjectType } from "graphql";
-import products from "./products";
 
-import refresh from "./refresh";
-import users from "./users";
+import products from "./products.js";
+import refresh from "./refresh.js";
+import users from "./users.js";
 
 /**
  * Root type for GraphQL queries.

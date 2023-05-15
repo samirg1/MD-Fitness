@@ -5,11 +5,11 @@ import {
     GraphQLString,
 } from "graphql";
 
-import { comparePassword, hashPassword } from "../../api/bcrypt";
-import validateObject from "../../api/joi";
-import { signToken } from "../../api/jsonwebtoken";
-import UserModel from "../../models/User";
-import UserType from "../types/User";
+import { comparePassword, hashPassword } from "../../api/bcrypt.js";
+import validateObject from "../../api/joi.js";
+import { signToken } from "../../api/jsonwebtoken.js";
+import UserModel from "../../models/User.js";
+import UserType from "../types/User.js";
 
 /**
  * GraphQL mutation object for logging in, registering and logging out.

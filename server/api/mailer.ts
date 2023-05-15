@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
-import UserModel from "../models/User";
-import { signToken } from "./jsonwebtoken";
+import UserModel from "../models/User.js";
+import { signToken } from "./jsonwebtoken.js";
 
 let transporter: nodemailer.Transporter;
 

@@ -1,7 +1,7 @@
 import { GraphQLList, GraphQLNonNull, GraphQLString } from "graphql";
 
-import { getProductsForUser, getProducts } from "../../api/stripe";
-import ProductType from "../types/Product";
+import { getProductsForUser, getProducts } from "../../api/stripe.js";
+import ProductType from "../types/Product.js";
 
 /**
  * GraphQL Query object for getting all products

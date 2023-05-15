@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import allowedOrigins from "../config/allowedOrigins";
+import allowedOrigins from "../config/allowedOrigins.js";
 
 /**
  * Validate credentials for a request.

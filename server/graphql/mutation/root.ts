@@ -1,10 +1,10 @@
 import { GraphQLObjectType } from "graphql";
 
-import AuthenticationType from "./authentication";
-import ConfirmationType from "./confirmation";
-import EditUserType from "./editUser";
-import PurchaseType from "./purchases";
-import ResetPasswordType from "./resetPassword";
+import AuthenticationType from "./authentication.js";
+import ConfirmationType from "./confirmation.js";
+import EditUserType from "./editUser.js";
+import PurchaseType from "./purchases.js";
+import ResetPasswordType from "./resetPassword.js";
 
 /**
  * Root type for GraphQL mutations.

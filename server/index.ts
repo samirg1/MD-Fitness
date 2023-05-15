@@ -1,13 +1,14 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
-import { mongoConnect } from "./api/mongoose";
-import corsOptions from "./config/corsOptions";
-import graphQlRoot from "./middlware/graphql";
+import { mongoConnect } from "./api/mongoose.js";
+import corsOptions from "./config/corsOptions.js";
+import graphQlRoot from "./middlware/graphql.js";
 
-import credentials from "./middlware/credentials";
+import credentials from "./middlware/credentials.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;

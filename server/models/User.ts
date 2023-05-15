@@ -1,4 +1,4 @@
-import { createModel, TObjectId } from "../api/mongoose";
+import { createModel, TObjectId } from "../api/mongoose.js";
 
 /**
  * Interface to represent user documents

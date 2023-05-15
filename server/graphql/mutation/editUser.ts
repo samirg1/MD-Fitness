@@ -1,14 +1,12 @@
 import {
-    GraphQLBoolean,
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLString,
 } from "graphql";
-import { hashPassword } from "../../api/bcrypt";
-import validateObject from "../../api/joi";
-import UserModel from "../../models/User";
-import users from "../query/users";
-import UserType from "../types/User";
+import { hashPassword } from "../../api/bcrypt.js";
+import validateObject from "../../api/joi.js";
+import UserModel from "../../models/User.js";
+import UserType from "../types/User.js";
 
 /**
  * GraphQL Query object for accessing purchases
