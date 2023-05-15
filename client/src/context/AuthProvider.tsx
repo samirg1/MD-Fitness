@@ -1,17 +1,6 @@
 import { createContext, useState } from "react";
 
 /**
- * Type of object that is stored as authentication state.
- */
-export type TAuthentication = {
-    name: string;
-    email: string;
-    permissions: number[];
-    purchases: string[];
-    accessToken: string;
-};
-
-/**
  * Interface for context
  */
 interface TAuthenticationContext {

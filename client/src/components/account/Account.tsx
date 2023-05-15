@@ -6,7 +6,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import useAccount from "../../hooks/useAccount";
 import useAuthentication from "../../hooks/useAuthentication";
-import useStripe, { TViewProduct } from "../../hooks/useStripe";
+import useStripe from "../../hooks/useStripe";
 import Card from "../Card";
 import Loader from "../Loader";
 import PageTitle from "../PageTitle";

@@ -7,7 +7,6 @@ import useSnackBar from "../hooks/useSnackBar";
  */
 const SnackBar = () => {
     const { options, setOptions } = useSnackBar();
-
     return (
         <Snackbar
             open={options !== null}
