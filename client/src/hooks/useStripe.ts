@@ -4,18 +4,6 @@ import { getStripe } from "../api/stripe";
 import { EmailType, renderEmail } from "../components/emails/renderEmail";
 import useSnackBar from "./useSnackBar";
 
-export type TSellProduct = {
-    id: string;
-    price_id: string;
-    price: number;
-    description: string;
-    name: string;
-};
-
-export type TViewProduct = Pick<TSellProduct, "id" | "description" | "name"> & {
-    metadata: { link: string; client?: string };
-};
-
 /**
  * Stripe hook.
  * @returns Function to redirect users to checkout and boolean whether this is loading or not.
@@ -77,7 +65,6 @@ const useStripe = () => {
                     price_id
                     price
                     description
-                    name
                 }
             }`,
             (data) => (products = data.products)

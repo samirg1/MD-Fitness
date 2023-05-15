@@ -3,18 +3,6 @@ import { graphQLRequest } from "../api/server";
 import useAuthentication from "./useAuthentication";
 import useSnackBar from "./useSnackBar";
 
-/**
- * Type of user that is returned from database.
- */
-export type TUser = {
-    _id: string;
-    name: string;
-    email: string;
-    dateCreated: Date;
-    permissions: number[];
-    purchases: string[];
-};
-
 const useAdmin = () => {
     const { setAuthentication } = useAuthentication();
     const { setOptions: setSnackBarOptions } = useSnackBar();

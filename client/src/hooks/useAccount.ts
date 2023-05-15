@@ -1,22 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { graphQLRequest } from "../api/server";
 import { EmailType, renderEmail } from "../components/emails/renderEmail";
-import { TAuthentication } from "../context/AuthProvider";
 import useAuthentication from "./useAuthentication";
 import useSnackBar from "./useSnackBar";
-
-/**
- * Signup object type.
- */
-export type TSignup = {
-    name: string;
-    email: string;
-    password: string;
-};
-/**
- * Login object type.
- */
-export type TLogin = Omit<TSignup, "name">;
 
 /**
  * Hook to use account functionality.

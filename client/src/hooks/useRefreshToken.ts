@@ -1,5 +1,4 @@
 import { graphQLRequest } from "../api/server";
-import { TAuthentication } from "../context/AuthProvider";
 import useAuthentication from "./useAuthentication";
 
 /**

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthentication from "../../hooks/useAuthentication";
 import useSnackBar from "../../hooks/useSnackBar";
-import useStripe, { TSellProduct } from "../../hooks/useStripe";
+import useStripe from "../../hooks/useStripe";
 import Card from "../Card";
 import Loader from "../Loader";
 import PageTitle from "../PageTitle";
