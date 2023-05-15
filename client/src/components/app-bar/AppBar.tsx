@@ -21,7 +21,6 @@ import {
     USER_SETTINGS,
 } from "../../config/pages";
 import PERMISSIONS from "../../config/permissions";
-import { TAuthentication } from "../../context/AuthProvider";
 import useAuthentication from "../../hooks/useAuthentication";
 import Loader from "../Loader";
 import TiktokIcon from "../TiktokIcon";

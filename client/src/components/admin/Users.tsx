@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
-import useAdmin, { TUser } from "../../hooks/useAdmin";
+import useAdmin from "../../hooks/useAdmin";
 import Loader from "../Loader";
 
 /**
