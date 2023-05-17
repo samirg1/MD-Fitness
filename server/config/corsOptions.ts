@@ -9,7 +9,8 @@ export default {
         callback: (err: Error | null, success?: boolean) => void
     ) => {
         if (origin === undefined || allowedOrigins.indexOf(origin) === -1) {
-            callback(new Error("Not allowed by CORS"));
+            console.log(`origin not allowed: ${origin}`)
+            callback(null, false);
         } else {
             callback(null, true);
         }

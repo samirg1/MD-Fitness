@@ -6,19 +6,24 @@ import Card from "../Card";
 import PageTitle from "../PageTitle";
 import BetaPopup from "./BetaPopup";
 
+let betaPoppedUp = false;
+
 /**
  * The main interface for the Home page.
  */
 const Home = () => {
     const navigate = useNavigate();
 
-    const [betaPopupOpen, setBetaPopupOpen] = useState(true);
+    const [betaPopupOpen, setBetaPopupOpen] = useState(!betaPoppedUp);
 
     return (
         <>
             <BetaPopup
                 open={betaPopupOpen}
-                handleClose={() => setBetaPopupOpen(false)}
+                handleClose={() => {
+                    setBetaPopupOpen(false);
+                    betaPoppedUp = true;
+                }}
             />
             <Box
                 style={{
@@ -58,9 +63,7 @@ const Home = () => {
                     <br />
                     <br />
                 </Grid>
-                <button
-                    onClick={() => setBetaPopupOpen(true)}
-                >
+                <button onClick={() => setBetaPopupOpen(true)}>
                     Show Beta Popup
                 </button>
             </Box>

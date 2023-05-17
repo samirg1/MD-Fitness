@@ -1,6 +1,7 @@
 import { SxProps, Theme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+// import "./ProgramView.css";
 
 type TProgramView = {
     product: TViewProduct | null;
@@ -37,16 +38,28 @@ const ProgramView = ({ product, handleClose }: TProgramView) => {
                         const url = product.metadata.link;
                         let newDiv = document.createElement("div");
                         newDiv.style.userSelect = "none";
-                        newDiv.style.padding = "2%";
 
-                        newDiv.classList.add("embeddedProgram");
+                        // newDiv.classList.add("embeddedProgram");
                         frame.parentElement!.replaceChild(newDiv, frame);
 
-                        const xhr = new XMLHttpRequest();
-                        xhr.open("GET", url, true);
-                        xhr.onload = () =>
-                            (newDiv.innerHTML = xhr.responseText);
-                        xhr.send();
+                        try {
+                            const xhr = new XMLHttpRequest();
+                            xhr.onreadystatechange = function () {
+                                if (
+                                    xhr.readyState === 4 &&
+                                    xhr.status === 200
+                                ) {
+                                    newDiv.innerHTML = xhr.responseText;
+                                }
+                            };
+                            xhr.onerror = function() {
+                                newDiv.innerHTML = `<p>ON ERROR: Failed to load program. ${xhr.statusText}</p>`;
+                              };
+                            xhr.open("GET", url, false);
+                            xhr.send();
+                        } catch (e) {
+                            newDiv.innerHTML = `<p>Error: Failed to load program. ${e}</p>`;
+                        }
                     }}
                     className="programView"
                     title="Program View"
