@@ -56,7 +56,7 @@ const BetaPopup = ({ open, handleClose }: TResetPasswordModalProps) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography sx={{ fontWeight: "bold"}}>
+                        <Typography sx={{ fontWeight: "bold" }}>
                             For test payments
                         </Typography>
                         <Typography>

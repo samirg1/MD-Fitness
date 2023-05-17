@@ -5,7 +5,7 @@ const BASE_URL =
         ? "https://md-fitness-api.onrender.com/graphql"
         : window.location.hostname === "localhost"
         ? "http://localhost:3001/graphql"
-        : process.env.REACT_APP_DEV_IP as string;
+        : (process.env.REACT_APP_DEV_IP as string);
 
 // default axios instance
 export default axios.create({

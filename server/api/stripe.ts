@@ -3,7 +3,9 @@ import { sendPurchaseConfirmationEmail } from "./mailer.js";
 
 import Stripe from "stripe";
 
-let stripe = new Stripe(process.env.STRIPE_API as string, { apiVersion: "2022-11-15" });
+let stripe = new Stripe(process.env.STRIPE_API as string, {
+    apiVersion: "2022-11-15",
+});
 
 type TProduct = {
     id: string;
@@ -72,16 +74,18 @@ export const addUsersPurchase = async (
     userEmail: string,
     emailHtml: string
 ) => {
-    const { payment_intent } = await stripe.checkout.sessions.retrieve(
+    const { payment_intent } = (await stripe.checkout.sessions.retrieve(
         sessionId,
         { expand: ["payment_intent"] }
-    ) as unknown as { payment_intent: {id: string, metadata: { fulfilled: string }} };
+    )) as unknown as {
+        payment_intent: { id: string; metadata: { fulfilled: string } };
+    };
 
     if (!payment_intent) return;
 
     if (payment_intent.metadata.fulfilled === "true") return;
     await stripe.paymentIntents.update(payment_intent.id, {
-        metadata: { fulfilled: 'true' },
+        metadata: { fulfilled: "true" },
     });
 
     const user = await UserModel.findOne({ email: userEmail });

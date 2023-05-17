@@ -1,8 +1,4 @@
-import {
-    GraphQLNonNull,
-    GraphQLObjectType,
-    GraphQLString,
-} from "graphql";
+import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 import { hashPassword } from "../../api/bcrypt.js";
 import validateObject from "../../api/joi.js";
 import UserModel from "../../models/User.js";
