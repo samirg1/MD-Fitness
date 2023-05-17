@@ -37,7 +37,7 @@ const BetaPopup = ({ open, handleClose }: TResetPasswordModalProps) => {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography sx={{ fontSize: "small" }}>
-                            Current version: 1.0.1
+                            Current version: 1.1.0
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
